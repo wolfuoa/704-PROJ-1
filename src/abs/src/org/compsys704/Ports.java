@@ -4,8 +4,8 @@ public class Ports {
 	public static final String REQUEST_SIGNAL = "LidLoaderControllerCD.request";
 	public static final String REFILL_SIGNAL = "LidLoaderPlantCD.refill";
 	public static final String ENABLE_SIGNAL = "LidLoaderPlantCD.enable";
-	public static final int PORT_LOADER_PLANT = 10001;
-	public static final int PORT_LOADER_CONTROLLER = 10000;
+	public static final int PORT_LOADER_PLANT = 10051;
+	public static final int PORT_LOADER_CONTROLLER = 10050;
 	public static final int PORT_LOADER_VIZ = 20000;
 	
 	// Manual 
