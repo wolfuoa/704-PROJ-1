@@ -1,6 +1,6 @@
 import run.GUI;
 
-Plant(
+LidLoaderPlant(
 		input signal pusherExtend,vacOn,armSource,armDest;
 		input signal enable,refill;
 		output signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty;

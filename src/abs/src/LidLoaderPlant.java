@@ -5,8 +5,8 @@ import com.systemj.input_Channel;
 import com.systemj.output_Channel;
 import run.GUI;//sysj\lid_loader_plant.sysj line: 1, column: 1
 
-public class Plant extends ClockDomain{
-  public Plant(String name){super(name);}
+public class LidLoaderPlant extends ClockDomain{
+  public LidLoaderPlant(String name){super(name);}
   Vector currsigs = new Vector();
   private boolean df = false;
   private char [] active;
