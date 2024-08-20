@@ -17,10 +17,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class CapLoader extends JFrame {
+public class ABS extends JFrame {
 	private JPanel panel;
 	
-	public CapLoader() {
+	public ABS() {
 //		this.setPreferredSize(new Dimension(200, 300));
 		panel = new Canvas();
 		panel.setPreferredSize(new Dimension(360, 350));
@@ -104,7 +104,7 @@ public class CapLoader extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		CapLoader cl = new CapLoader();
+		ABS cl = new ABS();
 		cl.pack();
 		cl.setVisible(true);
 		
