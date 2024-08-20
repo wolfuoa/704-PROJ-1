@@ -1,5 +1,3 @@
-import run.GUI;
-
 LidLoaderPlant(
 		input signal pusherExtend,vacOn,armSource,armDest;
 		input signal enable,refill;
@@ -8,8 +6,6 @@ LidLoaderPlant(
 		)
 ->
 {
-	new Thread(new GUI()).start();
-
 	signal capDec;
 	int signal capPos;
 	emit capPos(0);

@@ -1,0 +1,10 @@
+import run.GUI;
+
+MPR(
+	input signal conveyorStepComplete;
+	output signal conveyorStep;
+   	)
+->
+{
+	new Thread(new GUI()).start();
+}

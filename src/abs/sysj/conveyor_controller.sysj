@@ -1,0 +1,8 @@
+ConveyorController(
+	input signal conveyorStep;
+	output signal conveyorStepComplete;
+   	)
+->
+{
+
+}
