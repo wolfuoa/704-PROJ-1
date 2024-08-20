@@ -1,8 +1,8 @@
 ConveyorController(
 	input signal conveyorStep;
-	output signal conveyorStepComplete;
+	output signal conveyorStepComplete, motConveyorOn;
    	)
 ->
 {
-
+	sustain motConveyorOn;
 }

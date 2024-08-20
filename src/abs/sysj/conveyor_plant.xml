@@ -2,6 +2,9 @@
 	<SubSystem Name="SS21" Local="true">
 		<ClockDomain Name="ConveyorPlantCD" Class="ConveyorPlant">
 			
+			<!-- SELF CONTROLLER -->
+			<iSignal Name="motConveyorOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10021" />
+			
 		</ClockDomain>
 	</SubSystem>
 </System>

@@ -13,7 +13,8 @@ public class ConveyorController extends ClockDomain{
   private char [] suspended;
   public Signal conveyorStep = new Signal("conveyorStep", Signal.INPUT);
   public Signal conveyorStepComplete = new Signal("conveyorStepComplete", Signal.OUTPUT);
-  private int S0 = 1;
+  public Signal motConveyorOn = new Signal("motConveyorOn", Signal.OUTPUT);
+  private int S4 = 1;
   
   private int[] ends = new int[2];
   private int[] tdone = new int[2];
@@ -25,17 +26,25 @@ public class ConveyorController extends ClockDomain{
     }
     
     RUN: while(true){
-      switch(S0){
+      switch(S4){
         case 0 : 
-          S0=0;
+          S4=0;
           break RUN;
         
         case 1 : 
-          S0=2;
-          S0=2;
-          active[1]=0;
-          ends[1]=0;
-          S0=0;
+          S4=2;
+          S4=2;
+          motConveyorOn.setPresent();//sysj\conveyor_controller.sysj line: 7, column: 2
+          currsigs.addElement(motConveyorOn);
+          active[1]=1;
+          ends[1]=1;
+          break RUN;
+        
+        case 2 : 
+          motConveyorOn.setPresent();//sysj\conveyor_controller.sysj line: 7, column: 2
+          currsigs.addElement(motConveyorOn);
+          active[1]=1;
+          ends[1]=1;
           break RUN;
         
       }
@@ -71,6 +80,7 @@ public class ConveyorController extends ClockDomain{
       }
       conveyorStep.setpreclear();
       conveyorStepComplete.setpreclear();
+      motConveyorOn.setpreclear();
       int dummyint = 0;
       for(int qw=0;qw<currsigs.size();++qw){
         dummyint = ((Signal)currsigs.elementAt(qw)).getStatus() ? ((Signal)currsigs.elementAt(qw)).setprepresent() : ((Signal)currsigs.elementAt(qw)).setpreclear();
@@ -82,6 +92,8 @@ public class ConveyorController extends ClockDomain{
       conveyorStep.setClear();
       conveyorStepComplete.sethook();
       conveyorStepComplete.setClear();
+      motConveyorOn.sethook();
+      motConveyorOn.setClear();
       if(paused[1]!=0 || suspended[1]!=0 || active[1]!=1);
       else{
         conveyorStep.gethook();

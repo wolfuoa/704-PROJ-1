@@ -1,0 +1,8 @@
+ConveyorPlant(
+	input signal motConveyorOn;
+   	)
+->
+{
+	await(motConveyorOn);
+	System.out.println("Test");
+}
