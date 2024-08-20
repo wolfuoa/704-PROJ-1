@@ -1,0 +1,7 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS21" Local="true">
+		<ClockDomain Name="ConveyorPlantCD" Class="ConveyorPlant">
+			
+		</ClockDomain>
+	</SubSystem>
+</System>

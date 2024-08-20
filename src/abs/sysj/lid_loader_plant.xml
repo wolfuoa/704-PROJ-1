@@ -1,5 +1,5 @@
 <System xmlns="http://systemjtechnology.com">
-	<SubSystem Name="SS2" Local="true">
+	<SubSystem Name="SS51" Local="true">
 		<ClockDomain Name="LidLoaderPlantCD" Class="LidLoaderPlant">
 			<iSignal Name="pusherExtend" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10001" />
 			<iSignal Name="vacOn"        Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10001" />

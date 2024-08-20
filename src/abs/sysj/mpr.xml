@@ -1,0 +1,7 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS0" Local="true">
+		<ClockDomain Name="MPRCD" Class="MPR">
+			
+		</ClockDomain>
+	</SubSystem>
+</System>
