@@ -3,6 +3,10 @@ ConveyorPlant(
    	)
 ->
 {
-	await(motConveyorOn);
-	System.out.println("Test");
+	while(true){
+		abort(motConveyorOn && enable){
+			sustain bottleAtPos1;
+		}
+		await(!enable);
+	}
 }
