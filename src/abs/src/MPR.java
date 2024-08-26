@@ -14,7 +14,7 @@ public class MPR extends ClockDomain{
   private char [] suspended;
   public Signal conveyorStepComplete = new Signal("conveyorStepComplete", Signal.INPUT);
   public Signal conveyorStep = new Signal("conveyorStep", Signal.OUTPUT);
-  private int S896 = 1;
+  private int S902 = 1;
   
   private int[] ends = new int[2];
   private int[] tdone = new int[2];
@@ -26,18 +26,18 @@ public class MPR extends ClockDomain{
     }
     
     RUN: while(true){
-      switch(S896){
+      switch(S902){
         case 0 : 
-          S896=0;
+          S902=0;
           break RUN;
         
         case 1 : 
-          S896=2;
+          S902=2;
           new Thread(new GUI()).start();//sysj\mpr.sysj line: 9, column: 2
-          S896=0;
+          S902=0;
           active[1]=0;
           ends[1]=0;
-          S896=0;
+          S902=0;
           break RUN;
         
       }

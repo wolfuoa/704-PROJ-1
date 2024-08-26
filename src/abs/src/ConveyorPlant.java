@@ -12,7 +12,8 @@ public class ConveyorPlant extends ClockDomain{
   private char [] paused;
   private char [] suspended;
   public Signal motConveyorOn = new Signal("motConveyorOn", Signal.INPUT);
-  private int S8 = 1;
+  public Signal conveyorPlantOn = new Signal("conveyorPlantOn", Signal.OUTPUT);
+  private int S14 = 1;
   
   private int[] ends = new int[2];
   private int[] tdone = new int[2];
@@ -24,25 +25,24 @@ public class ConveyorPlant extends ClockDomain{
     }
     
     RUN: while(true){
-      switch(S8){
+      switch(S14){
         case 0 : 
-          S8=0;
+          S14=0;
           break RUN;
         
         case 1 : 
-          S8=2;
-          S8=2;
+          S14=2;
+          S14=2;
           active[1]=1;
           ends[1]=1;
           break RUN;
         
         case 2 : 
-          if(motConveyorOn.getprestatus()){//sysj\conveyor_plant.sysj line: 6, column: 8
-            System.out.println("Test");//sysj\conveyor_plant.sysj line: 7, column: 2
-            S8=0;
-            active[1]=0;
-            ends[1]=0;
-            S8=0;
+          if(motConveyorOn.getprestatus()){//sysj\conveyor_plant.sysj line: 8, column: 9
+            conveyorPlantOn.setPresent();//sysj\conveyor_plant.sysj line: 9, column: 3
+            currsigs.addElement(conveyorPlantOn);
+            active[1]=1;
+            ends[1]=1;
             break RUN;
           }
           else {
@@ -83,6 +83,7 @@ public class ConveyorPlant extends ClockDomain{
         runClockDomain();
       }
       motConveyorOn.setpreclear();
+      conveyorPlantOn.setpreclear();
       int dummyint = 0;
       for(int qw=0;qw<currsigs.size();++qw){
         dummyint = ((Signal)currsigs.elementAt(qw)).getStatus() ? ((Signal)currsigs.elementAt(qw)).setprepresent() : ((Signal)currsigs.elementAt(qw)).setpreclear();
@@ -92,6 +93,8 @@ public class ConveyorPlant extends ClockDomain{
       dummyint = motConveyorOn.getStatus() ? motConveyorOn.setprepresent() : motConveyorOn.setpreclear();
       motConveyorOn.setpreval(motConveyorOn.getValue());
       motConveyorOn.setClear();
+      conveyorPlantOn.sethook();
+      conveyorPlantOn.setClear();
       if(paused[1]!=0 || suspended[1]!=0 || active[1]!=1);
       else{
         motConveyorOn.gethook();

@@ -9,6 +9,9 @@
 			<!-- SELF PLANT MODEL -->
 			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
 			
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			
 		</ClockDomain>
 	</SubSystem>
 </System>

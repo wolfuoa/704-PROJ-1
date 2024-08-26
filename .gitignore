@@ -25,6 +25,8 @@ replay_pid*
 
 # WINDOWS
 **/metadata/*
+.metadata/
+
 
 # Windows thumbnail cache files
 Thumbs.db

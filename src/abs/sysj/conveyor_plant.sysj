@@ -1,12 +1,11 @@
 ConveyorPlant(
 	input signal motConveyorOn;
+	output signal conveyorPlantOn;
    	)
 ->
 {
 	while(true){
-		abort(motConveyorOn && enable){
-			sustain bottleAtPos1;
-		}
-		await(!enable);
+		await(motConveyorOn);
+		emit conveyorPlantOn;
 	}
 }

@@ -1,8 +1,12 @@
 ConveyorController(
-	input signal conveyorStep;
+	input signal conveyorStep, bottleAtPos1;
 	output signal conveyorStepComplete, motConveyorOn;
    	)
 ->
 {
-	sustain motConveyorOn;
+	abort(bottleAtPos1)
+	{
+		sustain motConveyorOn;
+	}
+	System.out.println("Test1");
 }
