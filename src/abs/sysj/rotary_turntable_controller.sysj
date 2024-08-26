@@ -1,7 +1,18 @@
 RotaryTurntableController(
-	input signal rotateStep, tableAlignedWithSensor, bottleAtPos1;
+	input signal rotateStep, turntableAlignedWithSensor, bottleAtPos1;
 	output signal rotateStepComplete, rotaryTurntableTrigger;
    	)
 ->
 {
+	while(true)
+	{
+		await(rotateStep);
+		abort(turntableAlignedWithSensor)
+		{
+		System.out.println("Step 3");
+			sustain rotaryTurntableTrigger;
+		}
+		System.out.println("Step 4");
+		emit rotateStepComplete;
+	}
 }

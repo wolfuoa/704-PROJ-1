@@ -1,23 +1,35 @@
 
 Sensors(
-	input signal conveyorPlantOn;
-	output signal bottleAtPos1;
+	input signal conveyorPlantOn, rotaryTurntablePlantOn;
+	output signal bottleAtPos1, turntableAlignedWithSensor;
    	)
 ->
 {
-	System.out.println("Test2");
 	// ---------------- bottleAtPos1 ----------------
 	{
 		while(true)
 		{
 			await(conveyorPlantOn);
-			System.out.println("Test3");
 			if ( true ) //bottleAtPos0)
 			{
 				emit bottleAtPos1;
-				System.out.println("Test");
 			}
 		}
 	}
+	// ----------------------------------------------
+	
+	
+	// ----------- tableAlignedWithSensor -----------
+	{
+		while(true)
+		{
+			await(rotaryTurntablePlantOn);
+			if ( true )
+			{
+				emit turntableAlignedWithSensor;
+			}
+		}
+	}
+	// ----------------------------------------------
 	
 }

@@ -4,9 +4,13 @@ ConveyorController(
    	)
 ->
 {
-	abort(bottleAtPos1)
+	while(true)
 	{
-		sustain motConveyorOn;
+		await(conveyorStep);
+		abort(bottleAtPos1)
+		{
+			sustain motConveyorOn;
+		}
+		emit conveyorStepComplete;
 	}
-	System.out.println("Test1");
 }

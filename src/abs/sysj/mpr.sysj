@@ -1,10 +1,23 @@
 import run.GUI;
 
 MPR(
-	input signal conveyorStepComplete;
-	output signal conveyorStep;
+	input signal conveyorStepComplete, rotateStepComplete;
+	output signal conveyorStep, rotateStep;
    	)
 ->
 {
 	new Thread(new GUI()).start();
+	System.out.println("Step 0");
+	abort(conveyorStepComplete)
+	{
+		sustain conveyorStep;
+	}
+	System.out.println("Conveyor Complete");	
+	
+	abort(rotateStepComplete)
+	{	
+		sustain rotateStep;
+	}
+	System.out.println("Rotary Turntable Complete");
+	
 }

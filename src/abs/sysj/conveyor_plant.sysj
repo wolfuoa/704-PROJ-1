@@ -4,7 +4,8 @@ ConveyorPlant(
    	)
 ->
 {
-	while(true){
+	while(true)
+	{
 		await(motConveyorOn);
 		emit conveyorPlantOn;
 	}

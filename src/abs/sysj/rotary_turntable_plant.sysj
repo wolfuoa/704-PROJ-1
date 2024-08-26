@@ -4,4 +4,9 @@ RotaryTurntablePlant(
    	)
 ->
 {
+	while(true)
+	{
+		await(rotaryTurntableTrigger);
+		emit rotaryTurntablePlantOn;
+	}
 }
