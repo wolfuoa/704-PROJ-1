@@ -1,0 +1,13 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS31" Local="true">
+		<ClockDomain Name="RotaryTurntablePlantCD" Class="RotaryTurntablePlant">
+			
+			<!-- SELF CONTROLLER -->
+			<iSignal Name="rotaryTurntableTrigger" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10031" />
+			
+			<!-- SENSORS -->
+			<oSignal Name="rotaryTurntablePlantOn" To="SensorsCD.rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			
+		</ClockDomain>
+	</SubSystem>
+</System>

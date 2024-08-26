@@ -1,0 +1,7 @@
+RotaryTurntablePlant(
+	input signal rotaryTurntableTrigger;
+	output signal rotaryTurntablePlantOn;
+   	)
+->
+{
+}

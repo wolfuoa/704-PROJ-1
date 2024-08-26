@@ -1,5 +1,5 @@
 <System xmlns="http://systemjtechnology.com">
-	<SubSystem Name="SS0" Local="true">
+	<SubSystem Name="SS8" Local="true">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
 			<!-- CONVEYOR -->

@@ -1,0 +1,7 @@
+RotaryTurntableController(
+	input signal rotateStep, tableAlignedWithSensor, bottleAtPos1;
+	output signal rotateStepComplete, rotaryTurntableTrigger;
+   	)
+->
+{
+}
