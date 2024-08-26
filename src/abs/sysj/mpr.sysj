@@ -7,7 +7,7 @@ MPR(
 ->
 {
 	new Thread(new GUI()).start();
-	System.out.println("Step 0");
+	
 	abort(conveyorStepComplete)
 	{
 		sustain conveyorStep;

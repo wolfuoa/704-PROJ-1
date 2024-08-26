@@ -9,10 +9,8 @@ RotaryTurntableController(
 		await(rotateStep);
 		abort(turntableAlignedWithSensor)
 		{
-		System.out.println("Step 3");
 			sustain rotaryTurntableTrigger;
 		}
-		System.out.println("Step 4");
 		emit rotateStepComplete;
 	}
 }

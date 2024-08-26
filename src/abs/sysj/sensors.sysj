@@ -1,10 +1,19 @@
 
 Sensors(
 	input signal conveyorPlantOn, rotaryTurntablePlantOn;
-	output signal bottleAtPos1, turntableAlignedWithSensor;
+	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor;
    	)
 ->
 {
+	// -------------- Private Variable --------------
+	boolean bottleAtPos1Reg = false;
+	boolean bottleAtPos2Reg = false;
+	boolean bottleAtPos3Reg = false;
+	boolean bottleAtPos4Reg = false;
+	boolean bottleAtPos5Reg = false;
+	// ----------------------------------------------
+
+
 	// ---------------- bottleAtPos1 ----------------
 	{
 		while(true)
@@ -12,13 +21,13 @@ Sensors(
 			await(conveyorPlantOn);
 			if ( true ) //bottleAtPos0)
 			{
-				emit bottleAtPos1;
+				bottleAtPos1Reg = true;
+				bottleAtPos5Reg = false;
 			}
 		}
 	}
 	// ----------------------------------------------
-	
-	
+	||
 	// ----------- tableAlignedWithSensor -----------
 	{
 		while(true)
@@ -31,5 +40,35 @@ Sensors(
 		}
 	}
 	// ----------------------------------------------
+	||
+	// ----------- Local Bottle Pos Shift -----------
+	{
+		while(true)
+		{
+			await(rotaryTurntablePlantOn);
+			bottleAtPos5Reg = bottleAtPos4Reg;
+			bottleAtPos4Reg = bottleAtPos3Reg;
+			bottleAtPos3Reg = bottleAtPos2Reg;
+			bottleAtPos2Reg = bottleAtPos1Reg;
+			bottleAtPos1Reg = false;
+		}	
+	}
+	// ----------------------------------------------
 	
+	
+	
+	||
+	// ----------- Bottle Position Memory -----------
+	{
+		{while(true){if(bottleAtPos1Reg){emit bottleAtPos1; System.out.println("Pos 1");} pause;}}
+		||
+		{while(true){if(bottleAtPos2Reg){emit bottleAtPos2;} pause;}}
+		||
+		{while(true){if(bottleAtPos3Reg){emit bottleAtPos3;} pause;}}
+		||
+		{while(true){if(bottleAtPos4Reg){emit bottleAtPos4;} pause;}}
+		||
+		{while(true){if(bottleAtPos5Reg){emit bottleAtPos5;} pause;}}
+	}
+	// ----------------------------------------------
 }
