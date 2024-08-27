@@ -2,8 +2,8 @@ import run.GUI;
 import run.POSGUI;
 
 MPR(
-	input signal conveyorStepComplete, rotateStepComplete, enableABS;
-	output signal conveyorStep, rotateStep;
+	input signal conveyorStepComplete, rotateStepComplete, bottleCapped, enableABS;
+	output signal conveyorStep, rotateStep, capBottle;
    	)
 ->
 {
@@ -28,5 +28,9 @@ MPR(
 	}
 
 	
+	
+	emit capBottle;
+	await(bottleCapped);
+	System.out.println("Bottle Capped");
 	
 }

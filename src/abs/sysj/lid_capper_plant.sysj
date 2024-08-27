@@ -1,0 +1,40 @@
+LidCapperPlant(
+	input signal gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
+	output signal gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
+   	)
+->
+{
+	// -------- Gripper Cylinder Height --------
+	{
+		while(true)
+		{
+			abort(gripperCylinderExtend)
+			{
+				sustain gripperCylinderLifted;
+			}
+			
+			abort(!gripperCylinderExtend)
+			{
+				sustain gripperCylinderLowered;
+			}
+		}
+	}
+	// -----------------------------------------
+	||
+	// ------- Gripper Cylinder Rotation -------
+	{
+		while(true)
+		{
+			abort(gripperCylinderRotate)
+			{
+				sustain gripperCylinderRotationAtOrigin;
+			}
+			
+			abort(gripperCylinderCounterRotate)
+			{
+				sustain gripperCylinderRotationAtMax;
+			}
+		}
+	}
+	// -----------------------------------------
+}

@@ -66,9 +66,9 @@ Sensors(
 	||
 	// ----------- Bottle Position Memory -----------
 	{
-		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1; System.out.println("Pos 1");} pause;}}
+		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2; System.out.println("Pos 2");} pause;}}
+		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2;} pause;}}
 		||
 		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3;} pause;}}
 		||

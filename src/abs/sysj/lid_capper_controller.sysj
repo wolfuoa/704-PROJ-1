@@ -1,0 +1,42 @@
+LidCapperController(
+	input signal capBottle, bottleAtPos4, gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
+	output signal bottleCapped, gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
+   	)
+->
+{
+	while(true)
+	{
+		await(capBottle);
+		// present(bottleAtPos4){
+		
+		abort(gripperCylinderLowered)
+		{
+			{sustain gripperBottleClampOn;}
+			||
+			{sustain gripperCylinderExtend;}
+		}
+		
+		abort(gripperCylinderRotationAtMax)
+		{
+			{sustain gripperBottleClampOn;}
+			||
+			{sustain gripperCylinderExtend;}
+			||
+			{sustain gripperCapClampOn;}
+			||
+			{sustain gripperCylinderRotate;}
+		}
+		
+		abort(gripperCylinderLifted)
+		{
+			sustain gripperBottleClampOn;
+		}
+		
+		abort(gripperCylinderRotationAtOrigin)
+		{
+			sustain gripperCylinderCounterRotate;
+		}
+		
+		emit bottleCapped;
+	}
+}
