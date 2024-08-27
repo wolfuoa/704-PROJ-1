@@ -1,0 +1,18 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS61" Local="true">
+		<ClockDomain Name="LidCapperPlantCD" Class="LidCapperPlant">
+			
+			<!-- SELF CONTROLLER -->
+			<iSignal Name="gripperCylinderExtend" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10021" />
+			<iSignal Name="gripperCylinderRotate" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10021" />
+			<iSignal Name="gripperCylinderCounterRotate" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10021" />
+			<iSignal Name="gripperCapClampOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10021" />
+			<iSignal Name="gripperBottleClampOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10021" />
+			<oSignal Name="gripperCylinderRotationAtMax" To="SensorsCD.gripperCylinderRotationAtMax" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			<oSignal Name="gripperCylinderRotationAtOrigin" To="SensorsCD.gripperCylinderRotationAtOrigin" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			<oSignal Name="gripperCylinderLifted" To="SensorsCD.gripperCylinderLifted" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			<oSignal Name="gripperCylinderLowered" To="SensorsCD.gripperCylinderLowered" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			
+		</ClockDomain>
+	</SubSystem>
+</System>

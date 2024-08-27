@@ -1,0 +1,17 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS20" Local="true">
+		<ClockDomain Name="ConveyorControllerCD" Class="ConveyorController">
+			
+			<!-- MPR -->
+			<iSignal Name="conveyorStep" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			<oSignal Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+			
+			<!-- SELF PLANT MODEL -->
+			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
+			
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			
+		</ClockDomain>
+	</SubSystem>
+</System>

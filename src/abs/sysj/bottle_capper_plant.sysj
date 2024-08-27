@@ -1,0 +1,12 @@
+ConveyorPlant(
+	input signal motConveyorOn;
+	output signal conveyorPlantOn;
+   	)
+->
+{
+	while(true)
+	{
+		await(motConveyorOn);
+		emit conveyorPlantOn;
+	}
+}
