@@ -1,8 +1,8 @@
 import run.GUI;
 
 MPR(
-	input signal conveyorStepComplete, rotateStepComplete;
-	output signal conveyorStep, rotateStep;
+	input signal conveyorStepComplete, rotateStepComplete, bottleCapped;
+	output signal conveyorStep, rotateStep, capBottle;
    	)
 ->
 {
@@ -15,5 +15,9 @@ MPR(
 	emit rotateStep;
 	await(rotateStepComplete);
 	System.out.println("Rotary Turntable Complete");
+	
+	emit capBottle;
+	await(bottleCapped);
+	System.out.println("Bottle Capped");
 	
 }
