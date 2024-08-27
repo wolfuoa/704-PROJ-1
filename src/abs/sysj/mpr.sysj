@@ -1,19 +1,32 @@
 import run.GUI;
+import run.POSGUI;
 
 MPR(
-	input signal conveyorStepComplete, rotateStepComplete;
+	input signal conveyorStepComplete, rotateStepComplete, enableABS;
 	output signal conveyorStep, rotateStep;
    	)
 ->
 {
 	new Thread(new GUI()).start();
+	new Thread(new POSGUI()).start();
+
+	int iteration = 0;
+
+	while(true){
+
+		await(enableABS);
+		System.out.println("Received enable from ABS. Starting iteration " + iteration);
+		iteration++;
+		
+		emit conveyorStep;
+		await(conveyorStepComplete);
+		System.out.println("Conveyor Complete");	
+		
+		emit rotateStep;
+		await(rotateStepComplete);
+		System.out.println("Rotary Turntable Complete");
+	}
+
 	
-	emit conveyorStep;
-	await(conveyorStepComplete);
-	System.out.println("Conveyor Complete");	
-	
-	emit rotateStep;
-	await(rotateStepComplete);
-	System.out.println("Rotary Turntable Complete");
 	
 }
