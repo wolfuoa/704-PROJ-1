@@ -1,0 +1,16 @@
+ConveyorController(
+	input signal conveyorStep, bottleAtPos1;
+	output signal conveyorStepComplete, motConveyorOn;
+   	)
+->
+{
+	while(true)
+	{
+		await(conveyorStep);
+		abort(bottleAtPos1)
+		{
+			sustain motConveyorOn;
+		}
+		emit conveyorStepComplete;
+	}
+}
