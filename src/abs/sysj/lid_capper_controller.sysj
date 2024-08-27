@@ -6,6 +6,37 @@ LidCapperController(
 {
 	while(true)
 	{
+		await(capBottle);
+		// await(bottleAtPos4)
 		
+		abort(gripperCylinderLowered)
+		{
+			{sustain gripperBottleClampOn;}
+			||
+			{sustain gripperCylinderExtend;}
+		}
+		
+		abort(gripperCylinderRotationAtMax)
+		{
+			{sustain gripperBottleClampOn;}
+			||
+			{sustain gripperCylinderExtend;}
+			||
+			{sustain gripperCapClampOn;}
+			||
+			{sustain gripperCylinderRotate;}
+		}
+		
+		abort(gripperCylinderLifted)
+		{
+			sustain gripperBottleClampOn;
+		}
+		
+		abort(gripperCylinderRotationAtOrigin)
+		{
+			sustain gripperCylinderCounterRotate;
+		}
+		
+		emit bottleCapped;
 	}
 }
