@@ -1,16 +1,24 @@
 <System xmlns="http://systemjtechnology.com">
-	<SubSystem Name="SS20" Local="true">
-		<ClockDomain Name="ConveyorControllerCD" Class="ConveyorController">
+	<SubSystem Name="SS60" Local="true">
+		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
 			
 			<!-- MPR -->
-			<iSignal Name="conveyorStep" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
-			<oSignal Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+			<iSignal Name="capBottle" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<oSignal Name="bottleCapped" To="MPRCD.bottleCapped" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
 			
 			<!-- SELF PLANT MODEL -->
-			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
+			<oSignal Name="gripperCylinderExtend" To="LidCapperPlantCD.gripperCylinderExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperCylinderRotate" To="LidCapperPlantCD.gripperCylinderRotate" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperCylinderCounterRotate" To="LidCapperPlantCD.gripperCylinderCounterRotate" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperCapClampOn" To="LidCapperPlantCD.gripperCapClampOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperBottleClampOn" To="LidCapperPlantCD.gripperBottleClampOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<iSignal Name="gripperCylinderRotationAtMax" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<iSignal Name="gripperCylinderRotationAtOrigin" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<iSignal Name="gripperCylinderLifted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<iSignal Name="gripperCylinderLowered" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
 			
 			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			<iSignal Name="bottleAtPos4" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
 			
 		</ClockDomain>
 	</SubSystem>

@@ -1,12 +1,11 @@
 ConveyorPlant(
-	input signal motConveyorOn;
-	output signal conveyorPlantOn;
+	input signal gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
+	output signal gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
    	)
 ->
 {
 	while(true)
 	{
-		await(motConveyorOn);
-		emit conveyorPlantOn;
+	
 	}
 }
