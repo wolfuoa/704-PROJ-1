@@ -16,4 +16,8 @@ MPR(
 	await(rotateStepComplete);
 	System.out.println("Rotary Turntable Complete");
 	
+	emit capBottle;
+	await(bottleCapped);
+	System.out.println("Bottle Capped");
+	
 }

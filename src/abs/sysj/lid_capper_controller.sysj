@@ -1,13 +1,13 @@
 LidCapperController(
 	input signal capBottle, bottleAtPos4, gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
-	output signal bottleCapped, gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn;
+	output signal bottleCapped, gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
    	)
 ->
 {
 	while(true)
 	{
 		await(capBottle);
-		// await(bottleAtPos4)
+		// present(bottleAtPos4){
 		
 		abort(gripperCylinderLowered)
 		{

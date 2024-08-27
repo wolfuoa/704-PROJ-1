@@ -11,7 +11,7 @@
 			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- LID CAPPER-->
-			<oSignal Name="capBottle" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
+			<oSignal Name="capBottle" To="LidCapperControllerCD.capBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 			<iSignal Name="bottleCapped" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 
 		</ClockDomain>
