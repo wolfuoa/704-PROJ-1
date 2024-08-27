@@ -1,23 +1,80 @@
 
 Sensors(
-	input signal conveyorPlantOn;
-	output signal bottleAtPos1;
+	input signal conveyorPlantOn, rotaryTurntablePlantOn, rotateStepComplete;
+	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor;
    	)
 ->
 {
-	System.out.println("Test2");
+	// --------------- Private Signal ---------------
+	boolean signal bottleAtPos1Reg;
+	boolean signal bottleAtPos2Reg;
+	boolean signal bottleAtPos3Reg;
+	boolean signal bottleAtPos4Reg;
+	boolean signal bottleAtPos5Reg;
+	// ----------------------------------------------
+
+	emit bottleAtPos1Reg(false);
+	emit bottleAtPos2Reg(false);
+	emit bottleAtPos3Reg(false);
+	emit bottleAtPos4Reg(false);
+	emit bottleAtPos5Reg(false);
+
 	// ---------------- bottleAtPos1 ----------------
 	{
 		while(true)
 		{
 			await(conveyorPlantOn);
-			System.out.println("Test3");
 			if ( true ) //bottleAtPos0)
 			{
-				emit bottleAtPos1;
-				System.out.println("Test");
+				emit bottleAtPos1Reg(true);
+				emit bottleAtPos5Reg(false);
 			}
 		}
 	}
+	// ----------------------------------------------
+	||
+	// ----------- tableAlignedWithSensor -----------
+	{
+		while(true)
+		{
+			await(rotaryTurntablePlantOn);
+			if ( true )
+			{
+				emit turntableAlignedWithSensor;
+			}
+		}
+	}
+	// ----------------------------------------------
+	||
+	// ----------- Local Bottle Pos Shift -----------
+	{
+		while(true)
+		{
+			await(rotateStepComplete);
+			emit bottleAtPos5Reg((Boolean)#bottleAtPos4Reg);
+			emit bottleAtPos4Reg((Boolean)#bottleAtPos3Reg);
+			emit bottleAtPos3Reg((Boolean)#bottleAtPos2Reg);
+			emit bottleAtPos2Reg((Boolean)#bottleAtPos1Reg);
+			emit bottleAtPos1Reg(false);
+			System.out.println("Turn");
+		}	
+	}
+	// ----------------------------------------------
 	
+	
+	
+	||
+	// ----------- Bottle Position Memory -----------
+	{
+		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1; System.out.println("Pos 1");} pause;}}
+		||
+		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2; System.out.println("Pos 2");} pause;}}
+		||
+		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3;} pause;}}
+		||
+		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4;} pause;}}
+		||
+		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5;} pause;}}
+	}
+	// ----------------------------------------------
 }

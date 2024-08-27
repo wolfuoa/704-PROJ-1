@@ -1,0 +1,17 @@
+RotaryTurntableController(
+	input signal rotateStep, turntableAlignedWithSensor, bottleAtPos1;
+	output signal rotateStepComplete, rotaryTurntableTrigger, rotateStepCompleteToSensors;
+   	)
+->
+{
+	while(true)
+	{
+		await(rotateStep);
+		abort(turntableAlignedWithSensor)
+		{
+			sustain rotaryTurntableTrigger;
+		}
+		emit rotateStepComplete;
+		emit rotateStepCompleteToSensors;
+	}
+}

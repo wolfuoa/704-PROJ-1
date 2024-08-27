@@ -1,0 +1,12 @@
+RotaryTurntablePlant(
+	input signal rotaryTurntableTrigger;
+	output signal rotaryTurntablePlantOn;
+   	)
+->
+{
+	while(true)
+	{
+		await(rotaryTurntableTrigger);
+		emit rotaryTurntablePlantOn;
+	}
+}

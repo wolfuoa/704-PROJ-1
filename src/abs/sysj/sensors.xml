@@ -1,10 +1,16 @@
 <System xmlns="http://systemjtechnology.com">
-	<SubSystem Name="SS0" Local="true">
+	<SubSystem Name="SS8" Local="true">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
 			<!-- CONVEYOR -->
 			<oSignal Name="bottleAtPos1" To="ConveyorControllerCD.bottleAtPos1" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
 			<iSignal Name="conveyorPlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
+			
+			<!-- ROTARY TURNTABLE -->
+			<oSignal Name="turntableAlignedWithSensor" To="RotaryTurntableControllerCD.turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
+			<iSignal Name="rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
+			
+			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
 
 		</ClockDomain>
 	</SubSystem>
