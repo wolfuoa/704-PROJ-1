@@ -1,6 +1,6 @@
 
 Sensors(
-	input signal conveyorPlantOn, rotaryTurntablePlantOn;
+	input signal conveyorPlantOn, rotaryTurntablePlantOn, rotateStepComplete;
 	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor;
    	)
 ->
@@ -11,7 +11,6 @@ Sensors(
 	boolean signal bottleAtPos3Reg;
 	boolean signal bottleAtPos4Reg;
 	boolean signal bottleAtPos5Reg;
-	signal checkBottlePositions;
 	// ----------------------------------------------
 
 	emit bottleAtPos1Reg(false);
@@ -42,7 +41,6 @@ Sensors(
 			if ( true )
 			{
 				emit turntableAlignedWithSensor;
-				emit checkBottlePositions;
 			}
 		}
 	}
@@ -52,7 +50,7 @@ Sensors(
 	{
 		while(true)
 		{
-			await(checkBottlePositions);
+			await(rotateStepComplete);
 			emit bottleAtPos5Reg((Boolean)#bottleAtPos4Reg);
 			emit bottleAtPos4Reg((Boolean)#bottleAtPos3Reg);
 			emit bottleAtPos3Reg((Boolean)#bottleAtPos2Reg);

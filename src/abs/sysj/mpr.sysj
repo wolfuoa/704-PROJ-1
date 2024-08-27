@@ -8,16 +8,12 @@ MPR(
 {
 	new Thread(new GUI()).start();
 	
-	abort(conveyorStepComplete)
-	{
-		sustain conveyorStep;
-	}
+	emit conveyorStep;
+	await(conveyorStepComplete);
 	System.out.println("Conveyor Complete");	
 	
-	abort(rotateStepComplete)
-	{	
-		sustain rotateStep;
-	}
+	emit rotateStep;
+	await(rotateStepComplete);
 	System.out.println("Rotary Turntable Complete");
 	
 }
