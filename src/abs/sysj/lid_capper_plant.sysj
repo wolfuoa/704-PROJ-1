@@ -1,4 +1,4 @@
-ConveyorPlant(
+LidCapperPlant(
 	input signal gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
 	output signal gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
    	)
