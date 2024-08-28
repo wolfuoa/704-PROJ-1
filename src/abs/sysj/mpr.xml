@@ -1,4 +1,105 @@
 <System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS20" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1002"/>
+			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
+			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
+		</Link>
+	</Interconnection>
+
+	<SubSystem Name="SS20">
+		<ClockDomain Name="ConveyorControllerCD" Class="ConveyorController">
+			
+			<!-- MPR -->
+			<iChannel Name="conveyorStep" From="MPRCD.conveyorStep" />
+			<oChannel Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" />
+			
+			<!-- SELF PLANT MODEL -->
+			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
+			
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS30">
+		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
+			
+			<!-- MPR -->
+			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
+			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
+			
+			<!-- SELF PLANT MODEL -->
+			<oSignal Name="rotaryTurntableTrigger" To="RotaryTurntablePlantCD.rotaryTurntableTrigger" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10031" />
+			
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
+			<iSignal Name="turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
+			<oSignal Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS60">
+		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
+			
+			<!-- MPR -->
+			<iChannel Name="capBottle" From="MPRCD.capBottle" />
+			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
+			
+			<!-- SELF PLANT MODEL -->
+			<oSignal Name="gripperCylinderExtend" To="LidCapperPlantCD.gripperCylinderExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperCylinderRotate" To="LidCapperPlantCD.gripperCylinderRotate" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperCylinderCounterRotate" To="LidCapperPlantCD.gripperCylinderCounterRotate" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperCapClampOn" To="LidCapperPlantCD.gripperCapClampOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<oSignal Name="gripperBottleClampOn" To="LidCapperPlantCD.gripperBottleClampOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
+			<iSignal Name="gripperCylinderRotationAtMax" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<iSignal Name="gripperCylinderRotationAtOrigin" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<iSignal Name="gripperCylinderLifted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<iSignal Name="gripperCylinderLowered" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos4" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS50">
+		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
+			
+			<!-- MPR -->
+			<iChannel Name="loadLid" From="MPRCD.loadLid" />
+			<oChannel Name="loadLidComplete" To="MPRCD.loadLidComplete" />
+			
+			<!-- SELF PLANT MODEL -->
+			<iSignal Name="pusherRetracted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="pusherExtended"  Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="WPgripped"       Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="armAtSource"     Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="armAtDest"       Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="empty"           Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="request"         Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+
+			<oSignal Name="pusherExtend" To="LidLoaderPlantCD.pusherExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
+			<oSignal Name="vacOn"        To="LidLoaderPlantCD.vacOn"        Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
+			<oSignal Name="armSource"    To="LidLoaderPlantCD.armSource"    Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
+			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
+
+			<iSignal Name="pusherExtendM" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="vacOnM"        Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="armSourceM"    Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="armDestM"      Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			
+
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos3" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS0" Local="true">
 		<ClockDomain Name="MPRCD" Class="MPR">
 
@@ -6,21 +107,21 @@
 			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- CONVEYOR -->
-			<oSignal Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
-			<iSignal Name="conveyorStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
+			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
 			
 			<!-- ROTARY TURNTABLE-->
-			<oSignal Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
-			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" />
+			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
 				
 			<!-- LID LOADER -->
-			<oSignal Name="loadLid" To="LidLoaderControllerCD.loadLid" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="lidLoaded" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
+			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
 			
 			
 			<!-- LID CAPPER-->
-			<oSignal Name="capBottle" To="LidCapperControllerCD.capBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
-			<iSignal Name="bottleCapped" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
+			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>

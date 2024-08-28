@@ -1,10 +1,42 @@
 <System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
+			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+		</Link>
+	</Interconnection>
+
+	<SubSystem Name="SS0">
+		<ClockDomain Name="MPRCD" Class="MPR">
+
+			<!-- SIGNALS FROM ABS -->
+			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			
+			<!-- CONVEYOR -->
+			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
+			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
+			
+			<!-- ROTARY TURNTABLE-->
+			<oSignal Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
+			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+				
+			<!-- LID LOADER -->
+			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
+			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
+			
+			<!-- LID CAPPER-->
+			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
+			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
+
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS60" Local="true">
 		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
 			
 			<!-- MPR -->
-			<iSignal Name="capBottle" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
-			<oSignal Name="bottleCapped" To="MPRCD.bottleCapped" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+			<iChannel Name="capBottle" From="MPRCD.capBottle" />
+			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
 			
 			<!-- SELF PLANT MODEL -->
 			<oSignal Name="gripperCylinderExtend" To="LidCapperPlantCD.gripperCylinderExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />

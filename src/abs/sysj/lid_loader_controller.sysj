@@ -1,14 +1,17 @@
 LidLoaderController(
-		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request,loadLid;
-		output signal pusherExtend,vacOn,armSource,armDest,lidLoaded;
-		input signal pusherExtendM,vacOnM,armSourceM,armDestM;
+		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request;
+		output signal pusherExtend,vacOn,armSource,armDest;
+		input signal pusherExtendM,vacOnM,armSourceM,armDestM, bottleAtPos3;
+
+		input Integer channel loadLid;
+		output Integer channel loadLidComplete;
 		)
 ->{
 
 	while(true)
 	{
 		
-		await(loadLid);
+		receive loadLid;
 
 		abort(!empty)
 		{
@@ -47,6 +50,6 @@ LidLoaderController(
 			pause;
 		}
 
-		emit lidLoaded;
+		send loadLidComplete(0);
 	}
 }
