@@ -1,9 +1,9 @@
 import run.GUI;
-import run.POSGUI;
+//import run.POSGUI;
 
 MPR(
-	input signal conveyorStepComplete, rotateStepComplete, bottleCapped, enableABS;
-	output signal conveyorStep, rotateStep, capBottle;
+	input signal conveyorStepComplete, rotateStepComplete, bottleCapped, enableABS, lidLoaded;
+	output signal conveyorStep, rotateStep, capBottle, loadLid;
    	)
 ->
 {
@@ -20,12 +20,14 @@ MPR(
 		await(enableABS);
 		emit conveyorStep;
 		await(conveyorStepComplete);
-		System.out.println("Conveyor Complete");	
+		System.out.println("Conveyor Complete");
+		await(!enableABS);	
 		
 		await(enableABS);
 		emit rotateStep;
 		await(rotateStepComplete);
 		System.out.println("Rotary Turntable Complete");
+		await(!enableABS);
 
 
 		await(enableABS);
@@ -38,9 +40,9 @@ MPR(
 		||
 		{
 			//lid loader
-			//emit capBottle;
-			//await(bottleCapped);
-			System.out.println("Bottle lid placed");
+			emit loadLid;
+			await(lidLoaded);
+			System.out.println("lidLoaded");
 		}
 		||
 		{
@@ -48,6 +50,7 @@ MPR(
 			//await(bottleCapped);
 			System.out.println("Bottle Capped");
 		}
+		await(!enableABS);
 	
 
 
@@ -55,6 +58,7 @@ MPR(
 		emit conveyorStep;
 		await(conveyorStepComplete);
 		System.out.println("Conveyor Complete");	
+		await(!enableABS);
 	}
 
 	

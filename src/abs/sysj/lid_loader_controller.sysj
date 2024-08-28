@@ -9,48 +9,36 @@ LidLoaderController(
 	{
 		
 		await(loadLid);
-		System.out.println("TEST: Received Request for Lid");
 
 		abort(!empty)
 		{
 			halt;
 		}
-		
-		System.out.println("TEST: Made it out of empty");
 
 		abort(armAtDest)
 		{
 			sustain armDest;
 		}
-		
-		System.out.println("TEST: armdest");
-		
+
 		abort(pusherExtended)
 		{
 			sustain pusherExtend;
 		}
-		System.out.println("TEST: pusherExtend");
 		
 		abort(pusherRetracted)
 		{
 			halt;
 		}
 		
-		System.out.println("TEST: pusherretract");
-		
 		abort(armAtSource)
 		{
 			sustain armSource;
 		}
 		
-		System.out.println("TEST: armsource");
-		
 		abort(WPgripped)
 		{
 			sustain vacOn;
 		}
-		
-		System.out.println("TEST: wpgripped");
 		
 		abort(armAtDest)
 		{
@@ -58,8 +46,6 @@ LidLoaderController(
 			emit vacOn;
 			pause;
 		}
-		
-		System.out.println("TEST: emitting lid loaded");
 
 		emit lidLoaded;
 	}
