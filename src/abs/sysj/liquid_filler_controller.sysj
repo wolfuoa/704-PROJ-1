@@ -1,0 +1,11 @@
+LiquidFillerController(
+    input signal fillBottle, bottleAtPos2, dosUnitFilled, dosUnitEvac;
+    input Integer signal liquidLoaded;
+    input InputJSON signal liquidFormula;
+    output signal valveInletOn, valveInjectorOn, dosUnitValveExtend, dosUnitValveRetract;
+    output Integer signal loadLiquid; 
+    )
+->
+{
+
+}

@@ -3,6 +3,7 @@ LidCapperController(
 	output signal bottleCapped, gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
    	)
 ->
+
 {
 	while(true)
 	{
