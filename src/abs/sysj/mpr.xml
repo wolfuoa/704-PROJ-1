@@ -1,6 +1,9 @@
 <System xmlns="http://systemjtechnology.com">
 	<SubSystem Name="SS0" Local="true">
 		<ClockDomain Name="MPRCD" Class="MPR">
+
+			<!-- SIGNALS FROM ABS -->
+			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- CONVEYOR -->
 			<oSignal Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
@@ -9,6 +12,11 @@
 			<!-- ROTARY TURNTABLE-->
 			<oSignal Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+				
+			<!-- LID LOADER -->
+			<oSignal Name="loadLid" To="LidLoaderControllerCD.loadLid" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10050" />
+			<iSignal Name="lidLoaded" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			
 			
 			<!-- LID CAPPER-->
 			<oSignal Name="capBottle" To="LidCapperControllerCD.capBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />

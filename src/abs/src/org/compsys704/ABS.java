@@ -26,7 +26,7 @@ public class ABS extends JFrame {
 		panel.setPreferredSize(new Dimension(360, 350));
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
-		enable.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.ENABLE_SIGNAL));
+		enable.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.ENABLE_SIGNAL));
 		JButton request = new JButton("request");
 		request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
 		JButton refill = new JButton("refill");
@@ -97,7 +97,7 @@ public class ABS extends JFrame {
 		c.gridy = 2;
 		this.add(pan3,c);
 		
-		this.setTitle("Cap Loader");
+		this.setTitle("ABS Live");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);

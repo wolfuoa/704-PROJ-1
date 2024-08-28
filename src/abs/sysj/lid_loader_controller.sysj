@@ -1,89 +1,52 @@
 LidLoaderController(
-		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request;
-		output signal pusherExtend,vacOn,armSource,armDest;
-		input Integer signal mode;
+		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request,loadLid;
+		output signal pusherExtend,vacOn,armSource,armDest,lidLoaded;
 		input signal pusherExtendM,vacOnM,armSourceM,armDestM;
 		)
 ->{
-/* TODO: Write control-logic */
+
+	while(true)
 	{
-		while(true)
+		
+		await(loadLid);
+
+		abort(!empty)
 		{
-			present(mode)
-			{
-				// ---------------- AUTO MODE ----------------
-				if(#mode == 0)
-				{
-					present(!empty)
-					{
-						present(request)
-						{
-							abort(armAtDest)
-							{
-								sustain armDest;
-							}
-							
-							abort(pusherExtended)
-							{
-								sustain pusherExtend;
-							}
-							
-							abort(pusherRetracted)
-							{
-								halt;
-							}
-							
-							abort(armAtSource)
-							{
-								sustain armSource;
-							}
-							
-							abort(WPgripped)
-							{
-								sustain vacOn;
-							}
-							
-							abort(armAtDest)
-							{
-								while(true)
-								{
-									emit armDest;
-									emit vacOn;
-									pause;
-								}
-							}
-							
-							
-						}
-					}
-				}
-				// ---------------- MANU MODE ----------------
-				else
-				{
-					present(pusherExtendM)
-					{
-						emit pusherExtend;
-					}
-					
-					present(vacOnM)
-					{
-						emit vacOn;
-					}
-					
-					present(armSourceM)
-					{
-						emit armSource;
-					}
-					
-					present(armDestM)
-					{
-						emit armDest;
-					}
-					
-				}
-			}
+			halt;
+		}
+
+		abort(armAtDest)
+		{
+			sustain armDest;
+		}
+
+		abort(pusherExtended)
+		{
+			sustain pusherExtend;
+		}
+		
+		abort(pusherRetracted)
+		{
+			halt;
+		}
+		
+		abort(armAtSource)
+		{
+			sustain armSource;
+		}
+		
+		abort(WPgripped)
+		{
+			sustain vacOn;
+		}
+		
+		abort(armAtDest)
+		{
+			emit armDest;
+			emit vacOn;
 			pause;
 		}
+
+		emit lidLoaded;
 	}
-	
 }
