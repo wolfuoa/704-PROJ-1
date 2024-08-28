@@ -1,6 +1,6 @@
 LidLoaderPlant(
 		input signal pusherExtend,vacOn,armSource,armDest;
-		input signal enable,refill;
+		input signal refill;
 		output signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty;
 		output signal pusherRetractedE,pusherExtendedE,WPgrippedE,armAtSourceE,armAtDestE,emptyE;
 		)
@@ -11,27 +11,23 @@ LidLoaderPlant(
 	emit capPos(0);
 	{// Arm
 		while(true){
-			abort(armSource && enable){
+			abort(armSource){
 				sustain armAtDest;
 			}
-			await(!enable);
-			abort(armDest && enable){
+			abort(armDest){
 				sustain armAtSource;
 			}
-			await(!enable);
 		}
 	}
 	||
 	{// Pusher
 		while(true){
-			abort(pusherExtend && enable){
+			abort(pusherExtend){
 				sustain pusherRetracted;
 			}
-			await(!enable);
-			abort(!pusherExtend && enable){
+			abort(!pusherExtend){
 				sustain pusherExtended;
 			}
-			await(!enable);
 		}
 	}
 	||

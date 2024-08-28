@@ -1,6 +1,12 @@
 <System xmlns="http://systemjtechnology.com">
 	<SubSystem Name="SS50" Local="true">
 		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
+
+			<!-- MPR -->
+			<iSignal Name="loadLid" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<oSignal Name="lidLoaded" To="MPRCD.lidLoaded" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+
+
 			<iSignal Name="pusherRetracted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			<iSignal Name="pusherExtended"  Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			<iSignal Name="WPgripped"       Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
@@ -14,7 +20,6 @@
 			<oSignal Name="armSource"    To="LidLoaderPlantCD.armSource"    Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 
-			<iSignal Name="mode"          Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			<iSignal Name="pusherExtendM" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			<iSignal Name="vacOnM"        Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			<iSignal Name="armSourceM"    Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
