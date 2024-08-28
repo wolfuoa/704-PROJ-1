@@ -21,7 +21,7 @@ public class Canvas extends JPanel {
 	
 	public Canvas(){
 		try {
-			tT = ImageIO.read(new File("res/turn_table_itself.png"));
+			//tT = ImageIO.read(new File("res/turn_table_itself.png"));
 			
 			BufferedImage bi = ImageIO.read(new File("res/arm.png"));
 			arm1 = bi.getSubimage(0, 0, 64, 256);
