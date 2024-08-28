@@ -1,0 +1,25 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS40" Local="true">
+		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
+			
+            <!-- MPR -->
+			<iSignal Name="fillBottle" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+            <iSignal Name="liquidFormula" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<oSignal Name="bottleFilled" To="MPRCD.bottleFilled" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+
+			<!-- SELF PLANT -->
+			<iSignal Name="dosUnitFilled" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="dosUnitEvac" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="liquidLoaded" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<oSignal Name="valveInletOn" To="LiquidFillerPlantCD.valveInletOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="valveInjectorOn" To="LiquidFillerPlantCD.valveInjectorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="dosUnitValveExtend" To="LiquidFillerPlantCD.dosUnitValveExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="dosUnitValveRetract" To="LiquidFillerPlantCD.dosUnitValveRetract" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="loadLiquid" To="LiquidFillerPlantCD.loadLiquid" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+
+            <!-- SENSORS -->
+			<iSignal Name="bottleAtPos2" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+
+		</ClockDomain>
+	</SubSystem>
+</System>
