@@ -1,16 +1,24 @@
 ConveyorController(
 	input signal conveyorStep, bottleAtPos1;
 	output signal conveyorStepComplete, motConveyorOn;
+	
+	input Integer channel conveyorStep_t;
+	output Integer channel conveyorStepComplete_t;
    	)
 ->
 {
 	while(true)
 	{
 		await(conveyorStep);
+		// receive conveyorStep_t;
+		System.out.println("Received Conveyor Signal");
 		abort(bottleAtPos1)
 		{
 			sustain motConveyorOn;
 		}
+		
+		System.out.println("Sending COnveyor signal");
+		// send conveyorStepComplete_t(0);
 		emit conveyorStepComplete;
 	}
 }
