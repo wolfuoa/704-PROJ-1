@@ -26,7 +26,7 @@ public class ABS extends JFrame {
 		panel.setPreferredSize(new Dimension(700, 450));
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
-		enable.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.ENABLE_SIGNAL));
+		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
 		JButton request = new JButton("request");
 		request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
 		JButton refill = new JButton("refill");

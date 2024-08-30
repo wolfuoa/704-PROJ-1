@@ -1,0 +1,16 @@
+BroadcastEnable(
+	input signal enable;
+    output signal enableMPR, enableLidLoader;
+
+   	)
+->
+{
+	while(true){
+
+        await(enable);
+        System.out.println("received enable signal");
+        emit enableMPR;
+        emit enableLidLoader;
+        await(!enable);
+	}
+}

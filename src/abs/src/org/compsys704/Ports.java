@@ -3,10 +3,11 @@ package org.compsys704;
 public class Ports {
 	public static final String REQUEST_SIGNAL = "LidLoaderControllerCD.request";
 	public static final String REFILL_SIGNAL = "LidLoaderPlantCD.refill";
-	public static final String ENABLE_SIGNAL = "MPRCD.enableABS";
+	public static final String ENABLE_SIGNAL = "BroadcastEnableCD.enable";
 	public static final int PORT_MPR = 10000;
 	public static final int PORT_LOADER_PLANT = 10051;
 	public static final int PORT_LOADER_CONTROLLER = 10050;
+	public static final int PORT_BROADCAST_ENABLE = 10090;
 	public static final int PORT_LOADER_VIZ = 20000;
 	public static final int PORT_LOADER_POS = 20001;
 	
