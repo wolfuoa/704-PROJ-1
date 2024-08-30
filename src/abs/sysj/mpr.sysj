@@ -8,29 +8,57 @@ MPR(
 ->
 {
 	new Thread(new GUI()).start();
-	new Thread(new POSGUI()).start();
+	//new Thread(new POSGUI()).start();
 
 	int iteration = 0;
 
 	while(true){
 
-		await(enableABS);
-		System.out.println("Received enable from ABS. Starting iteration " + iteration);
+		System.out.println("Starting iteration " + iteration);
 		iteration++;
 		
+		await(enableABS);
 		emit conveyorStep;
 		await(conveyorStepComplete);
 		System.out.println("Conveyor Complete");	
 		
+		await(enableABS);
 		emit rotateStep;
 		await(rotateStepComplete);
 		System.out.println("Rotary Turntable Complete");
+
+
+		await(enableABS);
+		{
+			//filler
+			//emit capBottle;
+			//await(bottleCapped);
+			System.out.println("Bottle filled");
+		}
+		||
+		{
+			//lid loader
+			//emit capBottle;
+			//await(bottleCapped);
+			System.out.println("Bottle lid placed");
+		}
+		||
+		{
+			emit capBottle;
+			//await(bottleCapped);
+			System.out.println("Bottle Capped");
+		}
+	
+
+
+		await(enableABS);
+		emit conveyorStep;
+		await(conveyorStepComplete);
+		System.out.println("Conveyor Complete");	
 	}
 
 	
 	
-	emit capBottle;
-	await(bottleCapped);
-	System.out.println("Bottle Capped");
+	
 	
 }
