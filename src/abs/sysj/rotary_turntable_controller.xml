@@ -3,8 +3,25 @@
 		<Link Type="Destination">
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
+
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+			
+			<!-- CONVEYOR -->
+			<oSignal Name="bottleAtPos1" To="ConveyorControllerCD.bottleAtPos1" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
+			<iSignal Name="conveyorPlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
+			
+			<!-- ROTARY TURNTABLE -->
+			<oSignal Name="turntableAlignedWithSensor" To="RotaryTurntableControllerCD.turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
+			<iSignal Name="rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
+			<!-- <iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" /> -->
+			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
+
+		</ClockDomain>
+	</SubSystem>
 
 	<SubSystem Name="SS0">
 		<ClockDomain Name="MPRCD" Class="MPR">

@@ -1,5 +1,30 @@
 <System xmlns="http://systemjtechnology.com">
-	<SubSystem Name="SS8" Local="true">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
+		</Link>
+	</Interconnection>
+
+	<SubSystem Name="SS30">
+		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
+			
+			<!-- MPR -->
+			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
+			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
+			
+			<!-- SELF PLANT MODEL -->
+			<oSignal Name="rotaryTurntableTrigger" To="RotaryTurntablePlantCD.rotaryTurntableTrigger" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10031" />
+			
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
+			<iSignal Name="turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
+			<oSignal Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS80" Local="true">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
 			<!-- CONVEYOR -->
@@ -9,7 +34,9 @@
 			<!-- ROTARY TURNTABLE -->
 			<oSignal Name="turntableAlignedWithSensor" To="RotaryTurntableControllerCD.turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
-			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
+			<!-- <iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" /> -->
+			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
+			
 
 		</ClockDomain>
 	</SubSystem>
