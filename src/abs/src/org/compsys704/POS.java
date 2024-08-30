@@ -1,8 +1,7 @@
 package org.compsys704;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -14,19 +13,29 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class ABS extends JFrame {
+public class POS extends JFrame {
 	private JPanel panel;
 	
-	public ABS() {
+	public POS() {
 //		this.setPreferredSize(new Dimension(200, 300));
-		panel = new Canvas();
-		panel.setPreferredSize(new Dimension(700, 450));
-		panel.setBackground(Color.WHITE);
+		 // Create a JLabel for the header text
+        JLabel headerLabel = new JLabel("Advantech ABS", JLabel.CENTER);
+        headerLabel.setFont(new Font("ARIAL", Font.BOLD, 50));
+        
+        JLabel header2 = new JLabel("Create a Batch Order", JLabel.LEFT);
+        header2.setFont(new Font("ARIAL", Font.BOLD, 20));
+        header2.setForeground(new Color(120, 66, 245));
+        //header2.SetColor(new Color(120, 66, 245));
+        
+        this.add(headerLabel);
+        this.add(header2);
+		
 		JButton enable = new JButton("enable");
-		enable.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.ENABLE_SIGNAL));
+		enable.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.ENABLE_SIGNAL));
 		JButton request = new JButton("request");
 		request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
 		JButton refill = new JButton("refill");
@@ -39,7 +48,7 @@ public class ABS extends JFrame {
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		this.add(panel,c);
+
 		c.gridx = 0;
 		c.gridy = 1;
 		this.add(ss,c);
@@ -97,19 +106,18 @@ public class ABS extends JFrame {
 		c.gridy = 2;
 		this.add(pan3,c);
 		
-		this.setTitle("ABS Live");
-		this.setSize(800, 700);
+		this.setTitle("POS");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setResizable(true);
+		this.setResizable(false);
 	}
 
 	public static void main(String[] args) {
-		ABS cl = new ABS();
-		//cl.pack();
+		POS cl = new POS();
+		cl.pack();
 		cl.setVisible(true);
 		
-		SignalServer<LoaderVizWorker> server = new SignalServer<LoaderVizWorker>(Ports.PORT_LOADER_VIZ, LoaderVizWorker.class);
+		SignalServer<POSWorker> server = new SignalServer<POSWorker>(Ports.PORT_LOADER_POS, POSWorker.class);
 		new Thread(server).start();
 		while(true){
 			try {
