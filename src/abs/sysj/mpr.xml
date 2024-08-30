@@ -1,4 +1,54 @@
 <System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS20" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1002"/>
+			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
+			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
+		</Link>
+	</Interconnection>
+
+	<SubSystem Name="SS20">
+		<ClockDomain Name="ConveyorControllerCD" Class="ConveyorController">
+			
+			<!-- MPR -->
+			<iChannel Name="conveyorStep" From="MPRCD.conveyorStep" />
+			<oChannel Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS30">
+		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
+			
+			<!-- MPR -->
+			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
+			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS60">
+		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
+			
+			<!-- MPR -->
+			<iChannel Name="capBottle" From="MPRCD.capBottle" />
+			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS50">
+		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
+			
+			<!-- MPR -->
+			<iChannel Name="loadLid" From="MPRCD.loadLid" />
+			<oChannel Name="loadLidComplete" To="MPRCD.loadLidComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS0" Local="true">
 		<ClockDomain Name="MPRCD" Class="MPR">
 
@@ -6,21 +56,21 @@
 			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- CONVEYOR -->
-			<oSignal Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
-			<iSignal Name="conveyorStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
+			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
 			
 			<!-- ROTARY TURNTABLE-->
-			<oSignal Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
-			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" />
+			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
 				
 			<!-- LID LOADER -->
-			<oSignal Name="loadLid" To="LidLoaderControllerCD.loadLid" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="lidLoaded" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
+			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
 			
 			
 			<!-- LID CAPPER-->
-			<oSignal Name="capBottle" To="LidCapperControllerCD.capBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
-			<iSignal Name="bottleCapped" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
+			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>

@@ -2,8 +2,10 @@ import run.GUI;
 //import run.POSGUI;
 
 MPR(
-	input signal conveyorStepComplete, rotateStepComplete, bottleCapped, enableABS, lidLoaded;
-	output signal conveyorStep, rotateStep, capBottle, loadLid;
+	input signal enableABS;
+
+	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete;
+	output Integer channel conveyorStep, loadLid, capBottle, rotateStep;
    	)
 ->
 {
@@ -18,51 +20,30 @@ MPR(
 		iteration++;
 		
 		await(enableABS);
-		emit conveyorStep;
-		await(conveyorStepComplete);
+		send conveyorStep(0);
+		receive conveyorStepComplete;
 		System.out.println("Conveyor Complete");
 		await(!enableABS);	
-		
+
+
 		await(enableABS);
-		emit rotateStep;
-		await(rotateStepComplete);
+		send loadLid(0);
+		receive loadLidComplete;
+		System.out.println("Load Lid Complete");
+		await(!enableABS);
+
+		await(enableABS);
+		send capBottle(0);
+		receive capBottleComplete;
+		System.out.println("Cap Bottle Complete");
+		await(!enableABS);
+
+		await(enableABS);
+		send rotateStep(0);
+		receive rotateStepComplete;
 		System.out.println("Rotary Turntable Complete");
 		await(!enableABS);
 
-
-		await(enableABS);
-		{
-			//filler
-			//emit capBottle;
-			//await(bottleCapped);
-			System.out.println("Bottle filled");
-		}
-		||
-		{
-			//lid loader
-			emit loadLid;
-			await(lidLoaded);
-			System.out.println("lidLoaded");
-		}
-		||
-		{
-			emit capBottle;
-			//await(bottleCapped);
-			System.out.println("Bottle Capped");
-		}
-		await(!enableABS);
-	
-
-
-		await(enableABS);
-		emit conveyorStep;
-		await(conveyorStepComplete);
-		System.out.println("Conveyor Complete");	
-		await(!enableABS);
 	}
 
-	
-	
-	
-	
 }
