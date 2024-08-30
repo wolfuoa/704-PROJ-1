@@ -1,9 +1,12 @@
 LiquidFillerController(
-    input signal fillBottle, bottleAtPos2, dosUnitEvac;
+    input signal bottleAtPos2, dosUnitEvac;
     input Integer signal liquidLoaded, dosUnitFilled;
     input signal liquidFormula;
-    output signal fillBottleComplete, valveInletOn, valveInjectorOn, dosUnitValveExtend;
-    output Integer signal loadLiquid, dosUnitValveRetract; 
+    output signal valveInletOn, valveInjectorOn, dosUnitValveExtend;
+    output Integer signal loadLiquid, dosUnitValveRetract;
+
+    input Integer channel fillBottle;
+    output Integer channel fillBottleComplete;
     )
 ->
 {
@@ -15,7 +18,7 @@ LiquidFillerController(
 
 //    while(true)
 //    {
-//        {receive fillBottle;} || {receive liquidFormula;}
+//        {receive fillBottle;}// || {receive liquidFormula;}
 //        // present(bottleAtPos2){}
 //
 //        // TODO: Implement JSON reading
@@ -54,6 +57,6 @@ LiquidFillerController(
 //            }
 //        }
 //
-//        emit fillBottleComplete;
+//        send fillBottleComplete;
 //    }
 }

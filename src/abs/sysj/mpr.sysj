@@ -1,57 +1,54 @@
 import run.GUI;
 //import run.POSGUI;
-import util.json_builder;
+// import util.json_builder;
 
 MPR(
 	input signal enableABS;
 
-	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete;
-	output Integer channel conveyorStep, loadLid, capBottle, rotateStep;
+	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete, fillBottleComplete;
+	output Integer channel conveyorStep, loadLid, capBottle, rotateStep, fillBottle;
    	)
 ->
 {
 	new Thread(new GUI()).start();
 	//new Thread(new POSGUI()).start();
-	
-	json_builder entity = new json_builder();
 
 	int iteration = 0;
 
 	while(true){
 
 		System.out.println("Starting iteration " + iteration);
-		iteration++;
+		iteration++;	
+		
+		await(enableABS);
+		send conveyorStep(0);
+		receive conveyorStepComplete;
+		System.out.println("Conveyor Complete");
+		await(!enableABS);	
 
 		await(enableABS);
-		
-		entity.init_json_builder();
-		entity.send_json_data(1,1,1,1,1);
-		entity.recv_json_data();
+		send loadLid(0);
+		receive loadLidComplete;
+		System.out.println("Load Lid Complete");
+		await(!enableABS);
 
-		
-//		await(enableABS);
-//		send conveyorStep(0);
-//		receive conveyorStepComplete;
-//		System.out.println("Conveyor Complete");
-//		await(!enableABS);	
-//
-//		await(enableABS);
-//		send loadLid(0);
-//		receive loadLidComplete;
-//		System.out.println("Load Lid Complete");
-//		await(!enableABS);
-//
-//		await(enableABS);
-//		send capBottle(0);
-//		receive capBottleComplete;
-//		System.out.println("Cap Bottle Complete");
-//		await(!enableABS);
-//
-//		await(enableABS);
-//		send rotateStep(0);
-//		receive rotateStepComplete;
-//		System.out.println("Rotary Turntable Complete");
-//		await(!enableABS);
+		await(enableABS);
+		send capBottle(0);
+		receive capBottleComplete;
+		System.out.println("Cap Bottle Complete");
+		await(!enableABS);
+
+		await(enableABS);
+		send rotateStep(0);
+		receive rotateStepComplete;
+		System.out.println("Rotary Turntable Complete");
+		await(!enableABS);
+
+		await(enableABS);
+		send fillBottle(0);
+		receive fillBottleComplete;
+		System.out.println("Fill Bottle Complete");
+		await(!enableABS);
 
 	}
 }

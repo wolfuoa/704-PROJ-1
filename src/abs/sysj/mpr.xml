@@ -4,6 +4,7 @@
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
 			<Interface SubSystem="SS20" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1002"/>
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 		</Link>
@@ -26,6 +27,16 @@
 			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
 			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
 			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS40">
+		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
+			
+            <!-- MPR -->
+			<iChannel Name="fillBottle" From="MPRCD.fillBottle" />
+			<oChannel Name="fillBottleComplete" To="MPRCD.fillBottleComplete" />
+
 		</ClockDomain>
 	</SubSystem>
 
@@ -73,8 +84,8 @@
 			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
 			<!-- LIQUID FILLER -->	
-			<oSignal Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
-			<iSignal Name="bottleFilled" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oChannel Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" />
+			<iChannel Name="fillBottleComplete" From="LiquidFillerControllerCD.fillBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>
