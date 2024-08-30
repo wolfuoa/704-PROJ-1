@@ -1,7 +1,6 @@
 LidLoaderController(
-		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request;
+		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request,bottleAtPos3;
 		output signal pusherExtend,vacOn,armSource,armDest;
-		input signal pusherExtendM,vacOnM,armSourceM,armDestM, bottleAtPos3;
 
 		input Integer channel loadLid;
 		output Integer channel loadLidComplete;

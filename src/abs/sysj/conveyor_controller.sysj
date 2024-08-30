@@ -10,13 +10,11 @@ ConveyorController(
 	while(true)
 	{
 		receive conveyorStep;
-		System.out.println("Received Conveyor Signal");
 		abort(bottleAtPos1)
 		{
 			sustain motConveyorOn;
 		}
 		
-		System.out.println("Sending COnveyor signal");
 		send conveyorStepComplete(0);
 	}
 }

@@ -8,17 +8,10 @@
 
 	<SubSystem Name="SS0">
 		<ClockDomain Name="MPRCD" Class="MPR">
-
-			<!-- SIGNALS FROM ABS -->
-			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
 			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
-			
-			<!-- ROTARY TURNTABLE-->
-			<oSignal Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
-			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 				
 			<!-- LID LOADER -->
 			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
@@ -51,12 +44,6 @@
 			<oSignal Name="vacOn"        To="LidLoaderPlantCD.vacOn"        Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 			<oSignal Name="armSource"    To="LidLoaderPlantCD.armSource"    Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
-
-			<iSignal Name="pusherExtendM" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="vacOnM"        Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="armSourceM"    Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="armDestM"      Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			
 
 			<!-- SENSORS -->
 			<iSignal Name="bottleAtPos3" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />

@@ -16,12 +16,6 @@
 			<iChannel Name="conveyorStep" From="MPRCD.conveyorStep" />
 			<oChannel Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" />
 			
-			<!-- SELF PLANT MODEL -->
-			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
-			
-			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
-			
 		</ClockDomain>
 	</SubSystem>
 
@@ -31,14 +25,6 @@
 			<!-- MPR -->
 			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
 			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
-			
-			<!-- SELF PLANT MODEL -->
-			<oSignal Name="rotaryTurntableTrigger" To="RotaryTurntablePlantCD.rotaryTurntableTrigger" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10031" />
-			
-			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
-			<iSignal Name="turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
-			<oSignal Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
 			
 		</ClockDomain>
 	</SubSystem>
@@ -50,20 +36,6 @@
 			<iChannel Name="capBottle" From="MPRCD.capBottle" />
 			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
 			
-			<!-- SELF PLANT MODEL -->
-			<oSignal Name="gripperCylinderExtend" To="LidCapperPlantCD.gripperCylinderExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
-			<oSignal Name="gripperCylinderRotate" To="LidCapperPlantCD.gripperCylinderRotate" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
-			<oSignal Name="gripperCylinderCounterRotate" To="LidCapperPlantCD.gripperCylinderCounterRotate" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
-			<oSignal Name="gripperCapClampOn" To="LidCapperPlantCD.gripperCapClampOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
-			<oSignal Name="gripperBottleClampOn" To="LidCapperPlantCD.gripperBottleClampOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10061" />
-			<iSignal Name="gripperCylinderRotationAtMax" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
-			<iSignal Name="gripperCylinderRotationAtOrigin" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
-			<iSignal Name="gripperCylinderLifted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
-			<iSignal Name="gripperCylinderLowered" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
-			
-			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos4" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
-			
 		</ClockDomain>
 	</SubSystem>
 
@@ -73,29 +45,6 @@
 			<!-- MPR -->
 			<iChannel Name="loadLid" From="MPRCD.loadLid" />
 			<oChannel Name="loadLidComplete" To="MPRCD.loadLidComplete" />
-			
-			<!-- SELF PLANT MODEL -->
-			<iSignal Name="pusherRetracted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="pusherExtended"  Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="WPgripped"       Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="armAtSource"     Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="armAtDest"       Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="empty"           Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="request"         Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-
-			<oSignal Name="pusherExtend" To="LidLoaderPlantCD.pusherExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
-			<oSignal Name="vacOn"        To="LidLoaderPlantCD.vacOn"        Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
-			<oSignal Name="armSource"    To="LidLoaderPlantCD.armSource"    Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
-			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
-
-			<iSignal Name="pusherExtendM" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="vacOnM"        Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="armSourceM"    Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			<iSignal Name="armDestM"      Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
-			
-
-			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos3" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			
 		</ClockDomain>
 	</SubSystem>
