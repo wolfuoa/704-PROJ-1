@@ -1,5 +1,6 @@
 import run.GUI;
 //import run.POSGUI;
+import util.json_builder;
 
 MPR(
 	input signal enableABS;
@@ -11,6 +12,8 @@ MPR(
 {
 	new Thread(new GUI()).start();
 	//new Thread(new POSGUI()).start();
+	
+	json_builder entity = new json_builder();
 
 	int iteration = 0;
 
@@ -18,32 +21,37 @@ MPR(
 
 		System.out.println("Starting iteration " + iteration);
 		iteration++;
+
+		await(enableABS);
 		
-		await(enableABS);
-		send conveyorStep(0);
-		receive conveyorStepComplete;
-		System.out.println("Conveyor Complete");
-		await(!enableABS);	
+		entity.init_json_builder();
+		entity.send_json_data(1,1,1,1,1);
+		entity.recv_json_data();
 
-
-		await(enableABS);
-		send loadLid(0);
-		receive loadLidComplete;
-		System.out.println("Load Lid Complete");
-		await(!enableABS);
-
-		await(enableABS);
-		send capBottle(0);
-		receive capBottleComplete;
-		System.out.println("Cap Bottle Complete");
-		await(!enableABS);
-
-		await(enableABS);
-		send rotateStep(0);
-		receive rotateStepComplete;
-		System.out.println("Rotary Turntable Complete");
-		await(!enableABS);
+		
+//		await(enableABS);
+//		send conveyorStep(0);
+//		receive conveyorStepComplete;
+//		System.out.println("Conveyor Complete");
+//		await(!enableABS);	
+//
+//		await(enableABS);
+//		send loadLid(0);
+//		receive loadLidComplete;
+//		System.out.println("Load Lid Complete");
+//		await(!enableABS);
+//
+//		await(enableABS);
+//		send capBottle(0);
+//		receive capBottleComplete;
+//		System.out.println("Cap Bottle Complete");
+//		await(!enableABS);
+//
+//		await(enableABS);
+//		send rotateStep(0);
+//		receive rotateStepComplete;
+//		System.out.println("Rotary Turntable Complete");
+//		await(!enableABS);
 
 	}
-
 }
