@@ -1,10 +1,35 @@
 <System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS20" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1002"/>
+			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+		</Link>
+	</Interconnection>
+	
+	<SubSystem Name="SS0">
+		<ClockDomain Name="MPRCD" Class="MPR">
+			
+			<!-- CONVEYOR -->
+			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
+			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
+				
+			<!-- LID LOADER -->
+			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
+			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
+			
+			<!-- LID CAPPER-->
+			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
+			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
+
+		</ClockDomain>
+	</SubSystem>
+	
 	<SubSystem Name="SS20" Local="true">
 		<ClockDomain Name="ConveyorControllerCD" Class="ConveyorController">
 			
 			<!-- MPR -->
-			<iSignal Name="conveyorStep" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
-			<oSignal Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+			<iChannel Name="conveyorStep" From="MPRCD.conveyorStep" />
+			<oChannel Name="conveyorStepComplete" To="MPRCD.conveyorStepComplete" />
 			
 			<!-- SELF PLANT MODEL -->
 			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />

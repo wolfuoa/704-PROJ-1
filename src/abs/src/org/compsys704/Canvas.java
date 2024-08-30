@@ -16,9 +16,13 @@ public class Canvas extends JPanel {
 	BufferedImage p2;
 	BufferedImage loader;
 	BufferedImage cap;
+
+	BufferedImage tT;
 	
 	public Canvas(){
 		try {
+			//tT = ImageIO.read(new File("res/turn_table_itself.png"));
+			
 			BufferedImage bi = ImageIO.read(new File("res/arm.png"));
 			arm1 = bi.getSubimage(0, 0, 64, 256);
 			arm2 = bi.getSubimage(71, 0, 48, 256);
@@ -29,7 +33,7 @@ public class Canvas extends JPanel {
 			cap = ImageIO.read(new File("res/cap.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.exit(1);;
+			System.exit(1);
 		}
 	}
 	

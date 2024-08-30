@@ -1,16 +1,20 @@
 ConveyorController(
-	input signal conveyorStep, bottleAtPos1;
-	output signal conveyorStepComplete, motConveyorOn;
+	input signal bottleAtPos1;
+	output signal motConveyorOn;
+	
+	input Integer channel conveyorStep;
+	output Integer channel conveyorStepComplete;
    	)
 ->
 {
 	while(true)
 	{
-		await(conveyorStep);
+		receive conveyorStep;
 		abort(bottleAtPos1)
 		{
 			sustain motConveyorOn;
 		}
-		emit conveyorStepComplete;
+		
+		send conveyorStepComplete(0);
 	}
 }

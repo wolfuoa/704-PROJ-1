@@ -1,23 +1,49 @@
 import run.GUI;
+//import run.POSGUI;
 
 MPR(
-	input signal conveyorStepComplete, rotateStepComplete, bottleCapped;
-	output signal conveyorStep, rotateStep, capBottle;
+	input signal enableABS;
+
+	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete;
+	output Integer channel conveyorStep, loadLid, capBottle, rotateStep;
    	)
 ->
 {
 	new Thread(new GUI()).start();
-	
-	emit conveyorStep;
-	await(conveyorStepComplete);
-	System.out.println("Conveyor Complete");	
-	
-	emit rotateStep;
-	await(rotateStepComplete);
-	System.out.println("Rotary Turntable Complete");
-	
-	emit capBottle;
-	await(bottleCapped);
-	System.out.println("Bottle Capped");
-	
+	//new Thread(new POSGUI()).start();
+
+	int iteration = 0;
+
+	while(true){
+
+		System.out.println("Starting iteration " + iteration);
+		iteration++;
+		
+		await(enableABS);
+		send conveyorStep(0);
+		receive conveyorStepComplete;
+		System.out.println("Conveyor Complete");
+		await(!enableABS);	
+
+
+		await(enableABS);
+		send loadLid(0);
+		receive loadLidComplete;
+		System.out.println("Load Lid Complete");
+		await(!enableABS);
+
+		await(enableABS);
+		send capBottle(0);
+		receive capBottleComplete;
+		System.out.println("Cap Bottle Complete");
+		await(!enableABS);
+
+		await(enableABS);
+		send rotateStep(0);
+		receive rotateStepComplete;
+		System.out.println("Rotary Turntable Complete");
+		await(!enableABS);
+
+	}
+
 }
