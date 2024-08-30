@@ -6,13 +6,17 @@
 			<oSignal Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
 			<iSignal Name="conveyorStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
-			<!-- ROTARY TURNTABLE-->
+			<!-- ROTARY TURNTABLE -->
 			<oSignal Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="rotateStepComplete" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
-			<!-- LID CAPPER-->
+			<!-- LID CAPPER -->
 			<oSignal Name="capBottle" To="LidCapperControllerCD.capBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 			<iSignal Name="bottleCapped" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+
+			<!-- LIQUID FILLER -->	
+			<oSignal Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="bottleFilled" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 
 		</ClockDomain>
 	</SubSystem>

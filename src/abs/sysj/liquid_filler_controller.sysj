@@ -2,10 +2,49 @@ LiquidFillerController(
     input signal fillBottle, bottleAtPos2, dosUnitFilled, dosUnitEvac;
     input Integer signal liquidLoaded;
     input InputJSON signal liquidFormula;
-    output signal valveInletOn, valveInjectorOn, dosUnitValveExtend, dosUnitValveRetract;
+    output signal fillBottleComplete, valveInletOn, valveInjectorOn, dosUnitValveExtend, dosUnitValveRetract;
     output Integer signal loadLiquid; 
     )
 ->
 {
+    while(true)
+    {
+        {await(fillBotle);} || {await(liquidFormula)}
+        // present(bottleAtPos2){}
 
+        // TODO: Implement JSON reading
+
+
+        emit loadLiquid(1);
+        
+        trap(T)
+        {
+            while(true)
+            {
+                if((Integer)#liquidLoaded == 1)
+                {
+                    exit(T);
+                }
+            }
+        } 
+        do
+        {}
+
+        abort(dosUnitFilled)
+        {
+            {sustain valveInjectorOn;}
+            ||
+            {sustain dosUnitValveRetract;}
+        }
+
+        abort(dosUnitEvac)
+        {
+            {sustain valveInletOn;}
+            ||
+            {sustain dosUnitValveExtend;}
+        }
+
+        emit fillBottleComplete;
+
+    }
 }

@@ -5,7 +5,7 @@
             <!-- MPR -->
 			<iSignal Name="fillBottle" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
             <iSignal Name="liquidFormula" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
-			<oSignal Name="bottleFilled" To="MPRCD.bottleFilled" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
+			<oSignal Name="fillBottleComplete" To="MPRCD.fillBottleComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
 
 			<!-- SELF PLANT -->
 			<iSignal Name="dosUnitFilled" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
