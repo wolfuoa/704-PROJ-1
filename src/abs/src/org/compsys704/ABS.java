@@ -23,7 +23,7 @@ public class ABS extends JFrame {
 	public ABS() {
 //		this.setPreferredSize(new Dimension(200, 300));
 		panel = new Canvas();
-		panel.setPreferredSize(new Dimension(360, 350));
+		panel.setPreferredSize(new Dimension(700, 450));
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.ENABLE_SIGNAL));
@@ -98,14 +98,15 @@ public class ABS extends JFrame {
 		this.add(pan3,c);
 		
 		this.setTitle("ABS Live");
+		this.setSize(800, 700);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+		this.setResizable(true);
 	}
 
 	public static void main(String[] args) {
 		ABS cl = new ABS();
-		cl.pack();
+		//cl.pack();
 		cl.setVisible(true);
 		
 		SignalServer<LoaderVizWorker> server = new SignalServer<LoaderVizWorker>(Ports.PORT_LOADER_VIZ, LoaderVizWorker.class);
