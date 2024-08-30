@@ -21,7 +21,6 @@
 
             <!-- MPR -->
 			<iChannel Name="fillBottle" From="MPRCD.fillBottle" />
-            <iSignal Name="liquidFormula" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
 			<oChannel Name="fillBottleComplete" To="MPRCD.fillBottleComplete" />
 
 			<!-- SELF PLANT -->

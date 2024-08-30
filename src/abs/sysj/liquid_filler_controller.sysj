@@ -1,7 +1,6 @@
 LiquidFillerController(
     input signal bottleAtPos2, dosUnitEvac;
     input Integer signal liquidLoaded, dosUnitFilled;
-    input signal liquidFormula;
     output signal valveInletOn, valveInjectorOn, dosUnitValveExtend;
     output Integer signal loadLiquid, dosUnitValveRetract;
 
@@ -14,11 +13,9 @@ LiquidFillerController(
     // TODO: Send channel data to sensors - When a bottle is filled with a portion of liquid sum it to keep track
     // Send a clearing signal to the sensors when the bottle is completely filled
 
-    await(liquidFormula);
-
 //    while(true)
 //    {
-//        {receive fillBottle;}// || {receive liquidFormula;}
+//        receive fillBottle;
 //        // present(bottleAtPos2){}
 //
 //        // TODO: Implement JSON reading
