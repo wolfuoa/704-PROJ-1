@@ -11,12 +11,12 @@ LiquidFillerPlant(
 	{
 		while(true)
 		{
-			abort(valveInletOn && dosUnitValveRetract && !valveInjectorOn)
+			abort(valveInjectorOn && dosUnitValveRetract && !valveInletOn)
 			{
 				sustain dosUnitEvac;
 			}
 			
-			abort(valveInjectorOn && dosUnitValveExtend && !valveInletOn)
+			abort(valveInletOn && dosUnitValveExtend && !valveInjectorOn)
 			{
 				sustain dosUnitFilled((Integer)#dosUnitValveRetract);
 			}
