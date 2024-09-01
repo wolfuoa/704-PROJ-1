@@ -1,59 +1,76 @@
+import util.Order;
+
 LiquidFillerController(
     input signal bottleAtPos2, dosUnitEvac;
     input Integer signal liquidLoaded, dosUnitFilled;
     output signal valveInletOn, valveInjectorOn, dosUnitValveExtend;
     output Integer signal loadLiquid, dosUnitValveRetract;
 
-    input Integer channel fillBottle;
+    input Order channel fillBottle;
     output Integer channel fillBottleComplete;
     )
 ->
 {
-
     // TODO: Send channel data to sensors - When a bottle is filled with a portion of liquid sum it to keep track
     // Send a clearing signal to the sensors when the bottle is completely filled
 
-//    while(true)
-//    {
-//        receive fillBottle;
-//        // present(bottleAtPos2){}
-//
-//        // TODO: Implement JSON reading
-//
-//        for(int liquid_num = 0; liquid_num < 4; liquid_num++)
-//        {
-//            trap(E)
-//            {
-//                abort(liquidLoaded)
-//                {
-//                    sustain loadLiquid(liquid_num);
-//                }
-//                    
-//                if((Integer)#liquidLoaded != liquid_num)
-//                {
-//                    exit(E);
-//                }
-//            }
-//            do
-//            {
-//                // Error
-//            }
-//
-//            abort(dosUnitFilled)
-//            {
-//                {sustain valveInjectorOn;}
-//                ||
-//                {sustain dosUnitValveRetract;}
-//            }
-//
-//            abort(dosUnitEvac)
-//            {
-//                {sustain valveInletOn;}
-//                ||
-//                {sustain dosUnitValveExtend;}
-//            }
-//        }
-//
-//        send fillBottleComplete;
-//    }
+    while(true)
+    {
+        receive fillBottle;
+        // present(bottleAtPos2){}
+
+        Order order = (Order)#fillBottle;
+        int[] fluids = order.getFluids();
+
+        for(int liquid_num = 0; liquid_num < fluids.length; liquid_num++)
+        {
+            trap(E)
+            {
+                abort(liquidLoaded)
+                {
+                    sustain loadLiquid(liquid_num);
+                }
+                
+                if((Integer)#liquidLoaded != liquid_num)
+                {
+                    exit(E);
+                }
+            }
+            do
+            {
+                // Error
+            }
+
+            trap(E)
+            {
+                {
+                    abort(dosUnitFilled)
+                    {
+                        sustain dosUnitValveRetract(fluids[i]);
+                    }
+                    
+                    if((Integer)#dosUnitFilled != fluids[i])
+                    {
+                        exit(E);
+                    }
+                }
+                ||
+                {
+                    sustain valveInjectorOn;
+                }
+            }
+            do
+            {
+                // Error
+            }
+
+            abort(dosUnitEvac)
+            {
+                {sustain valveInletOn;}
+                ||
+                {sustain dosUnitValveExtend;}
+            }
+        }
+    }
+        send fillBottleComplete;
 }
