@@ -11,19 +11,28 @@ LiquidFillerController(
     )
 ->
 {
+
+	Order order;
+	int signal current_liquid;
+	
     // TODO: Send channel data to sensors - When a bottle is filled with a portion of liquid sum it to keep track
     // Send a clearing signal to the sensors when the bottle is completely filled
 
     while(true)
     {
+    	pause;
         receive fillBottle;
+        System.out.println("Test");
         // present(bottleAtPos2){}
 
-        Order order = (Order)#fillBottle;
-        int[] fluids = order.getFluids();
+        order = (Order)#fillBottle;
+        System.out.println("Test 1");
 
-        for(int liquid_num = 0; liquid_num < fluids.length; liquid_num++)
+        for(int liquid_num = 0; liquid_num < 4; liquid_num++)
         {
+       		System.out.println("Test loop");
+        	emit current_liquid(order.getFluid(liquid_num));
+        	
             trap(E)
             {
                 abort(liquidLoaded)
@@ -40,17 +49,19 @@ LiquidFillerController(
             {
                 // Error
             }
+            
+            System.out.println("Test 3");
 
             trap(E)
             {
                 abort(dosUnitFilled)
                 {
-                    {sustain dosUnitValveRetract(fluids[i]);}
+                    {sustain dosUnitValveRetract((Integer)#current_liquid);}
                     ||
                     {sustain valveInjectorOn;}
                 }
                 
-                if((Integer)#dosUnitFilled != fluids[i])
+                if((Integer)#dosUnitFilled != (Integer)#current_liquid)
                 {
                     exit(E);
                 }
@@ -59,6 +70,8 @@ LiquidFillerController(
             {
                 // Error
             }
+            
+            System.out.println("Test 4");
 
             abort(dosUnitEvac)
             {
@@ -66,7 +79,9 @@ LiquidFillerController(
                 ||
                 {sustain dosUnitValveExtend;}
             }
+            
+            System.out.println("Test 5");
         }
-    }
-        send fillBottleComplete;
+        send fillBottleComplete(0);
+	}
 }

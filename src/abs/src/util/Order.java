@@ -1,3 +1,5 @@
+package util;
+
 import java.io.Serializable;
 
 public class Order implements Serializable{
@@ -20,8 +22,21 @@ public class Order implements Serializable{
         return this.quantity;
     }
 
-    public int[] getFluids() {
-        int[] ret = {this.fluid_1, this.fluid_2, this.fluid_3, this.fluid_4};
-        return ret;
+    public int getFluid(int fluid_num) {
+    	switch(fluid_num)
+    	{
+    	case 1:
+    		return this.fluid_1;
+    	case 2:
+    		return this.fluid_2;
+    	case 3:
+    		return this.fluid_3;
+    	case 4:
+    		return this.fluid_4;
+    	default:
+    		break;
+    	}
+    	   
+        return 0;
     }
 }
