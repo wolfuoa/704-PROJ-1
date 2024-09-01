@@ -1,13 +1,44 @@
 
 LiquidFillerPlant(
-    input signal valveInletOn, valveInjectorOn, dosUnitValveExtend, dosUnitValveRetract;
-    input Integer signal loadLiquid;
-    output signal dosUnitFilled, dosUnitEvac;
-    output Integer signal liquidLoaded;
+    input signal valveInletOn, valveInjectorOn, dosUnitValveExtend;
+    input Integer signal loadLiquid, dosUnitValveRetract;
+    output signal dosUnitEvac;
+    output Integer signal liquidLoaded, dosUnitFilled;
     )
 ->
 {
-    
-    
+    Integer signal liquid_loaded;
+	emit liquid_loaded(1);
 
+	// ----------- Pressure Canister -----------
+	{
+		while(true)
+		{
+			abort(valveInletOn && dosUnitValveRetract)
+			{
+				sustain dosUnitEvac;
+			}
+			
+			abort(valveInjectorOn && dosUnitValveExtend)
+			{
+				sustain dosUnitFilled((Integer)#dosUnitValveRetract);
+			}
+		}
+	}
+	// -----------------------------------------
+	||
+	// ------------ Liquids Loader -------------
+	{
+		while(true)
+		{
+			await(loadLiquid);
+            emit liquid_loaded((Integer)#loadLiquid);
+		}
+	}
+	// -----------------------------------------
+    ||
+    // ----------- Liquid Broadcast ------------
+    {
+        {while(true){emit liquidLoaded((Integer)#liquid_loaded);} pause;}
+    }
 }

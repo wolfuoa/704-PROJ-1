@@ -43,20 +43,16 @@ LiquidFillerController(
 
             trap(E)
             {
+                abort(dosUnitFilled)
                 {
-                    abort(dosUnitFilled)
-                    {
-                        sustain dosUnitValveRetract(fluids[i]);
-                    }
-                    
-                    if((Integer)#dosUnitFilled != fluids[i])
-                    {
-                        exit(E);
-                    }
+                    {sustain dosUnitValveRetract(fluids[i]);}
+                    ||
+                    {sustain valveInjectorOn;}
                 }
-                ||
+                
+                if((Integer)#dosUnitFilled != fluids[i])
                 {
-                    sustain valveInjectorOn;
+                    exit(E);
                 }
             }
             do
