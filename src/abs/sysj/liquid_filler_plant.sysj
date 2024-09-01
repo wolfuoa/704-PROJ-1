@@ -7,19 +7,16 @@ LiquidFillerPlant(
     )
 ->
 {
-    Integer signal liquid_loaded;
-	emit liquid_loaded(1);
-
 	// ----------- Pressure Canister -----------
 	{
 		while(true)
 		{
-			abort(valveInletOn && dosUnitValveRetract)
+			abort(valveInletOn && dosUnitValveRetract && !valveInjectorOn)
 			{
 				sustain dosUnitEvac;
 			}
 			
-			abort(valveInjectorOn && dosUnitValveExtend)
+			abort(valveInjectorOn && dosUnitValveExtend && !valveInletOn)
 			{
 				sustain dosUnitFilled((Integer)#dosUnitValveRetract);
 			}
@@ -32,13 +29,8 @@ LiquidFillerPlant(
 		while(true)
 		{
 			await(loadLiquid);
-            emit liquid_loaded((Integer)#loadLiquid);
+            emit liquidLoaded((Integer)#loadLiquid);
 		}
 	}
 	// -----------------------------------------
-    ||
-    // ----------- Liquid Broadcast ------------
-    {
-        {while(true){emit liquidLoaded((Integer)#liquid_loaded);} pause;}
-    }
 }
