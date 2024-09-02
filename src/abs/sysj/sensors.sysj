@@ -99,15 +99,15 @@ Sensors(
 	||
 	// ----------- Bottle Position Memory -----------
 	{
-		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1; emit bottleAtPos1V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2;; emit bottleAtPos2V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3;; emit bottleAtPos3V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4;; emit bottleAtPos4V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5;; emit bottleAtPos5V;} pause;}}
 	}
 	// ----------------------------------------------
 }
