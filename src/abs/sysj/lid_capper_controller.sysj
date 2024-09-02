@@ -1,5 +1,5 @@
 LidCapperController(
-	input signal bottleAtPos4, gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
+	input signal bottleAtPos4, gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered, enableLidCapper;
 	output signal gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
 	input Integer channel capBottle;
 	output Integer channel capBottleComplete;
@@ -11,13 +11,17 @@ LidCapperController(
 		receive capBottle;
 		// present(bottleAtPos4){
 		
+		await(enableLidCapper);
 		abort(gripperCylinderLowered)
 		{
 			{sustain gripperBottleClampOn;}
 			||
 			{sustain gripperCylinderExtend;}
 		}
+		System.out.println("[DEBUG] gripper cylinder lowered");
+		await(!enableLidCapper);
 		
+		await(enableLidCapper);
 		abort(gripperCylinderRotationAtMax)
 		{
 			{sustain gripperBottleClampOn;}
@@ -28,16 +32,24 @@ LidCapperController(
 			||
 			{sustain gripperCylinderRotate;}
 		}
+		System.out.println("[DEBUG] gripper cylinder rotation at max");
+		await(!enableLidCapper);
 		
+		await(enableLidCapper);
 		abort(gripperCylinderLifted)
 		{
 			sustain gripperBottleClampOn;
 		}
+		System.out.println("[DEBUG] gripper cylinder lifted");
+		await(!enableLidCapper);
 		
+		await(enableLidCapper);
 		abort(gripperCylinderRotationAtOrigin)
 		{
 			sustain gripperCylinderCounterRotate;
 		}
+		System.out.println("[DEBUG] gripper cylinder rotation at origin");
+		await(!enableLidCapper);
 		
 		send capBottleComplete(0);
 	}

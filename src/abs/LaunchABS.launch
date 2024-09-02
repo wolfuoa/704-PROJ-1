@@ -19,7 +19,12 @@
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.11.adoptIfRunning" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.11.enabled" value="true"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.11.mode" value="inherit"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.11.name" value="RunMPR"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.11.name" value="RunBroadcastEnable"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.12.action" value="NONE"/>
+    <booleanAttribute key="org.eclipse.debug.core.launchGroup.12.adoptIfRunning" value="false"/>
+    <booleanAttribute key="org.eclipse.debug.core.launchGroup.12.enabled" value="true"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.12.mode" value="inherit"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.12.name" value="RunMPR"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.2.action" value="NONE"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.2.adoptIfRunning" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.2.enabled" value="true"/>

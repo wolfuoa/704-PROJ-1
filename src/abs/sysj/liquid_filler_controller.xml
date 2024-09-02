@@ -29,6 +29,9 @@
 	<SubSystem Name="SS40" Local="true">
 		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
 
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableLiquidFiller" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+
             <!-- MPR -->
 			<iChannel Name="fillBottle" From="MPRCD.fillBottle" />
 			<oChannel Name="fillBottleComplete" To="MPRCD.fillBottleComplete" />

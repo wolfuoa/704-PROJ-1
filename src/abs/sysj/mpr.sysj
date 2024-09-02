@@ -3,7 +3,7 @@ import run.GUI;
 import util.Order;
 
 MPR(
-	input signal enableABS;
+	input signal enableMPR;
 
 	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete, fillBottleComplete;
 	output Integer channel conveyorStep, loadLid, capBottle, rotateStep;
@@ -23,35 +23,35 @@ MPR(
 		System.out.println("Starting iteration " + iteration);
 		iteration++;	
 		
-		await(enableABS);
+		await(enableMPR);
 		send conveyorStep(0);
 		receive conveyorStepComplete;
 		System.out.println("Conveyor Complete");
-		await(!enableABS);	
-
-		await(enableABS);
+		await(!enableMPR);	
+		
+		await(enableMPR);
 		send loadLid(0);
 		receive loadLidComplete;
 		System.out.println("Load Lid Complete");
-		await(!enableABS);
-
-		await(enableABS);
+		await(!enableMPR);
+		
+		await(enableMPR);
 		send capBottle(0);
 		receive capBottleComplete;
 		System.out.println("Cap Bottle Complete");
-		await(!enableABS);
-
-		await(enableABS);
+		await(!enableMPR);
+		
+		await(enableMPR);
 		send rotateStep(0);
 		receive rotateStepComplete;
 		System.out.println("Rotary Turntable Complete");
-		await(!enableABS);
+		await(!enableMPR);
 
-		await(enableABS);
+		await(enableMPR);
 		send fillBottle(test);
 		receive fillBottleComplete;
 		System.out.println("Fill Bottle Complete");
-		await(!enableABS);
+		await(!enableMPR);
 
 	}
 }

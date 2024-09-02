@@ -1,0 +1,23 @@
+BroadcastEnable(
+		input signal enable;
+		output signal enableMPR, enableLiquidFiller, enableLidLoader, enableLidCapper;
+
+   	)
+->
+{
+    while(true)
+    {
+		await(enable);
+		System.out.println("received enable signal");
+		
+		emit enableMPR;
+		//emit enableConveyor;
+		//emit enableRotaryTable;
+		emit enableLiquidFiller;
+		emit enableLidLoader;
+		emit enableLidCapper;
+		//emit enableBaxter;
+		
+		await(!enable);
+    }
+}
