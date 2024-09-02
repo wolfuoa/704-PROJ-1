@@ -7,14 +7,14 @@ BaxterPlant(
    	)
 ->
 {
-    RoboticArm rightArm = new RoboticArm();
-    RoboticArm leftArm = new RoboticArm();
+    RoboticArm rightArmInst = new RoboticArm();
+    RoboticArm leftArmInst = new RoboticArm();
 
     RoboticArm signal rightArm;
     RoboticArm signal leftArm;
 
-    emit rightArm(rightArm);
-    emit leftArm(leftArm);
+    emit rightArm(rightArmInst);
+    emit leftArm(leftArmInst);
 
 	// ------------ Command ------------
 	{
@@ -31,35 +31,31 @@ BaxterPlant(
 
             tokens = new StringTokenizer(args, " ");
 
-            // -------- Command Type --------
             switch(tokens.nextToken())
             {
             case "move_arm":
                 switch(tokens.nextToken())
                 {
                 case "left":
-                    virtualLeftArm.setArmStatus(tokens.nextToken)
+                    virtualLeftArm.setArmStatus(tokens.nextToken())
                 case "right:
-                    virtualRightArm.setArmStatus(tokens.nextToken);
+                    virtualRightArm.setArmStatus(tokens.nextToken());
                 }
             case "gripper":
                 switch(tokens.nextToken())
                 {
                 case "left":
-                    virtualLeftArm.setGripperStatus(tokens.nextToken)
+                    virtualLeftArm.setGripperStatus(tokens.nextToken())
                 case "right:
-                    virtualRightArm.setGripperStatus(tokens.nextToken);
+                    virtualRightArm.setGripperStatus(tokens.nextToken());
                 }
             }
-            // ------------------------------
-        
-
+            emit commandFeedback;
         }
 	}
     // ---------------------------------
     ||
     // ----------- Broadcast -----------
     {
-
     }
 }
