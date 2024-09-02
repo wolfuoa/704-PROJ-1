@@ -1,4 +1,5 @@
 import util.RoboticArm;
+import java.util.*;
 
 BaxterPlant(
 	input String signal command;
@@ -6,21 +7,52 @@ BaxterPlant(
    	)
 ->
 {
+    RoboticArm rightArm = new RoboticArm();
+    RoboticArm leftArm = new RoboticArm();
+
     RoboticArm signal rightArm;
     RoboticArm signal leftArm;
 
+    emit rightArm(rightArm);
+    emit leftArm(leftArm);
+
 	// ------------ Command ------------
 	{
-        RoboticArm virtualRightArm;
-        RoboticArm virtualLeftArm;
-        
+        RoboticArm virtualRightArm = new RoboticArm();
+        RoboticArm virtualLeftArm = new RoboticArm();
+
         String args;
+        StringTokenizer tokens;
 
         while(true)
         {
             await(command);
             args = (String)#command;
 
+            tokens = new StringTokenizer(args, " ");
+
+            // -------- Command Type --------
+            switch(tokens.nextToken())
+            {
+            case "move_arm":
+                switch(tokens.nextToken())
+                {
+                case "left":
+                    virtualLeftArm.setArmStatus(tokens.nextToken)
+                case "right:
+                    virtualRightArm.setArmStatus(tokens.nextToken);
+                }
+            case "gripper":
+                switch(tokens.nextToken())
+                {
+                case "left":
+                    virtualLeftArm.setGripperStatus(tokens.nextToken)
+                case "right:
+                    virtualRightArm.setGripperStatus(tokens.nextToken);
+                }
+            }
+            // ------------------------------
+        
 
         }
 	}

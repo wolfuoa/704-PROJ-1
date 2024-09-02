@@ -28,11 +28,28 @@ public class RoboticArm {
         return this.gripperStatus;
     }
 
-    public setArmStatus(ArmStatus status) {
-        this.armStatus = status;
+    public setArmStatus(String status) {
+        switch(status)
+        {
+        case "A":
+            this.armStatus = POSITION_A;
+            break;
+        default:
+            break;
+        }
     }
 
-    public setGripperStatus(GripperStatus status) {
-        this.gripperStatus = status;
+    public setGripperStatus(String status) {
+        switch(status)
+        {
+        case "open":
+            this.gripperStatus=OPEN;
+            break;
+        case "closed":
+            this.gripperStatus=CLOSED;
+            break;
+        default:
+            break;
+        }
     }
 }
