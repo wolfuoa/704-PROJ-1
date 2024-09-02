@@ -4,6 +4,7 @@
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
 			<Interface SubSystem="SS20" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1002"/>
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 		</Link>
@@ -29,13 +30,13 @@
 		</ClockDomain>
 	</SubSystem>
 
-	<SubSystem Name="SS60">
-		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
+	<SubSystem Name="SS40">
+		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
 			
-			<!-- MPR -->
-			<iChannel Name="capBottle" From="MPRCD.capBottle" />
-			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
-			
+            <!-- MPR -->
+			<iChannel Name="fillBottle" From="MPRCD.fillBottle" />
+			<oChannel Name="fillBottleComplete" To="MPRCD.fillBottleComplete" />
+
 		</ClockDomain>
 	</SubSystem>
 
@@ -49,11 +50,21 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS60">
+		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
+			
+			<!-- MPR -->
+			<iChannel Name="capBottle" From="MPRCD.capBottle" />
+			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS0" Local="true">
 		<ClockDomain Name="MPRCD" Class="MPR">
 
-			<!-- SIGNALS FROM ABS -->
-			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableMPR" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
@@ -71,6 +82,10 @@
 			<!-- LID CAPPER-->
 			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
 			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
+
+			<!-- LIQUID FILLER -->	
+			<oChannel Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" />
+			<iChannel Name="fillBottleComplete" From="LiquidFillerControllerCD.fillBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>

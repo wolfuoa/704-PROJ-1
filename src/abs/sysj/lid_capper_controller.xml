@@ -27,6 +27,9 @@
 	<SubSystem Name="SS60" Local="true">
 		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
 			
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableLidCapper" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+
 			<!-- MPR -->
 			<iChannel Name="capBottle" From="MPRCD.capBottle" />
 			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />

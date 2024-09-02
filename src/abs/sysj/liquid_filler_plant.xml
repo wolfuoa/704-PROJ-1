@@ -1,0 +1,17 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS41" Local="true">
+		<ClockDomain Name="LiquidFillerPlantCD" Class="LiquidFillerPlant">
+			
+			<!-- SELF CONTROLLER -->
+			<iSignal Name="valveInletOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
+			<iSignal Name="valveInjectorOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
+			<iSignal Name="dosUnitValveExtend" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
+			<iSignal Name="dosUnitValveRetract" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
+			<iSignal Name="loadLiquid" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="dosUnitFilled" To="LiquidFillerControllerCD.dosUnitFilled" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+			<oSignal Name="dosUnitEvac" To="LiquidFillerControllerCD.dosUnitEvac" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+			<oSignal Name="liquidLoaded" To="LiquidFillerControllerCD.liquidLoaded" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+			
+		</ClockDomain>
+	</SubSystem>
+</System>

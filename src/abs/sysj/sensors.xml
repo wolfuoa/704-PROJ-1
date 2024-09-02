@@ -2,6 +2,7 @@
 	<Interconnection>
 		<Link Type="Destination">
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
 			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
@@ -16,6 +17,15 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS40">
+		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
+
+            <!-- SENSORS -->
+			<oChannel Name="logQuantityLiquidFilled" To="SensorsCD.logQuantityLiquidFilled" />
+
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS80" Local="true">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
@@ -27,6 +37,11 @@
 			<oSignal Name="turntableAlignedWithSensor" To="RotaryTurntableControllerCD.turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
 			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
+
+			<!-- LIQUID FILLER -->
+			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />
+			<oSignal Name="bottleAtPos2" To="LiquidFillerControllerCD.bottleAtPos2" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+			<oSignal Name="overflowSensed" To="LiquidFillerControllerCD.overflowSensed" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 			
 		</ClockDomain>
 	</SubSystem>

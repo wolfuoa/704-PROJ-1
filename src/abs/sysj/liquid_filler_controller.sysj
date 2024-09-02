@@ -1,0 +1,92 @@
+import util.Order;
+
+LiquidFillerController(
+    input signal bottleAtPos2, dosUnitEvac, overflowSensed, enableLiquidFiller;
+    input Integer signal liquidLoaded, dosUnitFilled;
+    output signal valveInletOn, valveInjectorOn, dosUnitValveExtend;
+    output Integer signal loadLiquid, dosUnitValveRetract;
+
+    input Order channel fillBottle;
+    output Integer channel fillBottleComplete, logQuantityLiquidFilled;
+    )
+->
+{
+	Order order;
+	int signal currentLiquidVolume;
+	
+    // TODO: Send channel data to sensors - When a bottle is filled with a portion of liquid sum it to keep track
+    // Send a clearing signal to the sensors when the bottle is completely filled
+
+    while(true)
+    {
+    	pause;
+        receive fillBottle;
+        // present(bottleAtPos2){}
+
+        order = (Order)#fillBottle;
+
+        for(int liquid_num = 0; liquid_num < 4; liquid_num++)
+        {
+        	emit currentLiquidVolume(order.getLiquidVolume(liquid_num));
+        	
+            await(enableLiquidFiller);
+            trap(E)
+            {
+                abort(liquidLoaded)
+                {
+                    sustain loadLiquid(liquid_num);
+                }
+                
+                if((Integer)#liquidLoaded != liquid_num)
+                {
+                    exit(E);
+                }
+            }
+            do
+            {
+                // Error
+            }
+            System.out.println("[DEBUG] filled liquid number " + liquid_num);
+            await(!enableLiquidFiller);
+
+
+            await(enableLiquidFiller);
+            trap(E)
+            {
+                abort(dosUnitFilled)
+                {
+                    {sustain dosUnitValveRetract((Integer)#currentLiquidVolume);}
+                    ||
+                    {sustain valveInjectorOn;}
+                }
+
+                if((Integer)#dosUnitFilled != (Integer)#currentLiquidVolume)
+                {
+                    exit(E);
+                }
+            }
+            do
+            {
+                // Error
+            }
+            System.out.println("[DEBUG] dosUnitFilled");
+            await(!enableLiquidFiller);
+
+            await(enableLiquidFiller);
+            abort(dosUnitEvac)
+            {
+                {sustain valveInletOn;}
+                ||
+                {sustain dosUnitValveExtend;}
+            }
+            System.out.println("[DEBUG] dosUnitEvac");
+            await(!enableLiquidFiller);
+            
+            send logQuantityLiquidFilled((Integer)#dosUnitFilled);
+            pause;
+            
+        }
+        send fillBottleComplete(0);
+        send logQuantityLiquidFilled(-1);
+	}
+}

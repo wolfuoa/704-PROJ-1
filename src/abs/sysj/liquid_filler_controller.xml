@@ -1,0 +1,57 @@
+<System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
+		</Link>
+	</Interconnection>
+
+	<SubSystem Name="SS0">
+		<ClockDomain Name="MPRCD" Class="MPR">
+
+			<!-- LIQUID FILLER -->	
+			<oChannel Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" />
+			<iChannel Name="fillBottleComplete" From="LiquidFillerControllerCD.fillBottleComplete" />
+
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+
+			<!-- LIQUID FILLER -->
+			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS40" Local="true">
+		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
+
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableLiquidFiller" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+
+            <!-- MPR -->
+			<iChannel Name="fillBottle" From="MPRCD.fillBottle" />
+			<oChannel Name="fillBottleComplete" To="MPRCD.fillBottleComplete" />
+
+			<!-- SELF PLANT -->
+			<iSignal Name="dosUnitFilled" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="dosUnitEvac" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="liquidLoaded" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<oSignal Name="valveInletOn" To="LiquidFillerPlantCD.valveInletOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="valveInjectorOn" To="LiquidFillerPlantCD.valveInjectorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="dosUnitValveExtend" To="LiquidFillerPlantCD.dosUnitValveExtend" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="dosUnitValveRetract" To="LiquidFillerPlantCD.dosUnitValveRetract" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+			<oSignal Name="loadLiquid" To="LiquidFillerPlantCD.loadLiquid" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10041" />
+
+            <!-- SENSORS -->
+			<iSignal Name="bottleAtPos2" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="overflowSensed" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<oChannel Name="logQuantityLiquidFilled" To="SensorsCD.logQuantityLiquidFilled" />
+
+
+		</ClockDomain>
+	</SubSystem>
+</System>
