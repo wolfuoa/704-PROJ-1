@@ -11,6 +11,9 @@
             <!-- TO LID LOADER -->
 			<oSignal Name="enableLidLoader" To="LidLoaderControllerCD.enableLidLoader" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10050" />
 
+			<!-- TO LID CAPPER -->
+			<oSignal Name="enableLidCapper" To="LidCapperControllerCD.enableLidCapper" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
+
 		</ClockDomain>
 	</SubSystem>
 </System>
