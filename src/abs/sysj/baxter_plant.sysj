@@ -1,0 +1,33 @@
+import util.RoboticArm;
+
+BaxterPlant(
+	input String signal command;
+	output signal commandFeedback;
+   	)
+->
+{
+    RoboticArm signal rightArm;
+    RoboticArm signal leftArm;
+
+	// ------------ Command ------------
+	{
+        RoboticArm virtualRightArm;
+        RoboticArm virtualLeftArm;
+        
+        String args;
+
+        while(true)
+        {
+            await(command);
+            args = (String)#command;
+
+
+        }
+	}
+    // ---------------------------------
+    ||
+    // ----------- Broadcast -----------
+    {
+
+    }
+}
