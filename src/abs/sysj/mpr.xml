@@ -40,7 +40,6 @@
 		</ClockDomain>
 	</SubSystem>
 
-
 	<SubSystem Name="SS50">
 		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
 			
