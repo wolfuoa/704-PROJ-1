@@ -1,7 +1,7 @@
 import util.Order;
 
 LiquidFillerController(
-    input signal bottleAtPos2, dosUnitEvac, overflowSensed;
+    input signal bottleAtPos2, dosUnitEvac, overflowSensed, enableLiquidFiller;
     input Integer signal liquidLoaded, dosUnitFilled;
     output signal valveInletOn, valveInjectorOn, dosUnitValveExtend;
     output Integer signal loadLiquid, dosUnitValveRetract;
@@ -29,6 +29,7 @@ LiquidFillerController(
         {
         	emit currentLiquidVolume(order.getLiquidVolume(liquid_num));
         	
+            await(enableLiquidFiller);
             trap(E)
             {
                 abort(liquidLoaded)
@@ -45,7 +46,11 @@ LiquidFillerController(
             {
                 // Error
             }
+            System.out.println("[DEBUG] filled liquid number " + liquid_num);
+            await(!enableLiquidFiller);
 
+
+            await(enableLiquidFiller);
             trap(E)
             {
                 abort(dosUnitFilled)
@@ -54,7 +59,7 @@ LiquidFillerController(
                     ||
                     {sustain valveInjectorOn;}
                 }
-                
+
                 if((Integer)#dosUnitFilled != (Integer)#currentLiquidVolume)
                 {
                     exit(E);
@@ -64,13 +69,18 @@ LiquidFillerController(
             {
                 // Error
             }
+            System.out.println("[DEBUG] dosUnitFilled");
+            await(!enableLiquidFiller);
 
+            await(enableLiquidFiller);
             abort(dosUnitEvac)
             {
                 {sustain valveInletOn;}
                 ||
                 {sustain dosUnitValveExtend;}
             }
+            System.out.println("[DEBUG] dosUnitEvac");
+            await(!enableLiquidFiller);
             
             send logQuantityLiquidFilled((Integer)#dosUnitFilled);
             pause;

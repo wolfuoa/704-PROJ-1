@@ -8,6 +8,9 @@
             <!-- TO MPR -->
 			<oSignal Name="enableMPR" To="MPRCD.enableMPR" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10000" />
 
+			<!-- TO LIQUID FILLER -->
+			<oSignal Name="enableLiquidFiller" To="LiquidFillerControllerCD.enableLiquidFiller" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+
             <!-- TO LID LOADER -->
 			<oSignal Name="enableLidLoader" To="LidLoaderControllerCD.enableLidLoader" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10050" />
 

@@ -1,6 +1,6 @@
 BroadcastEnable(
         input signal enable;
-        output signal enableMPR, enableLidLoader, enableLidCapper;
+        output signal enableMPR, enableLiquidFiller, enableLidLoader, enableLidCapper;
 
    	)
 ->
@@ -13,7 +13,7 @@ BroadcastEnable(
                 emit enableMPR;
                 //emit enableConveyor;
                 //emit enableRotaryTable;
-                //emit enableLiquidFiller;
+                emit enableLiquidFiller;
                 emit enableLidLoader;
                 emit enableLidCapper;
                 //emit enableBaxter;
