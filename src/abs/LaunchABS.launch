@@ -49,7 +49,7 @@
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.8.adoptIfRunning" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.8.enabled" value="true"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.8.mode" value="inherit"/>
-    <stringAttribute key="org.eclipse.debug.core.launchGroup.8.name" value="RunSensors"/>
+    <stringAttribute key="org.eclipse.debug.core.launchGroup.8.name" value="RunLiquidFillerController"/>
     <stringAttribute key="org.eclipse.debug.core.launchGroup.9.action" value="NONE"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.9.adoptIfRunning" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.launchGroup.9.enabled" value="true"/>
