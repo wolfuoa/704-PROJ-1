@@ -16,7 +16,7 @@ MPR(
 
 	int iteration = 0;
 	
-	Order test = new Order(4,250,250,100,150);
+	Order test = new Order(4,80,40,30,50);
 	
 	while(true){
 

@@ -3,6 +3,7 @@
 		<Link Type="Destination">
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
 			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
 
@@ -13,6 +14,15 @@
 			<oChannel Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" />
 			<iChannel Name="fillBottleComplete" From="LiquidFillerControllerCD.fillBottleComplete" />
 
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+
+			<!-- LIQUID FILLER -->
+			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />
+			
 		</ClockDomain>
 	</SubSystem>
 
@@ -35,6 +45,9 @@
 
             <!-- SENSORS -->
 			<iSignal Name="bottleAtPos2" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<iSignal Name="overflowSensed" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
+			<oChannel Name="logQuantityLiquidFilled" To="SensorsCD.logQuantityLiquidFilled" />
+
 
 		</ClockDomain>
 	</SubSystem>
