@@ -21,17 +21,21 @@ public class LoaderVizWorker extends Worker{
 		case "armAtDestE":
 			States.ARM_AT_DEST = status;
 			break;
+		// Capper
+		case "capBottleCompleteV":
+			System.out.println("Capper Complete");
+			States.BOTTLE_CAPPED = status;
+			break;
+		case "capBottleIncompleteV":
+			System.out.println("Capper Incomplete");
+			States.BOTTLE_CAPPED = false;
+			break;
+			
 		//Liquid Filler
 			//Lid Loader
 		case "liquidFilled":
 			States.BOTTLE_FILLED = status;
-			break;
-		//Lid Loader
-		case "liddLoaded":
-			States.BOTTLE_CAPPED = status;
-			break;
-		
-			
+			break;	
 		case "WPgrippedE":
 			if(States.GRIPPED && States.ARM_AT_SOURCE){
 				if(!status)
