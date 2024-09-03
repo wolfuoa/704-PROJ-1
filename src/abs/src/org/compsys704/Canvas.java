@@ -25,6 +25,8 @@ public class Canvas extends JPanel {
 	BufferedImage lidLoaderPusherExtendedDyn;
 	BufferedImage bottleFillerDoneDyn;
 	BufferedImage bottleFillerNotDoneDyn;
+	BufferedImage bottleCapperDoneDyn;
+	BufferedImage bottleCapperNotDoneDyn;
 	
 	BufferedImage Base; 
 	
@@ -43,6 +45,10 @@ public class Canvas extends JPanel {
 			BufferedImage bottleFillers = ImageIO.read(new File("res/bottle_filler_filling_and_not_filling.png"));
 			bottleFillerNotDoneDyn = bottleFillers.getSubimage(0, 0, 146, 94);
 			bottleFillerDoneDyn = bottleFillers.getSubimage(0, 98, 146, 98);
+			
+			BufferedImage bottleCappers = ImageIO.read(new File("res/lid_capper_on_and_off.png"));
+			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 126, 93);
+			bottleCapperDoneDyn = bottleCappers.getSubimage(0, 93, 126, 92);
 			
 			BufferedImage bi = ImageIO.read(new File("res/arm.png"));
 			arm1 = bi.getSubimage(0, 0, 64, 256);
@@ -84,6 +90,13 @@ public class Canvas extends JPanel {
 			g.drawImage(lidLoaderPusherRetreactedDyn, 173, 45, null);
 		} else {
 			g.drawImage(lidLoaderPusherExtendedDyn, 225, 45, null);
+		}
+		
+		//Liquid Capper
+		if (States.BOTTLE_CAPPED) {
+			g.drawImage(bottleCapperDoneDyn, 407, 225, null);
+		} else {
+			g.drawImage(bottleCapperNotDoneDyn, 407, 225, null);
 		}
 		
 		
