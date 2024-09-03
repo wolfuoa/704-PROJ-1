@@ -13,7 +13,7 @@ MPR(
 ->
 {
 	new Thread(new GUI()).start();
-	//new Thread(new POSGUI()).start();
+	new Thread(new POSGUI()).start();
 
 	int iteration = 0;
 	
