@@ -16,47 +16,57 @@ MPR(
 	//new Thread(new POSGUI()).start();
 
 	int iteration = 0;
-	
+
+	String RESET = "\u001B[0m"; 
+	String BLACK = "\u001B[30m"; 
+	String RED = "\u001B[31m"; 
+	String GREEN = "\u001B[32m"; 
+	String YELLOW = "\u001B[33m"; 
+	String BLUE = "\u001B[34m"; 
+	String PURPLE = "\u001B[35m"; 
+	String CYAN = "\u001B[36m"; 
+	String WHITE = "\u001B[37m";
+
 	Order test = new Order(4,80,40,30,50);
 	
 	while(true){
 
-		System.out.println("Starting iteration " + iteration);
+		System.out.println(BLUE + "Starting iteration " + iteration + RESET);
 		iteration++;	
 		
 		await(enableMPR);
-		System.out.println("Conveyor Start");
+		System.out.println(YELLOW + "Conveyor Start" + RESET);
 		send conveyorStep(0);
 		receive conveyorStepComplete;
-		System.out.println("Conveyor Complete");
+		System.out.println(GREEN + "Conveyor Complete" + RESET);
 		await(!enableMPR);	
 		
 		await(enableMPR);
-		System.out.println("Load Lid Start");
+		System.out.println(YELLOW + "Load Lid Start" + RESET);
 		send loadLid(0);
 		receive loadLidComplete;
-		System.out.println("Load Lid Complete");
+		System.out.println(GREEN + "Load Lid Complete" + RESET);
 		await(!enableMPR);
 		
 		await(enableMPR);
-		System.out.println("Cap Bottle Start");
+		System.out.println(YELLOW + "Cap Bottle Start" + RESET);
 		send capBottle(0);
 		receive capBottleComplete;
-		System.out.println("Cap Bottle Complete");
+		System.out.println(GREEN + "Cap Bottle Complete" + RESET);
 		await(!enableMPR);
 		
 		await(enableMPR);
-		System.out.println("Rotary Turntable Start");
+		System.out.println(YELLOW + "Rotary Turntable Start" + RESET);
 		send rotateStep(0);
 		receive rotateStepComplete;
-		System.out.println("Rotary Turntable Complete");
+		System.out.println(GREEN + "Rotary Turntable Complete" + RESET);
 		await(!enableMPR);
 
 		await(enableMPR);
-		System.out.println("Fill Bottle Start");
+		System.out.println(YELLOW + "Fill Bottle Start" + RESET);
 		send fillBottle(test);
 		receive fillBottleComplete;
-		System.out.println("Fill Bottle Complete");
+		System.out.println(GREEN + "Fill Bottle Complete" + RESET);
 		await(!enableMPR);
 
 	}

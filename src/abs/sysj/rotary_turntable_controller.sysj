@@ -1,8 +1,8 @@
 RotaryTurntableController(
 	input signal turntableAlignedWithSensor, bottleAtPos1;
-	output signal rotaryTurntableTrigger, rotateStepCompleteToSensors;
+	output signal rotaryTurntableTrigger;
 	input Integer channel rotateStep;
-	output Integer channel rotateStepComplete;
+	output Integer channel rotateStepComplete, rotateStepCompleteToSensors;
    	)
 ->
 {
@@ -14,6 +14,6 @@ RotaryTurntableController(
 			sustain rotaryTurntableTrigger;
 		}
 		send rotateStepComplete(0);
-		emit rotateStepCompleteToSensors;
+		send rotateStepCompleteToSensors(0);
 	}
 }

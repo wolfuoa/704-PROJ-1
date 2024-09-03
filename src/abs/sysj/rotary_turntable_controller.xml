@@ -9,9 +9,10 @@
 
 	<SubSystem Name="SS80">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
-			
-			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
 
+			<!-- ROTARY TURNTABLE -->
+			<iChannel Name="rotateStepCompleteToSensors" From="RotaryTurntableControllerCD.rotateStepCompleteToSensors" />
+			
 		</ClockDomain>
 	</SubSystem>
 
@@ -51,7 +52,7 @@
 			<!-- SENSORS -->
 			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
-			<oSignal Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
 			
 		</ClockDomain>
 	</SubSystem>
