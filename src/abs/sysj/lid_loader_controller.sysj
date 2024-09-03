@@ -9,8 +9,6 @@ LidLoaderController(
 
 	while(true)
 	{
-		//await(enableLidLoader);
-		//System.out.println("enableReceived");
 		
 		receive loadLid;
 
@@ -19,17 +17,20 @@ LidLoaderController(
 			halt;
 		}
 
+		await(enableLidLoader);
 		abort(armAtDest)
 		{
 			sustain armDest;
 		}
+		System.out.println("[DEBUG] arm at destination");
+		await(!enableLidLoader);
 
 		await(enableLidLoader);
 		abort(pusherExtended)
 		{
 			sustain pusherExtend;
 		}
-		System.out.println("[DEBUG] lid loader step 1");
+		System.out.println("[DEBUG] pusher extended");
 		await(!enableLidLoader);
 		
 		await(enableLidLoader);
@@ -37,7 +38,7 @@ LidLoaderController(
 		{
 			halt;
 		}
-		System.out.println("[DEBUG] lid loader step 2");
+		System.out.println("[DEBUG] pusher retracted");
 		await(!enableLidLoader);
 		
 		await(enableLidLoader);
@@ -45,7 +46,7 @@ LidLoaderController(
 		{
 			sustain armSource;
 		}
-		System.out.println("[DEBUG] lid loader step 3");
+		System.out.println("[DEBUG] arm at source");
 		await(!enableLidLoader);
 		
 		await(enableLidLoader);
@@ -53,7 +54,7 @@ LidLoaderController(
 		{
 			sustain vacOn;
 		}
-		System.out.println("[DEBUG] lid loader step 4");
+		System.out.println("[DEBUG] workpeice gripped");
 		await(!enableLidLoader);
 		
 		await(enableLidLoader);
@@ -63,7 +64,7 @@ LidLoaderController(
 			emit vacOn;
 			pause;
 		}
-		System.out.println("[DEBUG] lid loader step 5");
+		System.out.println("[DEBUG] arm at destination");
 		await(!enableLidLoader);
 
 		send loadLidComplete(0);

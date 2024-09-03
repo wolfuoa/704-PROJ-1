@@ -1,8 +1,9 @@
 Sensors(
 	input signal conveyorPlantOn, rotaryTurntablePlantOn;
-	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor;
+	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor, overflowSensed;
+	output signal bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V;
 
-	input Integer channel rotateStepComplete;
+	input Integer channel rotateStepComplete, logQuantityLiquidFilled;
 
    	)
 ->
@@ -13,6 +14,7 @@ Sensors(
 	boolean signal bottleAtPos3Reg;
 	boolean signal bottleAtPos4Reg;
 	boolean signal bottleAtPos5Reg;
+	int signal totalFluidInCurrentBottle;
 	// ----------------------------------------------
 
 	emit bottleAtPos1Reg(false);
@@ -20,6 +22,7 @@ Sensors(
 	emit bottleAtPos3Reg(false);
 	emit bottleAtPos4Reg(false);
 	emit bottleAtPos5Reg(false);
+	emit totalFluidInCurrentBottle(0);
 
 	// ---------------- bottleAtPos1 ----------------
 	{
@@ -68,21 +71,44 @@ Sensors(
 		}	
 	}
 	// ----------------------------------------------
-	
-	
+	||
+	// ----------- Liquid Filler Overflow -----------
+	{
+		int totalFluidInBottle = 0;
+		while(true)
+		{	
+			receive logQuantityLiquidFilled;
+			
+			if((Integer)#logQuantityLiquidFilled == -1)
+			{
+				totalFluidInBottle = 0;
+			}
+			else
+			{
+				totalFluidInBottle += (Integer)#logQuantityLiquidFilled;
+			}
+			emit totalFluidInCurrentBottle(totalFluidInBottle);
+			pause;
+		}	
+	}
+	// ----------------------------------------------
+	||
+	{
+		{while(true){if((Integer)#totalFluidInCurrentBottle > 200){emit overflowSensed; System.out.println("Error");} pause;}}
+	}
 	
 	||
 	// ----------- Bottle Position Memory -----------
 	{
-		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1; emit bottleAtPos1V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2; emit bottleAtPos2V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3; emit bottleAtPos3V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4; emit bottleAtPos4V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5; emit bottleAtPos5V;} pause;}}
 	}
 	// ----------------------------------------------
 }
