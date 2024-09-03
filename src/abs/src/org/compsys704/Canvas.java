@@ -29,22 +29,21 @@ public class Canvas extends JPanel {
 	BufferedImage bottleCapperNotDoneDyn;
 	
 	BufferedImage Base; 
-	
-	public Canvas(){
+		public Canvas(){
 		try {
 			Base= ImageIO.read(new File("res/static_state.png"));
 			
 			
 			BufferedImage lidLoaderArms = ImageIO.read(new File("res/cap_loader/cap_rotating_arm_source_and_destination.png"));
-			lidLoaderArmSourceDyn = lidLoaderArms.getSubimage(0, 0, 72, 140);
-			lidLoaderArmDestDyn = lidLoaderArms.getSubimage(0, 140, 72, 140);
+			lidLoaderArmSourceDyn = lidLoaderArms.getSubimage(0, 0, 52, 98);
+			lidLoaderArmDestDyn = lidLoaderArms.getSubimage(0, 98, 52, 98);
 			
 			lidLoaderPusherRetreactedDyn = ImageIO.read(new File("res/cap_loader/cap_puser_use_twice.png"));
 			lidLoaderPusherExtendedDyn = ImageIO.read(new File("res/cap_loader/cap_puser_use_twice.png"));
 			
 			BufferedImage bottleFillers = ImageIO.read(new File("res/bottle_filler_filling_and_not_filling.png"));
-			bottleFillerNotDoneDyn = bottleFillers.getSubimage(0, 0, 146, 94);
-			bottleFillerDoneDyn = bottleFillers.getSubimage(0, 98, 146, 98);
+			bottleFillerNotDoneDyn = bottleFillers.getSubimage(0, 0, 115, 82);
+			bottleFillerDoneDyn = bottleFillers.getSubimage(0, 82, 115, 82);
 			
 			BufferedImage bottleCappers = ImageIO.read(new File("res/lid_capper_on_and_off.png"));
 			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 126, 93);
@@ -73,30 +72,30 @@ public class Canvas extends JPanel {
 		
 		//Liquid Filler
 		if (States.BOTTLE_FILLED) {
-			g.drawImage(bottleFillerDoneDyn, 225, 225, null);
+			g.drawImage(bottleFillerDoneDyn, 280, 233, null);
 		} else {
-			g.drawImage(bottleFillerNotDoneDyn, 225, 225, null);
+			g.drawImage(bottleFillerNotDoneDyn, 280, 233, null);
 		}
 	
 		//Lid Loader
 			// Arm
 		if (States.ARM_AT_SOURCE) {
-			g.drawImage(lidLoaderArmSourceDyn, 355, 80, null);
+			g.drawImage(lidLoaderArmSourceDyn, 395, 115, null);
 		} else {
-			g.drawImage(lidLoaderArmDestDyn, 355, 172, null);
+			g.drawImage(lidLoaderArmDestDyn, 395, 195, null);
 		}
 			// Pusher
 		if (States.PUSHER_RETRACTED) {
-			g.drawImage(lidLoaderPusherRetreactedDyn, 173, 45, null);
+			g.drawImage(lidLoaderPusherRetreactedDyn, 210, 70, null);
 		} else {
-			g.drawImage(lidLoaderPusherExtendedDyn, 225, 45, null);
+			g.drawImage(lidLoaderPusherExtendedDyn, 256, 70, null);
 		}
 		
 		//Liquid Capper
 		if (States.BOTTLE_CAPPED) {
-			g.drawImage(bottleCapperDoneDyn, 407, 225, null);
+			g.drawImage(bottleCapperDoneDyn, 442, 221, null);
 		} else {
-			g.drawImage(bottleCapperNotDoneDyn, 407, 225, null);
+			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
 		}
 		
 		
