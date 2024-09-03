@@ -12,26 +12,61 @@ BaxterLeftArmController(
 	while(true)
 	{
 		receive baxterCommand;
-        // present(bottleLeftPos5){}
 
         switch((Integer)#baxterCommand)
         {
-        // ---------------- REMOVE BOTTLE FROM END ----------------
-        case COMMAND_TAKE_BOTTLE:
+        // --------------- PLACE BOTTLE ON CONVEYOR ---------------
+        case COMMAND_PLACE_BOTTLE:
+        	// present(bottleLeftPos5){}
             abort(commandFeedback)
             {
-                sustain command("move_arm left ")
+                sustain command("move_arm left ABOVE_COLLECTION_POINT")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ON_COLLECTION_POINT")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("grip left CLOSED")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_COLLECTION_POINT")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_CONVEYOR_START")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ON_CONVEYOR_START")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("grip left OPEN")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_CONVEYOR_START")
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left IDLE")
             }
             break;
 		// --------------------------------------------------------
 		
 		// ---------------- LOAD LID FAULT COMMAND ----------------
         case COMMAND_LOAD_LID:
-            break;
-        // --------------------------------------------------------
-        
-        // ------------ ROTARY TURNTABLE FAULT COMMAND ------------
-        case COMMAND_ROTATE_TURNTABLE:
             break;
         // --------------------------------------------------------
         
