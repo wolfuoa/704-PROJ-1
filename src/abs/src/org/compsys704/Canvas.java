@@ -104,9 +104,9 @@ public class Canvas extends JPanel {
 		
 		//Liquid Capper
 		if (States.BOTTLE_CAPPED) {
-			g.drawImage(bottleCapperDoneDyn, 407, 225, null);
+			g.drawImage(bottleCapperDoneDyn, 442, 221, null);
 		} else {
-			g.drawImage(bottleCapperNotDoneDyn, 407, 225, null);
+			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
 		}
 		
 		
