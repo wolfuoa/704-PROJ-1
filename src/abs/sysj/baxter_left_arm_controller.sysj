@@ -1,0 +1,46 @@
+#import util.Constants;
+
+BaxterLeftArmController(
+	input signal bottleLeftPos5, commandFeedback;
+	output String signal command;
+	
+	input Integer channel baxterCommand;
+	output Integer channel baxterCommandComplete;
+   	)
+->
+{
+	while(true)
+	{
+		receive baxterCommand;
+        // present(bottleLeftPos5){}
+
+        switch((Integer)#baxterCommand)
+        {
+        // ---------------- REMOVE BOTTLE FROM END ----------------
+        case COMMAND_TAKE_BOTTLE:
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ")
+            }
+            break;
+		// --------------------------------------------------------
+		
+		// ---------------- LOAD LID FAULT COMMAND ----------------
+        case COMMAND_LOAD_LID:
+            break;
+        // --------------------------------------------------------
+        
+        // ------------ ROTARY TURNTABLE FAULT COMMAND ------------
+        case COMMAND_ROTATE_TURNTABLE:
+            break;
+        // --------------------------------------------------------
+        
+        // ------------- INVALID COMMAND FOR LEFT ARM -------------
+        default:
+            break;
+        // --------------------------------------------------------
+        }
+		
+		send baxterCommandComplete(0);
+	}
+}

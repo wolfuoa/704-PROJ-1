@@ -5,8 +5,8 @@ public class RoboticArm {
     private GripperStatus gripperStatus;
 
     public RoboticArm() {
-        this.armStatus = POSITION_A;
-        this.gripperStatus = OPEN;
+        this.armStatus = ArmStatus.POSITION_A;
+        this.gripperStatus = gripperStatus.OPEN;
     }
 
     public enum ArmStatus {
@@ -28,25 +28,25 @@ public class RoboticArm {
         return this.gripperStatus;
     }
 
-    public setArmStatus(String status) {
+    public void setArmStatus(String status) {
         switch(status)
         {
         case "A":
-            this.armStatus = POSITION_A;
+            this.armStatus = armStatus.POSITION_A;
             break;
         default:
             break;
         }
     }
 
-    public setGripperStatus(String status) {
+    public void setGripperStatus(String status) {
         switch(status)
         {
         case "open":
-            this.gripperStatus=OPEN;
+            this.gripperStatus = gripperStatus.OPEN;
             break;
         case "closed":
-            this.gripperStatus=CLOSED;
+            this.gripperStatus = gripperStatus.CLOSED;
             break;
         default:
             break;

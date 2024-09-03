@@ -37,7 +37,7 @@ BaxterPlant(
                 switch(tokens.nextToken())
                 {
                 case "left":
-                    virtualLeftArm.setArmStatus(tokens.nextToken())
+                    virtualLeftArm.setArmStatus(tokens.nextToken());
                 case "right:
                     virtualRightArm.setArmStatus(tokens.nextToken());
                 }
@@ -45,7 +45,7 @@ BaxterPlant(
                 switch(tokens.nextToken())
                 {
                 case "left":
-                    virtualLeftArm.setGripperStatus(tokens.nextToken())
+                    virtualLeftArm.setGripperStatus(tokens.nextToken());
                 case "right:
                     virtualRightArm.setGripperStatus(tokens.nextToken());
                 }
@@ -57,5 +57,8 @@ BaxterPlant(
     ||
     // ----------- Broadcast -----------
     {
+    //    {while(true){emit rightArmV((RoboticArm)#rightArm); pause;}}
+    //    ||
+    //    {while(true){emit leftArmV((RoboticArm)#leftArm); pause;}}
     }
 }
