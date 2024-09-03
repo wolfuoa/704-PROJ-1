@@ -10,9 +10,11 @@ public class LoaderVizWorker extends Worker{
 //		System.out.println(signame+"  "+status);
 		switch(signame){
 		case "pusherRetractedE":
+			System.out.println("Cpusher Retracted Viz");
 			States.PUSHER_RETRACTED = status;
 			break;
 		case "pusherExtendedE":
+			System.out.println("pusher Extended Viz");
 			States.PUSHER_EXTENDED = status;
 			break;
 		case "armAtSourceE":
@@ -23,11 +25,11 @@ public class LoaderVizWorker extends Worker{
 			break;
 		// Capper
 		case "capBottleCompleteV":
-			System.out.println("Capper Complete");
+			System.out.println("Capper Complete Viz");
 			States.BOTTLE_CAPPED = status;
 			break;
 		case "capBottleIncompleteV":
-			System.out.println("Capper Incomplete");
+			System.out.println("Capper Incomplete Viz");
 			States.BOTTLE_CAPPED = false;
 			break;
 			
@@ -56,7 +58,7 @@ public class LoaderVizWorker extends Worker{
 	}
 	
 	
-	static final List<String> signames = Arrays.asList("pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
+	static final List<String> signames = Arrays.asList("capBottleCompleteV", "capBottleIncompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
 	@Override
 	public boolean hasSignal(String sn) {
