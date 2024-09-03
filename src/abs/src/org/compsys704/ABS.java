@@ -23,7 +23,7 @@ public class ABS extends JFrame {
 	public ABS() {
 //		this.setPreferredSize(new Dimension(200, 300));
 		panel = new Canvas();
-		panel.setPreferredSize(new Dimension(700, 450));
+		panel.setPreferredSize(new Dimension(700, 600));
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
@@ -98,7 +98,7 @@ public class ABS extends JFrame {
 		this.add(pan3,c);
 		
 		this.setTitle("ABS Live");
-		this.setSize(800, 700);
+		this.setSize(800, 745);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
