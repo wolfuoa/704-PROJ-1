@@ -17,4 +17,7 @@ public class States {
 	
 	// Bottle Filler
 	public static volatile boolean BOTTLE_FILLED = false;
+	
+	//Bottle Capper
+	public static volatile boolean BOTTLE_CAPPED = false;
 }
