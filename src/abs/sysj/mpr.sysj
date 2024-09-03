@@ -2,6 +2,7 @@ import run.GUI;
 //import run.POSGUI;
 import util.Order;
 
+
 MPR(
 	input signal enableMPR;
 
@@ -24,30 +25,35 @@ MPR(
 		iteration++;	
 		
 		await(enableMPR);
+		System.out.println("Conveyor Start");
 		send conveyorStep(0);
 		receive conveyorStepComplete;
 		System.out.println("Conveyor Complete");
 		await(!enableMPR);	
 		
 		await(enableMPR);
+		System.out.println("Load Lid Start");
 		send loadLid(0);
 		receive loadLidComplete;
 		System.out.println("Load Lid Complete");
 		await(!enableMPR);
 		
 		await(enableMPR);
+		System.out.println("Cap Bottle Start");
 		send capBottle(0);
 		receive capBottleComplete;
 		System.out.println("Cap Bottle Complete");
 		await(!enableMPR);
 		
 		await(enableMPR);
+		System.out.println("Rotary Turntable Start");
 		send rotateStep(0);
 		receive rotateStepComplete;
 		System.out.println("Rotary Turntable Complete");
 		await(!enableMPR);
 
 		await(enableMPR);
+		System.out.println("Fill Bottle Start");
 		send fillBottle(test);
 		receive fillBottleComplete;
 		System.out.println("Fill Bottle Complete");

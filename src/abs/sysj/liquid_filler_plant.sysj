@@ -4,6 +4,8 @@ LiquidFillerPlant(
     input Integer signal loadLiquid, dosUnitValveRetract;
     output signal dosUnitEvac;
     output Integer signal liquidLoaded, dosUnitFilled;
+
+	output signal dosUnitEvacV;
     )
 ->
 {
@@ -32,5 +34,13 @@ LiquidFillerPlant(
             emit liquidLoaded((Integer)#loadLiquid);
 		}
 	}
-	// -----------------------------------------
+	||
+	{// To viz
+		{while(true){present(dosUnitEvac){emit dosUnitEvacV;} pause;}}
+		//||
+		//[TODO] send valued liquidLoaded
+		//||
+		//[TODO] send valued dosUnitFilled
+		//||
+	}
 }

@@ -42,6 +42,13 @@
 			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />
 			<oSignal Name="bottleAtPos2" To="LiquidFillerControllerCD.bottleAtPos2" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 			<oSignal Name="overflowSensed" To="LiquidFillerControllerCD.overflowSensed" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+
+			<!-- TO VISUALIZER -->
+			<oSignal Name="bottleAtPos1V" To="UI.bottleAtPos1V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos2V" To="UI.bottleAtPos2V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos3V" To="UI.bottleAtPos3V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos4V" To="UI.bottleAtPos4V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos5V" To="UI.bottleAtPos5V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			
 		</ClockDomain>
 	</SubSystem>
