@@ -2,31 +2,31 @@ package util;
 
 import java.io.Serializable;
 
-public class RoboticArm implement Serializable {
+public class RoboticArm implements Serializable {
     private ArmStatus armStatus;
     private GripperStatus gripperStatus;
 
     public RoboticArm() {
-        this.armStatus = ArmStatus.POSITION_IDLE;
+        this.armStatus = ArmStatus.IDLE;
         this.gripperStatus = gripperStatus.OPEN;
     }
 
     public enum ArmStatus {
-        POSITION_IDLE,
-        POSITION_ABOVE_COLLECTION_POINT,
-        POSITION_ON_COLLECTION_POINT,
-        POSITION_ABOVE_CONVEYOR_START,
-        POSITION_ON_CONVEYOR_START,
-        POSITION_ABOVE_REMOVAL_POINT,
-        POSITION_ON_REMOVAL_POINT,
-        POSITION_ABOVE_PACKAGE,
-        POSITION_ON_PACKAGE,
-        POSITION_ABOVE_LID_SURPLUS,
-        POSITION_ON_LID_SURPLUS,
-        POSITION_ABOVE_POSITION_THREE,
-        POSITION_ON_POSITION_THREE,
-        POSITION_ABOVE_ROTARY_TURNTABLE,
-        POSITION_ON_ROTARY_TURNTABLE;
+        IDLE,
+        ABOVE_COLLECTION_POINT,
+        ON_COLLECTION_POINT,
+        ABOVE_CONVEYOR_START,
+        ON_CONVEYOR_START,
+        ABOVE_REMOVAL_POINT,
+        ON_REMOVAL_POINT,
+        ABOVE_PACKAGE,
+        ON_PACKAGE,
+        ABOVE_LID_SURPLUS,
+        ON_LID_SURPLUS,
+        ABOVE_POSITION_THREE,
+        ON_POSITION_THREE,
+        ABOVE_ROTARY_TURNTABLE,
+        ON_ROTARY_TURNTABLE;
     }
 
     public enum GripperStatus {
@@ -45,8 +45,8 @@ public class RoboticArm implement Serializable {
     public void setArmStatus(String status) {
         switch(status)
         {
-        case "A":
-            this.armStatus = armStatus.POSITION_A;
+        case "IDLE":
+            this.armStatus = armStatus.IDLE;
             break;
         default:
             break;

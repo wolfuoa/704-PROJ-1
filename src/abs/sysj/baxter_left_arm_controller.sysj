@@ -1,7 +1,7 @@
 #import util.Constants;
 
 BaxterLeftArmController(
-	input signal bottleLeftPos5, commandFeedback;
+	input signal bottleAtPoint, commandFeedback;
 	output String signal command;
 	
 	input Integer channel baxterCommand;
@@ -17,56 +17,101 @@ BaxterLeftArmController(
         {
         // --------------- PLACE BOTTLE ON CONVEYOR ---------------
         case COMMAND_PLACE_BOTTLE:
-        	// present(bottleLeftPos5){}
+        	// present(bottleAtPoint){}
             abort(commandFeedback)
             {
-                sustain command("move_arm left ABOVE_COLLECTION_POINT")
+                sustain command("move_arm left ABOVE_COLLECTION_POINT");
             }
             
             abort(commandFeedback)
             {
-                sustain command("move_arm left ON_COLLECTION_POINT")
+                sustain command("move_arm left ON_COLLECTION_POINT");
             }
             
             abort(commandFeedback)
             {
-                sustain command("grip left CLOSED")
+                sustain command("grip left CLOSED");
             }
             
             abort(commandFeedback)
             {
-                sustain command("move_arm left ABOVE_COLLECTION_POINT")
+                sustain command("move_arm left ABOVE_COLLECTION_POINT");
             }
             
             abort(commandFeedback)
             {
-                sustain command("move_arm left ABOVE_CONVEYOR_START")
+                sustain command("move_arm left ABOVE_CONVEYOR_START");
             }
             
             abort(commandFeedback)
             {
-                sustain command("move_arm left ON_CONVEYOR_START")
+                sustain command("move_arm left ON_CONVEYOR_START");
             }
             
             abort(commandFeedback)
             {
-                sustain command("grip left OPEN")
+                sustain command("grip left OPEN");
             }
             
             abort(commandFeedback)
             {
-                sustain command("move_arm left ABOVE_CONVEYOR_START")
+                sustain command("move_arm left ABOVE_CONVEYOR_START");
             }
             
             abort(commandFeedback)
             {
-                sustain command("move_arm left IDLE")
+                sustain command("move_arm left IDLE");
             }
             break;
 		// --------------------------------------------------------
 		
 		// ---------------- LOAD LID FAULT COMMAND ----------------
         case COMMAND_LOAD_LID:
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_LID_SURPLUS");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ON_LID_SURPLUS");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("grip left CLOSED");
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_LID_SURPLUS");
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_POSITION_THREE");
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ON_POSITION_THREE");
+            }
+            
+            abort(commandFeedback)
+            {
+                sustain command("grip left OPEN");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left ABOVE_POSITION_THREE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm left IDLE");
+            }
+            
             break;
         // --------------------------------------------------------
         

@@ -1,7 +1,7 @@
 #import util.Constants;
 
 BaxterRightArmController(
-	input signal bottleAtPoint, commandFeedback;
+	input signal bottleAtPos5, commandFeedback;
 	output String signal command;
 	
 	input Integer channel baxterCommand;
@@ -12,21 +12,98 @@ BaxterRightArmController(
 	while(true)
 	{
 		receive baxterCommand;
-        // present(bottleAtPoint){}
+        // present(bottleAtPos5){}
 
         switch((Integer)#baxterCommand)
         {
         // ---------------- REMOVE BOTTLE FROM END ----------------
         case COMMAND_REMOVE_BOTTLE:
+            // present(bottleAtPos5){}
             abort(commandFeedback)
             {
-                sustain command("move_arm left ")
+                sustain command("move_arm right ABOVE_REMOVAL_POINT");
             }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ON_REMOVAL_POINT");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("grip right CLOSED");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ABOVE_REMOVAL_POINT");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ABOVE_PACKAGE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ON_PACKAGE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("grip right OPEN");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ABOVE_PACKAGE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right IDLE");
+            }
+
             break;
 		// --------------------------------------------------------
         
         // ------------ ROTATE TURNTABLE FAULT COMMAND ------------
         case COMMAND_ROTATE_TURNTABLE:
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ABOVE_ROTARY_TURNTABLE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ON_ROTARY_TURNTABLE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("grip right CLOSED");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("rotate_hand right clockwise 60");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("grip right OPEN");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right ABOVE_ROTARY_TURNTABLE");
+            }
+
+            abort(commandFeedback)
+            {
+                sustain command("move_arm right IDLE");
+            }
+
             break;
         // --------------------------------------------------------
         
