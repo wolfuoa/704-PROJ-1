@@ -5,8 +5,8 @@ import util.Order;
 MPR(
 	input signal enableABS;
 
-	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete, fillBottleComplete;
-	output Integer channel conveyorStep, loadLid, capBottle, rotateStep;
+	input Integer channel conveyorStepComplete, capBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant, fillBottleComplete, placeBottleComplete, removeBottleComplete;
+	output Integer channel conveyorStep, capBottle, loadLidFaultTolerant, rotateStepFaultTolerant, placeBottle, removeBottle;
 	output Order channel fillBottle;
    	)
 ->
@@ -30,8 +30,8 @@ MPR(
 		await(!enableABS);	
 
 		await(enableABS);
-		send loadLid(0);
-		receive loadLidComplete;
+		send loadLidFaultTolerant(0);
+		receive loadLidCompleteFaultTolerant;
 		System.out.println("Load Lid Complete");
 		await(!enableABS);
 
@@ -42,8 +42,8 @@ MPR(
 		await(!enableABS);
 
 		await(enableABS);
-		send rotateStep(0);
-		receive rotateStepComplete;
+		send rotateStepFaultTolerant(0);
+		receive rotateStepCompleteFaultTolerant;
 		System.out.println("Rotary Turntable Complete");
 		await(!enableABS);
 

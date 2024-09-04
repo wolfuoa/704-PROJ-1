@@ -1,7 +1,7 @@
 #import util.Constants;
 
 BaxterRightArmController(
-	input signal bottleAtPos5, commandFeedbackRight;
+	input signal bottleLeftPos5, commandFeedbackRight;
 	output String signal commandRight;
 	
 	input Integer channel baxterRightArmCommand;
@@ -18,7 +18,7 @@ BaxterRightArmController(
         {
         // ---------------- REMOVE BOTTLE FROM END ----------------
         case COMMAND_REMOVE_BOTTLE:
-            // present(bottleAtPos5){}
+            // present(bottleLeftPos5){}
             abort(commandFeedbackRight)
             {
                 sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");

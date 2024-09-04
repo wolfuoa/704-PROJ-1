@@ -2,24 +2,16 @@
 	<Interconnection>
 		<Link Type="Destination">
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
-			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 		</Link>
 	</Interconnection>
 
-	<SubSystem Name="SS0">
-		<ClockDomain Name="MPRCD" Class="MPR">
-			
-			<!-- CONVEYOR -->
-			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
-			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
+	<SubSystem Name="SS100">
+		<ClockDomain Name="FRUCD" Class="FRU">
 				
 			<!-- LID LOADER -->
 			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
 			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
-			
-			<!-- LID CAPPER-->
-			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
-			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>
@@ -27,9 +19,9 @@
 	<SubSystem Name="SS50" Local="true">
 		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
 			
-			<!-- MPR -->
-			<iChannel Name="loadLid" From="MPRCD.loadLid" />
-			<oChannel Name="loadLidComplete" To="MPRCD.loadLidComplete" />
+			<!-- FRU -->
+			<iChannel Name="loadLid" From="FRUCD.loadLid" />
+			<oChannel Name="loadLidComplete" To="FRUCD.loadLidComplete" />
 			
 			<!-- SELF PLANT MODEL -->
 			<iSignal Name="pusherRetracted" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />

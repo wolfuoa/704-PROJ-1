@@ -2,7 +2,7 @@
 	<Interconnection>
 		<Link Type="Destination">
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
-			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
@@ -15,25 +15,12 @@
 		</ClockDomain>
 	</SubSystem>
 
-	<SubSystem Name="SS0">
-		<ClockDomain Name="MPRCD" Class="MPR">
-			
-			<!-- CONVEYOR -->
-			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
-			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
+	<SubSystem Name="SS100">
+		<ClockDomain Name="FRUCD" Class="FRU">
 			
 			<!-- ROTARY TURNTABLE-->
 			<oChannel Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" />
 			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
-				
-			<!-- LID LOADER -->
-			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
-			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
-			
-			
-			<!-- LID CAPPER-->
-			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
-			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>
@@ -41,9 +28,9 @@
 	<SubSystem Name="SS30" Local="true">
 		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
 			
-			<!-- MPR -->
-			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
-			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
+			<!-- FRU -->
+			<iChannel Name="rotateStep" From="FRUCD.rotateStep" />
+			<oChannel Name="rotateStepComplete" To="FRUCD.rotateStepComplete" />
 			
 			<!-- SELF PLANT MODEL -->
 			<oSignal Name="rotaryTurntableTrigger" To="RotaryTurntablePlantCD.rotaryTurntableTrigger" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10031" />
