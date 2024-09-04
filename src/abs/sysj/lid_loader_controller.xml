@@ -1,9 +1,9 @@
 <System xmlns="http://systemjtechnology.com">
 	<Interconnection>
 		<Link Type="Destination">
-			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
-			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
 
@@ -24,7 +24,6 @@
 
 		</ClockDomain>
 	</SubSystem>
-
 
 	<SubSystem Name="SS80">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
