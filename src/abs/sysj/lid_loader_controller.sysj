@@ -3,7 +3,7 @@ LidLoaderController(
 		output signal pusherExtend,vacOn,armSource,armDest;
 
 		input Integer channel loadLid;
-		output Integer channel loadLidComplete;
+		output Integer channel loadLidComplete, loadLidCompleteSensors;
 		)
 ->{
 
@@ -68,5 +68,6 @@ LidLoaderController(
 		await(!enableLidLoader);
 
 		send loadLidComplete(0);
+		send loadLidCompleteSensors(0);
 	}
 }

@@ -15,58 +15,72 @@ MPR(
 	new Thread(new GUI()).start();
 	new Thread(new POSGUI()).start();
 
+	String signal RESET; 
+	String signal BLACK; 
+	String signal RED; 
+	String signal GREEN; 
+	String signal YELLOW; 
+	String signal BLUE; 
+	String signal PURPLE; 
+	String signal CYAN; 
+	String signal WHITE;
+
+	emit RESET("\u001B[0m");
+	emit BLACK("\u001B[30m");
+	emit RED("\u001B[31m");
+	emit GREEN("\u001B[32m");
+	emit YELLOW("\u001B[33m");
+	emit BLUE("\u001B[34m");
+	emit PURPLE("\u001B[35m");
+	emit CYAN("\u001B[36m");
+	emit WHITE("\u001B[37m");
+
 	int iteration = 0;
-
-	String RESET = "\u001B[0m"; 
-	String BLACK = "\u001B[30m"; 
-	String RED = "\u001B[31m"; 
-	String GREEN = "\u001B[32m"; 
-	String YELLOW = "\u001B[33m"; 
-	String BLUE = "\u001B[34m"; 
-	String PURPLE = "\u001B[35m"; 
-	String CYAN = "\u001B[36m"; 
-	String WHITE = "\u001B[37m";
-
-	Order test = new Order(4,80,40,30,50);
 	
-	while(true){
+	
+	while(true)
+	{
 
-		System.out.println(BLUE + "Starting iteration " + iteration + RESET);
+		System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 		iteration++;	
 		
 		await(enableMPR);
-		System.out.println(YELLOW + "Conveyor Start" + RESET);
+		System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
 		send conveyorStep(0);
 		receive conveyorStepComplete;
-		System.out.println(GREEN + "Conveyor Complete" + RESET);
+		System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
 		await(!enableMPR);	
 		
 		await(enableMPR);
-		System.out.println(YELLOW + "Load Lid Start" + RESET);
-		send loadLid(0);
-		receive loadLidComplete;
-		System.out.println(GREEN + "Load Lid Complete" + RESET);
+		{
+			Order test = new Order(4,80,40,30,50);
+			System.out.println((String)#YELLOW + "Fill Bottle Start" + (String)#RESET);
+			send fillBottle(test);
+			receive fillBottleComplete;
+			System.out.println((String)#GREEN + "Fill Bottle Complete" + (String)#RESET);
+		}
+		||
+		{
+			System.out.println((String)#YELLOW + "Load Lid Start" + (String)#RESET);
+			send loadLid(0);
+			receive loadLidComplete;
+			System.out.println((String)#GREEN + "Load Lid Complete" + (String)#RESET);
+		}
+		||
+		{
+			System.out.println((String)#YELLOW + "Cap Bottle Start" + (String)#RESET);
+			send capBottle(0);
+			receive capBottleComplete;
+			System.out.println((String)#GREEN + "Cap Bottle Complete" + (String)#RESET);
+		}
 		await(!enableMPR);
 		
-		await(enableMPR);
-		System.out.println(YELLOW + "Cap Bottle Start" + RESET);
-		send capBottle(0);
-		receive capBottleComplete;
-		System.out.println(GREEN + "Cap Bottle Complete" + RESET);
-		await(!enableMPR);
 		
 		await(enableMPR);
-		System.out.println(YELLOW + "Rotary Turntable Start" + RESET);
+		System.out.println((String)#YELLOW + "Rotary Turntable Start" + (String)#RESET);
 		send rotateStep(0);
 		receive rotateStepComplete;
-		System.out.println(GREEN + "Rotary Turntable Complete" + RESET);
-		await(!enableMPR);
-
-		await(enableMPR);
-		System.out.println(YELLOW + "Fill Bottle Start" + RESET);
-		send fillBottle(test);
-		receive fillBottleComplete;
-		System.out.println(GREEN + "Fill Bottle Complete" + RESET);
+		System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
 		await(!enableMPR);
 
 	}

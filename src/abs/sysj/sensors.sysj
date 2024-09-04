@@ -1,9 +1,9 @@
 Sensors(
 	input signal conveyorPlantOn, rotaryTurntablePlantOn;
 	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor, overflowSensed;
-	output signal bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V, capBottleCompleteV, capBottleIncompleteV;
+	output signal bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V, capBottleCompleteV, capBottleIncompleteV, loadLidCompleteV, loadLidIncompleteV, fillBottleCompleteV, fillBottleIncompleteV;
 
-	input Integer channel rotateStepCompleteToSensors, logQuantityLiquidFilled, capBottleCompleteSensors;
+	input Integer channel rotateStepCompleteToSensors, logQuantityLiquidFilled, capBottleCompleteSensors, loadLidCompleteSensors, fillBottleCompleteSensors;
    	)
 ->
 {
@@ -15,6 +15,8 @@ Sensors(
 	boolean signal bottleAtPos5Reg;
 	int signal totalFluidInCurrentBottle;
 	int signal capBottleCompleteMemory;
+	int signal loadLidCompleteMemory;
+	int signal fillBottleCompleteMemory;
 	// ----------------------------------------------
 
 	emit bottleAtPos1Reg(false);
@@ -24,6 +26,8 @@ Sensors(
 	emit bottleAtPos5Reg(false);
 	emit totalFluidInCurrentBottle(0);
 	emit capBottleCompleteMemory(0);
+	emit loadLidCompleteMemory(0);
+	emit fillBottleCompleteMemory(0);
 
 	// ---------------- bottleAtPos1 ----------------
 	{
@@ -70,6 +74,8 @@ Sensors(
 			System.out.println("Turn");
 
 			emit capBottleCompleteMemory(0);
+			emit loadLidCompleteMemory(0);
+			emit fillBottleCompleteMemory(0);
 
 			pause;
 		}	
@@ -103,20 +109,45 @@ Sensors(
 	}
 	// ----------------------------------------------
 	||
-	// --------- Cap Bottle Complete Signal ---------
+	// ---------- Machine Complete Signals ----------
 	{
-		while(true)
 		{
-			receive capBottleCompleteSensors;
-			emit capBottleCompleteMemory(1);
-			pause;
+			while(true)
+			{
+				receive capBottleCompleteSensors;
+				emit capBottleCompleteMemory(1);
+				pause;
+			}
+		}
+		||
+		{
+			while(true)
+			{
+				receive loadLidCompleteSensors;
+				emit loadLidCompleteMemory(1);
+				pause;
+			}
+		}
+		||
+		{
+			while(true)
+			{
+				receive fillBottleCompleteSensors;
+				emit fillBottleCompleteMemory(1);
+				pause;
+			}
 		}
 	}
 	// ----------------------------------------------
 	||
 	// --------- Broadcast Complete Signals ---------
 	{
-		{while(true){if((Integer)#capBottleCompleteMemory == 1){emit capBottleCompleteV; System.out.println("CapComplete");} else {emit capBottleIncompleteV; System.out.println("CapIncomplete");} pause;}}
+		{while(true){if((Integer)#capBottleCompleteMemory == 1){emit capBottleCompleteV; } else {emit capBottleIncompleteV; } pause;}}
+		||
+		{while(true){if((Integer)#loadLidCompleteMemory == 1){emit loadLidCompleteV; } else {emit loadLidIncompleteV; } pause;}}
+		||
+		{while(true){if((Integer)#fillBottleCompleteMemory == 1){emit fillBottleCompleteV; } else {emit fillBottleIncompleteV; } pause;}}
+		
 	}
 	// ----------------------------------------------
 	||
