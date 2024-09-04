@@ -48,6 +48,48 @@ public class RoboticArm implements Serializable {
         case "IDLE":
             this.armStatus = armStatus.IDLE;
             break;
+        case "ABOVE_COLLECTION_POINT":
+            this.armStatus = ArmStatus.ABOVE_COLLECTION_POINT;
+            break;
+        case "ON_COLLECTION_POINT":
+            this.armStatus = ArmStatus.ON_COLLECTION_POINT;
+            break;
+        case "ABOVE_CONVEYOR_START":
+            this.armStatus = ArmStatus.ABOVE_CONVEYOR_START;
+            break;
+        case "ON_CONVEYOR_START":
+            this.armStatus = ArmStatus.ON_CONVEYOR_START;
+            break;
+        case "ABOVE_REMOVAL_POINT":
+            this.armStatus = ArmStatus.ABOVE_REMOVAL_POINT;
+            break;
+        case "ON_REMOVAL_POINT":
+            this.armStatus = ArmStatus.ON_REMOVAL_POINT;
+            break;
+        case "ABOVE_PACKAGE":
+            this.armStatus = ArmStatus.ABOVE_PACKAGE;
+            break;
+        case "ON_PACKAGE":
+            this.armStatus = ArmStatus.ON_PACKAGE;
+            break;
+        case "ABOVE_LID_SURPLUS":
+            this.armStatus = ArmStatus.ABOVE_LID_SURPLUS;
+            break;
+        case "ON_LID_SURPLUS":
+            this.armStatus = ArmStatus.ON_LID_SURPLUS;
+            break;
+        case "ABOVE_POSITION_THREE":
+            this.armStatus = ArmStatus.ABOVE_POSITION_THREE;
+            break;
+        case "ON_POSITION_THREE":
+            this.armStatus = ArmStatus.ON_POSITION_THREE;
+            break;
+        case "ABOVE_ROTARY_TURNTABLE":
+            this.armStatus = ArmStatus.ABOVE_ROTARY_TURNTABLE;
+            break;
+        case "ON_ROTARY_TURNTABLE":
+            this.armStatus = ArmStatus.ON_ROTARY_TURNTABLE;
+            break;
         default:
             break;
         }
@@ -56,11 +98,11 @@ public class RoboticArm implements Serializable {
     public void setGripperStatus(String status) {
         switch(status)
         {
-        case "open":
-            this.gripperStatus = gripperStatus.OPEN;
+        case "OPEN":
+            this.gripperStatus = GripperStatus.OPEN;
             break;
-        case "closed":
-            this.gripperStatus = gripperStatus.CLOSED;
+        case "CLOSED":
+            this.gripperStatus = GripperStatus.CLOSED;
             break;
         default:
             break;

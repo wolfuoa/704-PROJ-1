@@ -41,7 +41,7 @@ BaxterPlant(
                 case "right:
                     virtualRightArm.setArmStatus(tokens.nextToken());
                 }
-            case "gripper":
+            case "grip":
                 switch(tokens.nextToken())
                 {
                 case "left":
@@ -49,6 +49,8 @@ BaxterPlant(
                 case "right:
                     virtualRightArm.setGripperStatus(tokens.nextToken());
                 }
+            case "rotate_hand":
+                
             }
             emit commandFeedback;
         }
