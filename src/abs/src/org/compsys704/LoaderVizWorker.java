@@ -27,12 +27,7 @@ public class LoaderVizWorker extends Worker{
 		case "capBottleCompleteV":
 			System.out.println("Capper Complete Viz");
 			States.BOTTLE_CAPPED = status;
-			break;
-		case "capBottleIncompleteV":
-			System.out.println("Capper Incomplete Viz");
-			States.BOTTLE_CAPPED = false;
-			break;
-			
+			break;			
 		//Liquid Filler
 			//Lid Loader
 		case "liquidFilled":
@@ -58,7 +53,7 @@ public class LoaderVizWorker extends Worker{
 	}
 	
 	
-	static final List<String> signames = Arrays.asList("capBottleCompleteV", "capBottleIncompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
+	static final List<String> signames = Arrays.asList("capBottleCompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
 	@Override
 	public boolean hasSignal(String sn) {
