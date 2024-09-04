@@ -8,7 +8,7 @@ public class RoboticArm implements Serializable {
 
     public RoboticArm() {
         this.armStatus = ArmStatus.IDLE;
-        this.gripperStatus = gripperStatus.OPEN;
+        this.gripperStatus = GripperStatus.OPEN;
     }
 
     public enum ArmStatus {
@@ -46,7 +46,7 @@ public class RoboticArm implements Serializable {
         switch(status)
         {
         case "IDLE":
-            this.armStatus = armStatus.IDLE;
+            this.armStatus = ArmStatus.IDLE;
             break;
         case "ABOVE_COLLECTION_POINT":
             this.armStatus = ArmStatus.ABOVE_COLLECTION_POINT;

@@ -1,11 +1,11 @@
-#import util.Constants;
+import util.Constants;
 
 FRU(
     input Integer channel placeBottle, removeBottle, loadLidFaultTolerant, rotateStepFaultTolerant;
     output Integer channel placeBottleComplete, removeBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant;
 
     output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
-    input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterLeftArmCommandComplete;
+    input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
    	)
 ->
 {
@@ -17,6 +17,7 @@ FRU(
             send baxterLeftArmCommand(COMMAND_PLACE_BOTTLE);
             receive baxterLeftArmCommandComplete;
             send placeBottleComplete(0);
+            pause;
 		}
 	}
     // -----------------------------------------
@@ -29,6 +30,7 @@ FRU(
             send baxterRightArmCommand(COMMAND_REMOVE_BOTTLE);
             receive baxterRightArmCommandComplete;
             send removeBottleComplete(0);
+            pause;
         }
 	}
 	// -----------------------------------------
@@ -45,7 +47,8 @@ FRU(
                 send baxterLeftArmCommand(COMMAND_LOAD_LID);
                 receive baxterLeftArmCommandComplete;
             }
-            send loadLidComplete(0);
+            send loadLidCompleteFaultTolerant(0);
+            pause;
         }
 	}
 	// -----------------------------------------
@@ -62,7 +65,8 @@ FRU(
                 send baxterRightArmCommand(COMMAND_ROTATE_TURNTABLE);
                 receive baxterRightArmCommandComplete;
             }
-            send rotateStepComplete(0);
+            send rotateStepCompleteFaultTolerant(0);
+            pause;
         }
 	}
 	// -----------------------------------------

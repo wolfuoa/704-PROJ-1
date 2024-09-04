@@ -1,4 +1,4 @@
-#import util.Constants;
+import util.Constants;
 
 BaxterRightArmController(
 	input signal bottleLeftPos5, commandFeedbackRight;
@@ -17,7 +17,7 @@ BaxterRightArmController(
         switch((Integer)#baxterRightArmCommand)
         {
         // ---------------- REMOVE BOTTLE FROM END ----------------
-        case COMMAND_REMOVE_BOTTLE:
+        case 1: // COMMAND_REMOVE_BOTTLE
             // present(bottleLeftPos5){}
             abort(commandFeedbackRight)
             {
@@ -68,7 +68,7 @@ BaxterRightArmController(
 		// --------------------------------------------------------
         
         // ------------ ROTATE TURNTABLE FAULT COMMAND ------------
-        case COMMAND_ROTATE_TURNTABLE:
+        case 3: // COMMAND_ROTATE_TURNTABLE
             abort(commandFeedbackRight)
             {
                 sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
@@ -114,5 +114,6 @@ BaxterRightArmController(
         }
 		
 		send baxterRightArmCommandComplete(0);
+		pause;
 	}
 }

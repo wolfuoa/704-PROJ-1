@@ -1,4 +1,4 @@
-#import util.Constants;
+import util.Constants;
 
 BaxterLeftArmController(
 	input signal bottleAtPoint, commandFeedbackLeft;
@@ -16,7 +16,7 @@ BaxterLeftArmController(
         switch((Integer)#baxterLeftArmCommand)
         {
         // --------------- PLACE BOTTLE ON CONVEYOR ---------------
-        case COMMAND_PLACE_BOTTLE:
+        case 0: // COMMAND_PLACE_BOTTLE
         	// present(bottleAtPoint){}
             abort(commandFeedbackLeft)
             {
@@ -66,7 +66,7 @@ BaxterLeftArmController(
 		// --------------------------------------------------------
 		
 		// ---------------- LOAD LID FAULT COMMAND ----------------
-        case COMMAND_LOAD_LID:
+        case 2: // COMMAND LOAD LID
             abort(commandFeedbackLeft)
             {
                 sustain commandLeft("move_arm left ABOVE_LID_SURPLUS");
@@ -122,5 +122,6 @@ BaxterLeftArmController(
         }
 		
 		send baxterLeftArmCommandComplete(0);
+		pause;
 	}
 }
