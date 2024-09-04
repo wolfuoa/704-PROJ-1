@@ -60,6 +60,8 @@
 
 			<!-- SIGNALS FROM BROADCAST ENABLE -->
 			<iSignal Name="enableMPR" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<iSignal Name="posOrder" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			
 			
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />

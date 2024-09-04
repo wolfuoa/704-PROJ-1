@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import util.Order;
+
 public class ABS extends JFrame {
 	private JPanel panel;
 	
@@ -27,8 +29,9 @@ public class ABS extends JFrame {
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
-		JButton request = new JButton("request");
-		request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
+		JButton request = new JButton("test pos");
+		request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, new Order(69, 5, 10, 12, 19)));
+		//request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL));
 		JButton refill = new JButton("refill");
 		refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
 		JPanel ss = new JPanel();
