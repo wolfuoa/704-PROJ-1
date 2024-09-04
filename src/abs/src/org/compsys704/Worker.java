@@ -43,6 +43,8 @@ public abstract class Worker implements Runnable {
 		try {
 			while (true) {
 				Object[] o = (Object[]) ois.readObject();
+				
+				System.out.println("\u001B[33m" + o.toString() + "\u001B[0m");
 				if(initTimeElapsed())
 					setSignal((Boolean) o[0]);
 			}
