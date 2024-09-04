@@ -9,13 +9,20 @@ FRU(
    	)
 ->
 {
+    // ------- Local Signal Declarations -------
+    int signal localReceiverLeft;
+    int signal localTransmitterLeft;
+    int signal localReceiverRight;
+    int signal localTransmitterRight;
+    // -----------------------------------------
+
 	// -------------- Load Bottle --------------
 	{
 		while(true)
 		{
 			receive placeBottle;
-            send baxterLeftArmCommand(COMMAND_PLACE_BOTTLE);
-            receive baxterLeftArmCommandComplete;
+            emit localTransmitterLeft(0); // COMMAND_PLACE_BOTTLE
+            await(localReceiverLeft);
             send placeBottleComplete(0);
             pause;
 		}
@@ -27,7 +34,7 @@ FRU(
 		while(true)
         {
             receive removeBottle;
-            send baxterRightArmCommand(COMMAND_REMOVE_BOTTLE);
+            emit localTransmitterRight(1); // COMMAND_REMOVE_BOTTLE
             receive baxterRightArmCommandComplete;
             send removeBottleComplete(0);
             pause;
@@ -44,8 +51,8 @@ FRU(
             receive loadLidComplete;
             if((Integer)#loadLidComplete == 1)
             {
-                send baxterLeftArmCommand(COMMAND_LOAD_LID);
-                receive baxterLeftArmCommandComplete;
+                emit localTransmitterLeft(2); // COMMAND_LOAD_LID
+                await(localReceiverLeft);
             }
             send loadLidCompleteFaultTolerant(0);
             pause;
@@ -62,8 +69,8 @@ FRU(
             receive rotateStepComplete;
             if((Integer)#rotateStepComplete == 1)
             {
-                send baxterRightArmCommand(COMMAND_ROTATE_TURNTABLE);
-                receive baxterRightArmCommandComplete;
+                emit localTransmitterRight(3); // COMMAND_ROTATE_TURNTABLE
+                await(localReceiverRight);
             }
             send rotateStepCompleteFaultTolerant(0);
             pause;
