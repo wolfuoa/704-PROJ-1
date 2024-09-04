@@ -1,0 +1,69 @@
+#import util.Constants;
+
+FRU(
+    input Integer channel placeBottle, removeBottle, loadLidFaultTolerant, rotateStepFaultTolerant;
+    output Integer channel placeBottleComplete, removeBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant;
+
+    output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
+    input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterLeftArmCommandComplete;
+   	)
+->
+{
+	// -------------- Load Bottle --------------
+	{
+		while(true)
+		{
+			receive placeBottle;
+            send baxterLeftArmCommand(COMMAND_PLACE_BOTTLE);
+            receive baxterLeftArmCommandComplete;
+            send placeBottleComplete(0);
+		}
+	}
+    // -----------------------------------------
+    ||
+	// ------------- Remove Bottle -------------
+	{
+		while(true)
+        {
+            receive removeBottle;
+            send baxterRightArmCommand(COMMAND_REMOVE_BOTTLE);
+            receive baxterRightArmCommandComplete;
+            send removeBottleComplete(0);
+        }
+	}
+	// -----------------------------------------
+    ||
+	// ------- Load Lid [FAULT TOLERANT] -------
+	{
+		while(true)
+        {
+            receive loadLidFaultTolerant;
+            send loadLid(0);
+            receive loadLidComplete;
+            if((Integer)#loadLidComplete == 1)
+            {
+                send baxterLeftArmCommand(COMMAND_LOAD_LID);
+                receive baxterLeftArmCommandComplete;
+            }
+            send loadLidComplete(0);
+        }
+	}
+	// -----------------------------------------
+    ||
+	// --- Rotate Turntable [FAULT TOLERANT] ---
+	{
+		while(true)
+        {
+            receive rotateStepFaultTolerant;
+            send rotateStep(0);
+            receive rotateStepComplete;
+            if((Integer)#rotateStepComplete == 1)
+            {
+                send baxterRightArmCommand(COMMAND_ROTATE_TURNTABLE);
+                receive baxterRightArmCommandComplete;
+            }
+            send rotateStepComplete(0);
+        }
+	}
+	// -----------------------------------------
+}

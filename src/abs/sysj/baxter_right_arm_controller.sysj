@@ -1,67 +1,67 @@
 #import util.Constants;
 
 BaxterRightArmController(
-	input signal bottleAtPos5, commandFeedback;
-	output String signal command;
+	input signal bottleAtPos5, commandFeedbackRight;
+	output String signal commandRight;
 	
-	input Integer channel baxterCommand;
-	output Integer channel baxterCommandComplete;
+	input Integer channel baxterRightArmCommand;
+	output Integer channel baxterRightArmCommandComplete;
    	)
 ->
 {
 	while(true)
 	{
-		receive baxterCommand;
+		receive baxterRightArmCommand;
         // present(bottleAtPos5){}
 
-        switch((Integer)#baxterCommand)
+        switch((Integer)#baxterRightArmCommand)
         {
         // ---------------- REMOVE BOTTLE FROM END ----------------
         case COMMAND_REMOVE_BOTTLE:
             // present(bottleAtPos5){}
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ABOVE_REMOVAL_POINT");
+                sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ON_REMOVAL_POINT");
+                sustain commandRight("move_arm right ON_REMOVAL_POINT");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("grip right CLOSED");
+                sustain commandRight("grip right CLOSED");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ABOVE_REMOVAL_POINT");
+                sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ABOVE_PACKAGE");
+                sustain commandRight("move_arm right ABOVE_PACKAGE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ON_PACKAGE");
+                sustain commandRight("move_arm right ON_PACKAGE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("grip right OPEN");
+                sustain commandRight("grip right OPEN");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ABOVE_PACKAGE");
+                sustain commandRight("move_arm right ABOVE_PACKAGE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right IDLE");
+                sustain commandRight("move_arm right IDLE");
             }
 
             break;
@@ -69,39 +69,39 @@ BaxterRightArmController(
         
         // ------------ ROTATE TURNTABLE FAULT COMMAND ------------
         case COMMAND_ROTATE_TURNTABLE:
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ABOVE_ROTARY_TURNTABLE");
+                sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ON_ROTARY_TURNTABLE");
+                sustain commandRight("move_arm right ON_ROTARY_TURNTABLE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("grip right CLOSED");
+                sustain commandRight("grip right CLOSED");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("rotate_hand right clockwise 60");
+                sustain commandRight("rotate_hand right clockwise 60");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("grip right OPEN");
+                sustain commandRight("grip right OPEN");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right ABOVE_ROTARY_TURNTABLE");
+                sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackRight)
             {
-                sustain command("move_arm right IDLE");
+                sustain commandRight("move_arm right IDLE");
             }
 
             break;
@@ -113,6 +113,6 @@ BaxterRightArmController(
         // --------------------------------------------------------
         }
 		
-		send baxterCommandComplete(0);
+		send baxterRightArmCommandComplete(0);
 	}
 }

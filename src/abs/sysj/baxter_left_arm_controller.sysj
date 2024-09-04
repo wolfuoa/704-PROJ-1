@@ -1,115 +1,115 @@
 #import util.Constants;
 
 BaxterLeftArmController(
-	input signal bottleAtPoint, commandFeedback;
-	output String signal command;
+	input signal bottleAtPoint, commandFeedbackLeft;
+	output String signal commandLeft;
 	
-	input Integer channel baxterCommand;
-	output Integer channel baxterCommandComplete;
+	input Integer channel baxterLeftArmCommand;
+	output Integer channel baxterLeftArmCommandComplete;
    	)
 ->
 {
 	while(true)
 	{
-		receive baxterCommand;
+		receive baxterLeftArmCommand;
 
-        switch((Integer)#baxterCommand)
+        switch((Integer)#baxterLeftArmCommand)
         {
         // --------------- PLACE BOTTLE ON CONVEYOR ---------------
         case COMMAND_PLACE_BOTTLE:
         	// present(bottleAtPoint){}
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_COLLECTION_POINT");
+                sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ON_COLLECTION_POINT");
+                sustain commandLeft("move_arm left ON_COLLECTION_POINT");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("grip left CLOSED");
+                sustain commandLeft("grip left CLOSED");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_COLLECTION_POINT");
+                sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_CONVEYOR_START");
+                sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ON_CONVEYOR_START");
+                sustain commandLeft("move_arm left ON_CONVEYOR_START");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("grip left OPEN");
+                sustain commandLeft("grip left OPEN");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_CONVEYOR_START");
+                sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left IDLE");
+                sustain commandLeft("move_arm left IDLE");
             }
             break;
 		// --------------------------------------------------------
 		
 		// ---------------- LOAD LID FAULT COMMAND ----------------
         case COMMAND_LOAD_LID:
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_LID_SURPLUS");
+                sustain commandLeft("move_arm left ABOVE_LID_SURPLUS");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ON_LID_SURPLUS");
+                sustain commandLeft("move_arm left ON_LID_SURPLUS");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("grip left CLOSED");
+                sustain commandLeft("grip left CLOSED");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_LID_SURPLUS");
+                sustain commandLeft("move_arm left ABOVE_LID_SURPLUS");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_POSITION_THREE");
+                sustain commandLeft("move_arm left ABOVE_POSITION_THREE");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ON_POSITION_THREE");
+                sustain commandLeft("move_arm left ON_POSITION_THREE");
             }
             
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("grip left OPEN");
+                sustain commandLeft("grip left OPEN");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left ABOVE_POSITION_THREE");
+                sustain commandLeft("move_arm left ABOVE_POSITION_THREE");
             }
 
-            abort(commandFeedback)
+            abort(commandFeedbackLeft)
             {
-                sustain command("move_arm left IDLE");
+                sustain commandLeft("move_arm left IDLE");
             }
             
             break;
@@ -121,6 +121,6 @@ BaxterLeftArmController(
         // --------------------------------------------------------
         }
 		
-		send baxterCommandComplete(0);
+		send baxterLeftArmCommandComplete(0);
 	}
 }
