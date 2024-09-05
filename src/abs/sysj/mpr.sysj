@@ -6,8 +6,8 @@ import util.Order;
 MPR(
 	input signal enableMPR;
 
-	input Integer channel conveyorStepComplete, loadLidComplete, capBottleComplete, rotateStepComplete, fillBottleComplete;
-	output Integer channel conveyorStep, loadLid, capBottle, rotateStep;
+	input Integer channel conveyorStepComplete, capBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant, fillBottleComplete, placeBottleComplete, removeBottleComplete;
+	output Integer channel conveyorStep, capBottle, loadLidFaultTolerant, rotateStepFaultTolerant, placeBottle, removeBottle;
 	output Order channel fillBottle;
    	)
 ->
@@ -42,14 +42,27 @@ MPR(
 	{
 
 		System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
-		iteration++;	
+		iteration++;
+
+		await(enableMPR);
+		send placeBottle(0);
+		receive placeBottleComplete;
+		System.out.println("Place Bottle Complete");
+		await(!enableMPR);	
 		
 		await(enableMPR);
 		System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
 		send conveyorStep(0);
 		receive conveyorStepComplete;
 		System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
-		await(!enableMPR);	
+		await(!enableMPR);
+
+		await(enableMPR);
+		System.out.println((String)#YELLOW + "Rotary Turntable Start" + (String)#RESET);
+		send rotateStepFaultTolerant(0);
+		receive rotateStepCompleteFaultTolerant;
+		System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
+		await(!enableMPR);
 		
 		await(enableMPR);
 		{
@@ -62,8 +75,8 @@ MPR(
 		||
 		{
 			System.out.println((String)#YELLOW + "Load Lid Start" + (String)#RESET);
-			send loadLid(0);
-			receive loadLidComplete;
+			send loadLidFaultTolerant(0);
+			receive loadLidCompleteFaultTolerant;
 			System.out.println((String)#GREEN + "Load Lid Complete" + (String)#RESET);
 		}
 		||
@@ -75,13 +88,11 @@ MPR(
 		}
 		await(!enableMPR);
 		
-		
 		await(enableMPR);
-		System.out.println((String)#YELLOW + "Rotary Turntable Start" + (String)#RESET);
-		send rotateStep(0);
-		receive rotateStepComplete;
-		System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
-		await(!enableMPR);
+		send removeBottle(0);
+		receive removeBottleComplete;
+		System.out.println("Remove Bottle Complete");
+		await(!enableMPR);	
 
 	}
 }

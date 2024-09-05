@@ -1,0 +1,119 @@
+import util.Constants;
+
+BaxterRightArmController(
+	input signal bottleLeftPos5, commandFeedbackRight;
+	output String signal commandRight;
+	
+	input Integer channel baxterRightArmCommand;
+	output Integer channel baxterRightArmCommandComplete;
+   	)
+->
+{
+	while(true)
+	{
+		receive baxterRightArmCommand;
+        // present(bottleAtPos5){}
+
+        switch((Integer)#baxterRightArmCommand)
+        {
+        // ---------------- REMOVE BOTTLE FROM END ----------------
+        case 1: // COMMAND_REMOVE_BOTTLE
+            // present(bottleLeftPos5){}
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ON_REMOVAL_POINT");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("grip right CLOSED");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ABOVE_PACKAGE");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ON_PACKAGE");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("grip right OPEN");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ABOVE_PACKAGE");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right IDLE");
+            }
+
+            break;
+		// --------------------------------------------------------
+        
+        // ------------ ROTATE TURNTABLE FAULT COMMAND ------------
+        case 3: // COMMAND_ROTATE_TURNTABLE
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ON_ROTARY_TURNTABLE");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("grip right CLOSED");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("rotate_hand right clockwise 60");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("grip right OPEN");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
+            }
+
+            abort(commandFeedbackRight)
+            {
+                sustain commandRight("move_arm right IDLE");
+            }
+
+            break;
+        // --------------------------------------------------------
+        
+        // ------------- INVALID COMMAND FOR RIGHT ARM -------------
+        default:
+            break;
+        // --------------------------------------------------------
+        }
+		
+		send baxterRightArmCommandComplete(0);
+		pause;
+	}
+}

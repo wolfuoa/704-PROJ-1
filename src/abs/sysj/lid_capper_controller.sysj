@@ -9,7 +9,7 @@ LidCapperController(
 	while(true)
 	{
 		receive capBottle;
-		// present(bottleAtPos4){
+		// present(bottleAtPos4){}
 		
 		await(enableLidCapper);
 		abort(gripperCylinderLowered)

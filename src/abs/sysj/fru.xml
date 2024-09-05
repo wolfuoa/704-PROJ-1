@@ -1,0 +1,113 @@
+<System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
+			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
+			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
+            <Interface SubSystem="SS710" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1071"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
+			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
+		</Link>
+	</Interconnection>
+
+    <SubSystem Name="SS0">
+		<ClockDomain Name="MPRCD" Class="MPR">
+			
+			<!-- FAULT RECOVERY UNIT -->
+			<oChannel Name="rotateStepFaultTolerant" To="FRUCD.rotateStepFaultTolerant" />
+			<iChannel Name="rotateStepCompleteFaultTolerant" From="FRUCD.rotateStepCompleteFaultTolerant" />
+			<oChannel Name="loadLidFaultTolerant" To="FRUCD.loadLidFaultTolerant" />
+			<iChannel Name="loadLidCompleteFaultTolerant" From="FRUCD.loadLidCompleteFaultTolerant" />
+			<oChannel Name="placeBottle" To="FRUCD.placeBottle" />
+			<iChannel Name="placeBottleComplete" From="FRUCD.placeBottleComplete" />
+			<oChannel Name="removeBottle" To="FRUCD.removeBottle" />
+			<iChannel Name="removeBottleComplete" From="FRUCD.removeBottleComplete" />
+
+		</ClockDomain>
+	</SubSystem>
+
+    <SubSystem Name="SS30">
+		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
+			
+			<!-- FRU -->
+			<iChannel Name="rotateStep" From="FRUCD.rotateStep" />
+			<oChannel Name="rotateStepComplete" To="FRUCD.rotateStepComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+    <SubSystem Name="SS50">
+		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
+			
+			<!-- FRU -->
+			<iChannel Name="loadLid" From="FRUCD.loadLid" />
+			<oChannel Name="loadLidComplete" To="FRUCD.loadLidComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+    <SubSystem Name="SS700">
+		<ClockDomain Name="BaxterLeftArmControllerCD" Class="BaxterLeftArmController">
+			
+			<!-- FRU -->
+			<iChannel Name="baxterLeftArmCommand" From="FRUCD.baxterLeftArmCommand" />
+			<oChannel Name="baxterLeftArmCommandComplete" To="FRUCD.baxterLeftArmCommandComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+    <SubSystem Name="SS710">
+		<ClockDomain Name="BaxterRightArmControllerCD" Class="BaxterRightArmController">
+			
+			<!-- FRU -->
+			<iChannel Name="baxterRightArmCommand" From="FRUCD.baxterRightArmCommand" />
+			<oChannel Name="baxterRightArmCommandComplete" To="FRUCD.baxterRightArmCommandComplete" />
+
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+		
+			<!-- ROTARY TURNTABLE -->
+			<iChannel Name="rotateStepCompleteToSensors" From="FRUCD.rotateStepCompleteToSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+    <SubSystem Name="SS100" Local="true">
+		<ClockDomain Name="FRUCD" Class="FRU">
+			
+            <!-- MPR -->
+            <iChannel Name="rotateStepFaultTolerant" From="MPRCD.rotateStepFaultTolerant" />
+			<oChannel Name="rotateStepCompleteFaultTolerant" To="MPRCD.rotateStepCompleteFaultTolerant" />
+			<iChannel Name="loadLidFaultTolerant" From="MPRCD.loadLidFaultTolerant" />
+			<oChannel Name="loadLidCompleteFaultTolerant" To="MPRCD.loadLidCompleteFaultTolerant" />
+			<iChannel Name="placeBottle" From="MPRCD.placeBottle" />
+			<oChannel Name="placeBottleComplete" To="MPRCD.placeBottleComplete" />
+			<iChannel Name="removeBottle" From="MPRCD.removeBottle" />
+			<oChannel Name="removeBottleComplete" To="MPRCD.removeBottleComplete" />
+
+            <!-- BAXTER LEFT ARM -->
+			<oChannel Name="baxterLeftArmCommand" To="BaxterLeftArmControllerCD.baxterLeftArmCommand" />
+			<iChannel Name="baxterLeftArmCommandComplete" From="BaxterLeftArmControllerCD.baxterLeftArmCommandComplete" />
+
+			<!-- BAXTER RIGHT ARM -->
+			<oChannel Name="baxterRightArmCommand" To="BaxterRightArmControllerCD.baxterRightArmCommand" />
+			<iChannel Name="baxterRightArmCommandComplete" From="BaxterRightArmControllerCD.baxterRightArmCommandComplete" />
+
+            <!-- ROTARY TURNTABLE-->
+			<oChannel Name="rotateStep" To="RotaryTurntableControllerCD.rotateStep" />
+			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
+
+            <!-- LID LOADER -->
+			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
+			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
+
+			<!-- SENSORS -->
+			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
+
+		</ClockDomain>
+	</SubSystem>
+</System>

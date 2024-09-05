@@ -1,0 +1,15 @@
+<System xmlns="http://systemjtechnology.com">
+	<SubSystem Name="SS701" Local="true">
+		<ClockDomain Name="BaxterPlantCD" Class="BaxterPlant">
+			
+			<!-- SELF LEFT CONTROLLER -->
+			<oSignal Name="commandFeedbackLeft" To="BaxterLeftArmControllerCD.commandFeedbackLeft" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10700" />
+			<iSignal Name="commandLeft" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10701" />
+
+            <!-- SELF RIGHT CONTROLLER -->
+			<oSignal Name="commandFeedbackRight" To="BaxterRightArmControllerCD.commandFeedbackRight" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10710" />
+			<iSignal Name="commandRight" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10701" />
+
+		</ClockDomain>
+	</SubSystem>
+</System>
