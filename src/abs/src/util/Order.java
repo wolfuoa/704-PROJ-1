@@ -2,7 +2,7 @@ package util;
 
 import java.io.Serializable;
 
-public class Order implements Serializable{
+public class Order implements Serializable {
     private final int quantity;
     private final int volume_liquid_0;
     private final int volume_liquid_1;

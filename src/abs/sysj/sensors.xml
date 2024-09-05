@@ -1,21 +1,13 @@
 <System xmlns="http://systemjtechnology.com">
 	<Interconnection>
 		<Link Type="Destination">
-			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
 			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
+			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 		</Link>
 	</Interconnection>
-
-	<SubSystem Name="SS30">
-		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
-			
-			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
-			
-		</ClockDomain>
-	</SubSystem>
 
 	<SubSystem Name="SS40">
 		<ClockDomain Name="LiquidFillerControllerCD" Class="LiquidFillerController">
@@ -43,6 +35,15 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS100">
+		<ClockDomain Name="FRUCD" Class="FRU">
+			
+			<!-- SENSORS -->
+			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
+
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS80" Local="true">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
@@ -53,7 +54,7 @@
 			<!-- ROTARY TURNTABLE -->
 			<oSignal Name="turntableAlignedWithSensor" To="RotaryTurntableControllerCD.turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
-			<iChannel Name="rotateStepCompleteToSensors" From="RotaryTurntableControllerCD.rotateStepCompleteToSensors" />
+			<iChannel Name="rotateStepCompleteToSensors" From="FRUCD.rotateStepCompleteToSensors" />
 
 			<!-- LIQUID FILLER -->
 			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />

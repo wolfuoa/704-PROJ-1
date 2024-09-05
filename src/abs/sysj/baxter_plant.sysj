@@ -1,0 +1,117 @@
+import util.RoboticArm;
+
+BaxterPlant(
+	input String signal commandLeft, commandRight;
+	output signal commandFeedbackLeft, commandFeedbackRight;
+   	)
+->
+{
+    RoboticArm rightArmInst = new RoboticArm();
+    RoboticArm leftArmInst = new RoboticArm();
+
+    RoboticArm signal rightArm;
+    RoboticArm signal leftArm;
+
+    emit rightArm(rightArmInst);
+    emit leftArm(leftArmInst);
+
+	// ------------ Command Left ------------
+	{
+        RoboticArm virtualLeftArm = new RoboticArm();
+
+        String args;
+        StringTokenizer tokens;
+
+        while(true)
+        {
+            await(commandLeft);
+            args = (String)#commandLeft;
+
+            System.out.println(args);
+
+            tokens = new StringTokenizer(args, " ");
+
+            switch(tokens.nextToken())
+            {
+            case "move_arm":
+                switch(tokens.nextToken())
+                {
+                default:
+                    virtualLeftArm.setArmStatus(tokens.nextToken());
+                    break;
+                }
+                break;
+            case "grip":
+                switch(tokens.nextToken())
+                {
+                default:
+                    virtualLeftArm.setGripperStatus(tokens.nextToken());
+                    break;
+                }
+                break;
+            case "rotate_hand":
+                break;
+            default:
+                break;
+            }
+
+            emit leftArm(virtualLeftArm);
+            emit commandFeedbackLeft;
+        }
+	}
+    // ---------------------------------------
+    ||
+    // ------------ Command Right ------------
+	{
+        RoboticArm virtualRightArm = new RoboticArm();
+
+        String args;
+        StringTokenizer tokens;
+
+        while(true)
+        {
+            await(commandRight);
+            args = (String)#commandRight;
+            
+            System.out.println(args);
+
+            tokens = new StringTokenizer(args, " ");
+
+            switch(tokens.nextToken())
+            {
+            case "move_arm":
+                switch(tokens.nextToken())
+                {
+                default:
+                    virtualRightArm.setArmStatus(tokens.nextToken());
+                    break;
+                }
+                break;
+            case "grip":
+                switch(tokens.nextToken())
+                {
+                default:
+                    virtualRightArm.setGripperStatus(tokens.nextToken());
+                    break;
+                }
+                break;
+            case "rotate_hand":
+                break;
+            default:
+                break;
+            }
+
+            emit rightArm(virtualRightArm);
+            emit commandFeedbackRight;
+        }
+	}
+    // ---------------------------------------
+    ||
+    // -------------- Broadcast --------------
+    {
+    //    {while(true){emit rightArmV((RoboticArm)#rightArm); pause;}}
+    //    ||
+    //    {while(true){emit leftArmV((RoboticArm)#leftArm); pause;}}
+    }
+    // ---------------------------------------
+}

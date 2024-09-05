@@ -1,0 +1,128 @@
+import util.Constants;
+
+FRU(
+    input Integer channel placeBottle, removeBottle, loadLidFaultTolerant, rotateStepFaultTolerant;
+    output Integer channel placeBottleComplete, removeBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant;
+
+    output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
+    input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
+
+    output Integer channel rotateStepCompleteToSensors;
+   	)
+->
+{
+    // ------- Local Signal Declarations -------
+    int signal localReceiverLeft;
+    int signal localTransmitterLeft;
+    int signal localReceiverRight;
+    int signal localTransmitterRight;
+    // -----------------------------------------
+
+	// -------------- Load Bottle --------------
+	{
+		while(true)
+		{
+			receive placeBottle;
+            emit localTransmitterLeft(0); // COMMAND_PLACE_BOTTLE
+            await(localReceiverLeft);
+            send placeBottleComplete(0);
+            pause;
+		}
+	}
+    // -----------------------------------------
+    ||
+	// ------------- Remove Bottle -------------
+	{
+		while(true)
+        {
+            receive removeBottle;
+            emit localTransmitterRight(1); // COMMAND_REMOVE_BOTTLE
+            await(localReceiverRight);
+            send removeBottleComplete(0);
+            pause;
+        }
+	}
+	// -----------------------------------------
+    ||
+	// ------- Load Lid [FAULT TOLERANT] -------
+	{
+		while(true)
+        {
+            receive loadLidFaultTolerant;
+            send loadLid(0);
+            receive loadLidComplete;
+            if((Integer)#loadLidComplete == 1)
+            {
+                emit localTransmitterLeft(2); // COMMAND_LOAD_LID
+                await(localReceiverLeft);
+            }
+            send loadLidCompleteFaultTolerant(0);
+            pause;
+        }
+	}
+	// -----------------------------------------
+    ||
+	// --- Rotate Turntable [FAULT TOLERANT] ---
+	{
+		while(true)
+        {
+            receive rotateStepFaultTolerant;
+            send rotateStep(0);
+            receive rotateStepComplete;
+            if((Integer)#rotateStepComplete == 1)
+            {
+                emit localTransmitterRight(3); // COMMAND_ROTATE_TURNTABLE
+                await(localReceiverRight);
+            }
+            send rotateStepCompleteFaultTolerant(0);
+            send rotateStepCompleteToSensors(0);
+            pause;
+        }
+	}
+	// -----------------------------------------
+    ||
+    // ------- Consolidate Input Signals -------
+    {
+        {
+            while(true)
+            {
+                receive baxterLeftArmCommandComplete;
+                emit localReceiverLeft(0);
+                pause;
+            }
+        }
+        ||
+        {
+            while(true)
+            {
+                receive baxterRightArmCommandComplete;
+                emit localReceiverRight(0);
+                pause;
+            }
+        }
+
+    }
+    // ----------------------------------------
+    ||
+    // ------ Consolidate Output Signals ------
+    {
+        {
+            while(true)
+            {
+                await(localTransmitterLeft);
+                send baxterLeftArmCommand((Integer)#localTransmitterLeft);
+                pause;
+            }
+        }
+        ||
+        {
+            while(true)
+            {
+                await(localTransmitterRight);
+                send baxterRightArmCommand((Integer)#localTransmitterRight);
+                pause;
+            }
+        }
+    }
+    // ----------------------------------------
+}

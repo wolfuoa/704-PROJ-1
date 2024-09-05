@@ -1,0 +1,35 @@
+<System xmlns="http://systemjtechnology.com">
+	<Interconnection>
+		<Link Type="Destination">
+			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
+			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
+		</Link>
+	</Interconnection>
+	
+	<SubSystem Name="SS100">
+		<ClockDomain Name="FRUCD" Class="FRU">
+			
+			<!-- BAXTER LEFT ARM -->
+			<oChannel Name="baxterLeftArmCommand" To="BaxterLeftArmControllerCD.baxterLeftArmCommand" />
+			<iChannel Name="baxterLeftArmCommandComplete" From="BaxterLeftArmControllerCD.baxterLeftArmCommandComplete" />
+
+		</ClockDomain>
+	</SubSystem>
+	
+	<SubSystem Name="SS700" Local="true">
+		<ClockDomain Name="BaxterLeftArmControllerCD" Class="BaxterLeftArmController">
+			
+			<!-- FRU -->
+			<iChannel Name="baxterLeftArmCommand" From="FRUCD.baxterLeftArmCommand" />
+			<oChannel Name="baxterLeftArmCommandComplete" To="FRUCD.baxterLeftArmCommandComplete" />
+			
+			<!-- SELF PLANT MODEL -->
+			<oSignal Name="commandLeft" To="BaxterPlantCD.commandLeft" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10701" />
+			<iSignal Name="commandFeedbackLeft" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10700" />
+
+			<!-- SENSORS -->
+			<iSignal Name="bottleAtPoint" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10700" />
+			
+		</ClockDomain>
+	</SubSystem>
+</System>
