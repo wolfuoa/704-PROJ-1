@@ -90,9 +90,10 @@ LiquidFillerController(
             send fillBottleCompleteSensors(0);
             send logQuantityLiquidFilled(-1);
         }
-        else
+        // -----------------------------------------
+		else
+		// ----- bottle at pos 2 not detected ------
         {
-            // bottle at position 2 not detected 
             send fillBottleComplete(2);
             System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 2 (liquid filler)" + "\u001B[0m");
         }

@@ -56,9 +56,10 @@ LidCapperController(
 			send capBottleComplete(0);
 			send capBottleCompleteSensors(0);
 		}
+		// ----------- To Visualization ------------
 		else
+		// ----- bottle at pos 4 not detected ------
 		{
-			// bottle at pos 4 not detected
 			send capBottleComplete(2);
 			System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 4 (lid capper)" + "\u001B[0m");
 		}

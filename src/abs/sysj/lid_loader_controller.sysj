@@ -34,22 +34,6 @@ LidLoaderController(
 			}
 			System.out.println("[DEBUG] pusher extended");
 			await(!enableLidLoader);
-
-			//// --------MODIFIED-----
-			//abort(!enableLidLoader)
-			//{
-			//	sustain pusherExtend;
-			//}
-			//trap(E)
-			//{
-			//	{sustain pusherExtend;}
-			//	||
-			//	{await(!enableLidLoader); exit(E);}
-			//}
-			//do
-			//{
-			//}
-			//// --------------
 			
 			await(enableLidLoader);
 			abort(pusherRetracted)
@@ -88,9 +72,10 @@ LidLoaderController(
 			send loadLidComplete(0);
 			send loadLidCompleteSensors(0);
 		}
+		// -----------------------------------------
 		else
+		// ----- bottle at pos 3 not detected ------
 		{
-			// bottle at pos 3 not detected
 			send loadLidComplete(2);
 			System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 3  (lid loader)" + "\u001B[0m");
 		}
