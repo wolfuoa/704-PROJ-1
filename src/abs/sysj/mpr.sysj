@@ -44,11 +44,11 @@ MPR(
 		System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 		iteration++;
 
-		await(enableABS);
+		await(enableMPR);
 		send placeBottle(0);
 		receive placeBottleComplete;
 		System.out.println("Place Bottle Complete");
-		await(!enableABS);	
+		await(!enableMPR);	
 		
 		await(enableMPR);
 		System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
@@ -88,11 +88,11 @@ MPR(
 		}
 		await(!enableMPR);
 		
-		await(enableABS);
+		await(enableMPR);
 		send removeBottle(0);
 		receive removeBottleComplete;
 		System.out.println("Remove Bottle Complete");
-		await(!enableABS);	
+		await(!enableMPR);	
 
 	}
 }

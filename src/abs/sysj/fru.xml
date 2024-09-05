@@ -67,7 +67,7 @@
 		</ClockDomain>
 	</SubSystem>
 
-	<SubSystem Name="SS80" Local="true">
+	<SubSystem Name="SS80">
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 		
 			<!-- ROTARY TURNTABLE -->
