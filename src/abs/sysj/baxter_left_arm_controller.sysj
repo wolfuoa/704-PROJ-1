@@ -13,6 +13,8 @@ BaxterLeftArmController(
 	{
 		receive baxterLeftArmCommand;
 
+        System.out.println((Integer)#baxterLeftArmCommand);
+
         switch((Integer)#baxterLeftArmCommand)
         {
         // --------------- PLACE BOTTLE ON CONVEYOR ---------------

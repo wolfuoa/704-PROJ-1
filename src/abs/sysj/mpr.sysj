@@ -21,7 +21,13 @@ MPR(
 	while(true){
 
 		System.out.println("Starting iteration " + iteration);
-		iteration++;	
+		iteration++;
+
+		await(enableABS);
+		send placeBottle(0);
+		receive placeBottleComplete;
+		System.out.println("Place Bottle Complete");
+		await(!enableABS);
 		
 		await(enableABS);
 		send conveyorStep(0);
@@ -51,6 +57,12 @@ MPR(
 		send fillBottle(test);
 		receive fillBottleComplete;
 		System.out.println("Fill Bottle Complete");
+		await(!enableABS);
+		
+		await(enableABS);
+		send removeBottle(0);
+		receive removeBottleComplete;
+		System.out.println("Remove Bottle Complete");
 		await(!enableABS);
 
 	}

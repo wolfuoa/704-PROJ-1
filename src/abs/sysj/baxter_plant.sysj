@@ -1,5 +1,4 @@
 import util.RoboticArm;
-import java.util.*;
 
 BaxterPlant(
 	input String signal commandLeft, commandRight;
@@ -27,6 +26,8 @@ BaxterPlant(
         {
             await(commandLeft);
             args = (String)#commandLeft;
+
+            System.out.println(args);
 
             tokens = new StringTokenizer(args, " ");
 
@@ -71,6 +72,8 @@ BaxterPlant(
         {
             await(commandRight);
             args = (String)#commandRight;
+            
+            System.out.println(args);
 
             tokens = new StringTokenizer(args, " ");
 

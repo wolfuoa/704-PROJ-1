@@ -35,7 +35,7 @@ FRU(
         {
             receive removeBottle;
             emit localTransmitterRight(1); // COMMAND_REMOVE_BOTTLE
-            receive baxterRightArmCommandComplete;
+            await(localReceiverRight);
             send removeBottleComplete(0);
             pause;
         }
@@ -77,4 +77,49 @@ FRU(
         }
 	}
 	// -----------------------------------------
+    ||
+    // ------- Consolidate Input Signals -------
+    {
+        {
+            while(true)
+            {
+                receive baxterLeftArmCommandComplete;
+                emit localReceiverLeft(0);
+                pause;
+            }
+        }
+        ||
+        {
+            while(true)
+            {
+                receive baxterRightArmCommandComplete;
+                emit localReceiverRight(0);
+                pause;
+            }
+        }
+
+    }
+    // ----------------------------------------
+    ||
+    // ------ Consolidate Output Signals ------
+    {
+        {
+            while(true)
+            {
+                await(localTransmitterLeft);
+                send baxterLeftArmCommand((Integer)#localTransmitterLeft);
+                pause;
+            }
+        }
+        ||
+        {
+            while(true)
+            {
+                await(localTransmitterRight);
+                send baxterRightArmCommand((Integer)#localTransmitterRight);
+                pause;
+            }
+        }
+    }
+    // ----------------------------------------
 }
