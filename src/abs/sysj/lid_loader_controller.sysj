@@ -42,6 +42,10 @@ LidLoaderController(
 		abort(!enableLidLoader){sustain pusherRetracted;}
 		
 		abort(enableLidLoader){sustain pusherRetracted;}
+<<<<<<< HEAD
+=======
+		}
+>>>>>>> 2d60ea068969448033d884c595372d72b650d040
 		abort(armAtSource)
 		{
 			sustain armSource;
