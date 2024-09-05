@@ -1,13 +1,13 @@
 import util.Constants;
 
 FRU(
-    output signal rotateStepCompleteToSensors;
-
     input Integer channel placeBottle, removeBottle, loadLidFaultTolerant, rotateStepFaultTolerant;
     output Integer channel placeBottleComplete, removeBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant;
 
     output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
     input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
+
+    output Integer channel rotateStepCompleteToSensors;
    	)
 ->
 {
@@ -75,7 +75,7 @@ FRU(
                 await(localReceiverRight);
             }
             send rotateStepCompleteFaultTolerant(0);
-            emit rotateStepCompleteToSensors;
+            send rotateStepCompleteToSensors(0);
             pause;
         }
 	}

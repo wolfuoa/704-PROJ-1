@@ -6,6 +6,7 @@
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
             <Interface SubSystem="SS710" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1071"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 		</Link>
 	</Interconnection>
@@ -66,6 +67,15 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS80" Local="true">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+		
+			<!-- ROTARY TURNTABLE -->
+			<iChannel Name="rotateStepCompleteToSensors" From="FRUCD.rotateStepCompleteToSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
     <SubSystem Name="SS100" Local="true">
 		<ClockDomain Name="FRUCD" Class="FRU">
 			
@@ -96,7 +106,7 @@
 			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
 
 			<!-- SENSORS -->
-			<oSignal Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
 
 		</ClockDomain>
 	</SubSystem>
