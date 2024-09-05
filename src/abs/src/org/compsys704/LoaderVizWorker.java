@@ -58,8 +58,17 @@ public class LoaderVizWorker extends Worker{
 		}
 	}
 	
+	@Override
+	public void setValueSignal(boolean status, Object objectData){
+		switch(signame){
+		default:
+			System.out.println("signal + object arrived " + signame);
+		}
+		
+	}
 	
-	static final List<String> signames = Arrays.asList("capBottleCompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
+	
+	static final List<String> signames = Arrays.asList("rightArmV","capBottleCompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
 	@Override
 	public boolean hasSignal(String sn) {

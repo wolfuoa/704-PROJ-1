@@ -42,6 +42,13 @@ public class POSWorker extends Worker{
 		}
 	}
 	
+	@Override
+	public void setValueSignal(boolean status, Object objectData){
+		switch(signame){
+		
+		}
+	}
+	
 	
 	static final List<String> signames = Arrays.asList("pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
