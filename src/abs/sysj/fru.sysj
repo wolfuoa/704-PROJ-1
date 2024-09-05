@@ -7,6 +7,7 @@ FRU(
     output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
     input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
 
+    input signal bottleAtPos1FRU, bottleAtPos3;
     output Integer channel rotateStepCompleteToSensors;
    	)
 ->
@@ -49,7 +50,9 @@ FRU(
 		while(true)
         {
             receive loadLidFaultTolerant;
-            send loadLid(0);
+            present(bottleAtPos3)
+            {
+                send loadLid(0);
             receive loadLidComplete;
             if((Integer)#loadLidComplete == 1)
             {
@@ -57,6 +60,12 @@ FRU(
                 await(localReceiverLeft);
             }
             send loadLidCompleteFaultTolerant(0);
+            }
+            else
+            {
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 3  (FRU -> Lid Loader)" + "\u001B[0m");
+                send loadLidCompleteFaultTolerant(2);
+            }
             pause;
         }
 	}
@@ -67,15 +76,23 @@ FRU(
 		while(true)
         {
             receive rotateStepFaultTolerant;
-            send rotateStep(0);
-            receive rotateStepComplete;
-            if((Integer)#rotateStepComplete == 1)
+            present(bottleAtPos1FRU)
             {
-                emit localTransmitterRight(3); // COMMAND_ROTATE_TURNTABLE
-                await(localReceiverRight);
+                send rotateStep(0);
+                receive rotateStepComplete;
+                if((Integer)#rotateStepComplete == 1)
+                {
+                    emit localTransmitterRight(3); // COMMAND_ROTATE_TURNTABLE
+                    await(localReceiverRight);
+                }
+                send rotateStepCompleteFaultTolerant(0);
+                send rotateStepCompleteToSensors(0);
             }
-            send rotateStepCompleteFaultTolerant(0);
-            send rotateStepCompleteToSensors(0);
+            else 
+            {
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 1  (FRU -> Rotary Turntable)" + "\u001B[0m");
+                send rotateStepCompleteFaultTolerant(2);
+            }
             pause;
         }
 	}

@@ -56,7 +56,7 @@ LidCapperController(
 			send capBottleComplete(0);
 			send capBottleCompleteSensors(0);
 		}
-		// ----------- To Visualization ------------
+		// -----------------------------------------
 		else
 		// ----- bottle at pos 4 not detected ------
 		{

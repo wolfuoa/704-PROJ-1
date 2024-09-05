@@ -12,14 +12,6 @@
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
 			<iChannel Name="conveyorStepComplete" From="ConveyorControllerCD.conveyorStepComplete" />
-				
-			<!-- LID LOADER -->
-			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
-			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
-			
-			<!-- LID CAPPER-->
-			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
-			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
 		</ClockDomain>
 	</SubSystem>
@@ -35,7 +27,7 @@
 			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
 			
 			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos1" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			<iSignal Name="bottleAtPos1Conveyor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
 			
 		</ClockDomain>
 	</SubSystem>

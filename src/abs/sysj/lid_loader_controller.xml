@@ -51,7 +51,6 @@
 			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 
 			<!-- SENSORS -->
-			<iSignal Name="bottleAtPos3" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			<oChannel Name="loadLidCompleteSensors" To="SensorsCD.loadLidCompleteSensors" />
 			
 		</ClockDomain>
