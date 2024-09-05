@@ -101,7 +101,7 @@ public class ABS extends JFrame {
 		this.add(pan3,c);
 		
 		this.setTitle("ABS Live");
-		this.setSize(800, 745);
+		this.setSize(800, 750);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);
