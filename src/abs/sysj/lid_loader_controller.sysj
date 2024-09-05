@@ -42,7 +42,6 @@ LidLoaderController(
 		abort(!enableLidLoader){sustain pusherRetracted;}
 		
 		abort(enableLidLoader){sustain pusherRetracted;}
-		}
 		abort(armAtSource)
 		{
 			sustain armSource;
@@ -71,4 +70,5 @@ LidLoaderController(
 		send loadLidComplete(0);
 		send loadLidCompleteSensors(0);
 	}
+	
 }
