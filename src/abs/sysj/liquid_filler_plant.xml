@@ -8,10 +8,15 @@
 			<iSignal Name="dosUnitValveExtend" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
 			<iSignal Name="dosUnitValveRetract" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
 			<iSignal Name="loadLiquid" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10041" />
+
 			<oSignal Name="dosUnitFilled" To="LiquidFillerControllerCD.dosUnitFilled" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 			<oSignal Name="dosUnitEvac" To="LiquidFillerControllerCD.dosUnitEvac" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 			<oSignal Name="liquidLoaded" To="LiquidFillerControllerCD.liquidLoaded" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+
 			
+			<!-- TO VISUALIZER -->
+			<oSignal Name="dosUnitEvacV" To="UI.dosUnitEvacV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+
 		</ClockDomain>
 	</SubSystem>
 </System>

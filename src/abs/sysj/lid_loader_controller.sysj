@@ -1,9 +1,9 @@
 LidLoaderController(
-		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request,bottleAtPos3;
+		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request,bottleAtPos3, enableLidLoader;
 		output signal pusherExtend,vacOn,armSource,armDest;
 
 		input Integer channel loadLid;
-		output Integer channel loadLidComplete;
+		output Integer channel loadLidComplete, loadLidCompleteSensors;
 		)
 ->{
 
@@ -17,38 +17,57 @@ LidLoaderController(
 			halt;
 		}
 
+		await(enableLidLoader);
 		abort(armAtDest)
 		{
 			sustain armDest;
 		}
+		System.out.println("[DEBUG] arm at destination");
+		await(!enableLidLoader);
 
+		await(enableLidLoader);
 		abort(pusherExtended)
 		{
 			sustain pusherExtend;
 		}
+		System.out.println("[DEBUG] pusher extended");
+		await(!enableLidLoader);
 		
+		await(enableLidLoader);
 		abort(pusherRetracted)
 		{
 			halt;
 		}
+		System.out.println("[DEBUG] pusher retracted");
+		await(!enableLidLoader);
 		
+		await(enableLidLoader);
 		abort(armAtSource)
 		{
 			sustain armSource;
 		}
+		System.out.println("[DEBUG] arm at source");
+		await(!enableLidLoader);
 		
+		await(enableLidLoader);
 		abort(WPgripped)
 		{
 			sustain vacOn;
 		}
+		System.out.println("[DEBUG] workpeice gripped");
+		await(!enableLidLoader);
 		
+		await(enableLidLoader);
 		abort(armAtDest)
 		{
 			emit armDest;
 			emit vacOn;
 			pause;
 		}
+		System.out.println("[DEBUG] arm at destination");
+		await(!enableLidLoader);
 
 		send loadLidComplete(0);
+		send loadLidCompleteSensors(0);
 	}
 }

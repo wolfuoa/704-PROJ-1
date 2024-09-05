@@ -1,8 +1,9 @@
 <System xmlns="http://systemjtechnology.com">
 	<Interconnection>
 		<Link Type="Destination">
-			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
 
@@ -24,9 +25,21 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+
+			<!-- LID CAPPER -->
+			<iChannel Name="capBottleCompleteSensors" From="LidCapperControllerCD.capBottleCompleteSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS60" Local="true">
 		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
 			
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableLidCapper" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+
 			<!-- MPR -->
 			<iChannel Name="capBottle" From="MPRCD.capBottle" />
 			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
@@ -44,6 +57,7 @@
 			
 			<!-- SENSORS -->
 			<iSignal Name="bottleAtPos4" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10060" />
+			<oChannel Name="capBottleCompleteSensors" To="SensorsCD.capBottleCompleteSensors" />
 			
 		</ClockDomain>
 	</SubSystem>

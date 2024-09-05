@@ -55,11 +55,21 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS60">
+		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
+			
+			<!-- MPR -->
+			<iChannel Name="capBottle" From="MPRCD.capBottle" />
+			<oChannel Name="capBottleComplete" To="MPRCD.capBottleComplete" />
+			
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS0" Local="true">
 		<ClockDomain Name="MPRCD" Class="MPR">
 
-			<!-- SIGNALS FROM ABS -->
-			<iSignal Name="enableABS" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableMPR" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />

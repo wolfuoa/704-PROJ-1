@@ -2,8 +2,9 @@ import run.GUI;
 //import run.POSGUI;
 import util.Order;
 
+
 MPR(
-	input signal enableABS;
+	input signal enableMPR;
 
 	input Integer channel conveyorStepComplete, capBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant, fillBottleComplete, placeBottleComplete, removeBottleComplete;
 	output Integer channel conveyorStep, capBottle, loadLidFaultTolerant, rotateStepFaultTolerant, placeBottle, removeBottle;
@@ -14,56 +15,84 @@ MPR(
 	new Thread(new GUI()).start();
 	//new Thread(new POSGUI()).start();
 
+	String signal RESET; 
+	String signal BLACK; 
+	String signal RED; 
+	String signal GREEN; 
+	String signal YELLOW; 
+	String signal BLUE; 
+	String signal PURPLE; 
+	String signal CYAN; 
+	String signal WHITE;
+
+	emit RESET("\u001B[0m");
+	emit BLACK("\u001B[30m");
+	emit RED("\u001B[31m");
+	emit GREEN("\u001B[32m");
+	emit YELLOW("\u001B[33m");
+	emit BLUE("\u001B[34m");
+	emit PURPLE("\u001B[35m");
+	emit CYAN("\u001B[36m");
+	emit WHITE("\u001B[37m");
+
 	int iteration = 0;
 	
-	Order test = new Order(4,80,40,30,50);
 	
-	while(true){
+	while(true)
+	{
 
-		System.out.println("Starting iteration " + iteration);
+		System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 		iteration++;
 
 		await(enableABS);
 		send placeBottle(0);
 		receive placeBottleComplete;
 		System.out.println("Place Bottle Complete");
-		await(!enableABS);
+		await(!enableABS);	
 		
-		await(enableABS);
+		await(enableMPR);
+		System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
 		send conveyorStep(0);
 		receive conveyorStepComplete;
-		System.out.println("Conveyor Complete");
-		await(!enableABS);	
+		System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
+		await(!enableMPR);
 
-		await(enableABS);
-		send loadLidFaultTolerant(0);
-		receive loadLidCompleteFaultTolerant;
-		System.out.println("Load Lid Complete");
-		await(!enableABS);
-
-		await(enableABS);
-		send capBottle(0);
-		receive capBottleComplete;
-		System.out.println("Cap Bottle Complete");
-		await(!enableABS);
-
-		await(enableABS);
+		await(enableMPR);
+		System.out.println((String)#YELLOW + "Rotary Turntable Start" + (String)#RESET);
 		send rotateStepFaultTolerant(0);
 		receive rotateStepCompleteFaultTolerant;
-		System.out.println("Rotary Turntable Complete");
-		await(!enableABS);
-
-		await(enableABS);
-		send fillBottle(test);
-		receive fillBottleComplete;
-		System.out.println("Fill Bottle Complete");
-		await(!enableABS);
+		System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
+		await(!enableMPR);
+		
+		await(enableMPR);
+		{
+			Order test = new Order(4,80,40,30,50);
+			System.out.println((String)#YELLOW + "Fill Bottle Start" + (String)#RESET);
+			send fillBottle(test);
+			receive fillBottleComplete;
+			System.out.println((String)#GREEN + "Fill Bottle Complete" + (String)#RESET);
+		}
+		||
+		{
+			System.out.println((String)#YELLOW + "Load Lid Start" + (String)#RESET);
+			send loadLidFaultTolerant(0);
+			receive loadLidCompleteFaultTolerant;
+			System.out.println((String)#GREEN + "Load Lid Complete" + (String)#RESET);
+		}
+		||
+		{
+			System.out.println((String)#YELLOW + "Cap Bottle Start" + (String)#RESET);
+			send capBottle(0);
+			receive capBottleComplete;
+			System.out.println((String)#GREEN + "Cap Bottle Complete" + (String)#RESET);
+		}
+		await(!enableMPR);
 		
 		await(enableABS);
 		send removeBottle(0);
 		receive removeBottleComplete;
 		System.out.println("Remove Bottle Complete");
-		await(!enableABS);
+		await(!enableABS);	
 
 	}
 }

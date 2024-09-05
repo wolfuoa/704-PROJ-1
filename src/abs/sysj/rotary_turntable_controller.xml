@@ -3,17 +3,8 @@
 		<Link Type="Destination">
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
 			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
-			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
-
-	<SubSystem Name="SS80">
-		<ClockDomain Name="SensorsCD" Class="Sensors">
-			
-			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
-
-		</ClockDomain>
-	</SubSystem>
 
 	<SubSystem Name="SS100">
 		<ClockDomain Name="FRUCD" Class="FRU">
