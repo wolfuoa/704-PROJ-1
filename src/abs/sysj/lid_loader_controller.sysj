@@ -31,17 +31,17 @@ LidLoaderController(
 			sustain pusherExtend;
 		}
 		System.out.println("[DEBUG] pusher extended");
-		await(!enableLidLoader);
-
-		await(enableLidLoader);
+		abort(!enableLidLoader){sustain pusherExtend;}
+		
+		abort(enableLidLoader){sustain pusherExtend;}
 		abort(pusherRetracted)
 		{
 			halt;
 		}
 		System.out.println("[DEBUG] pusher retracted");
-		abort(!enableLidLoader){sustain pusherRetracted;}
+		await(!enableLidLoader);
 		
-		abort(enableLidLoader){sustain pusherRetracted;}
+		await(enableLidLoader);
 		abort(armAtSource)
 		{
 			sustain armSource;
