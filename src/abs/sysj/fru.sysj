@@ -26,7 +26,14 @@ FRU(
 			receive placeBottle;
             emit localTransmitterLeft(0); // COMMAND_PLACE_BOTTLE
             await(localReceiverLeft);
-            send placeBottleComplete(0);
+            if((Integer)#localReceiverLeft == 0)
+            {
+                send placeBottleComplete(0);
+            }
+            else
+            {
+                send placeBottleComplete(2);
+            }
             pause;
 		}
 	}
@@ -104,7 +111,7 @@ FRU(
             while(true)
             {
                 receive baxterLeftArmCommandComplete;
-                emit localReceiverLeft(0);
+                emit localReceiverLeft((Integer)#baxterLeftArmCommandComplete);
                 pause;
             }
         }
@@ -113,7 +120,7 @@ FRU(
             while(true)
             {
                 receive baxterRightArmCommandComplete;
-                emit localReceiverRight(0);
+                emit localReceiverRight((Integer)#baxterRightArmCommandComplete);
                 pause;
             }
         }

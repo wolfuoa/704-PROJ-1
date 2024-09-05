@@ -1,29 +1,33 @@
 Sensors(
 	input signal conveyorPlantOn, rotaryTurntablePlantOn;
-	output signal bottleAtPos1Conveyor, bottleAtPos1FRU, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor, overflowSensed;
+	output signal bottleAtPoint, bottleAtPos1Conveyor, bottleAtPos1FRU, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, bottleLeftPos5, turntableAlignedWithSensor, overflowSensed;
 	output signal bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V, capBottleCompleteV, capBottleIncompleteV, loadLidCompleteV, loadLidIncompleteV, fillBottleCompleteV, fillBottleIncompleteV;
 
-	input Integer channel rotateStepCompleteToSensors, logQuantityLiquidFilled, capBottleCompleteSensors, loadLidCompleteSensors, fillBottleCompleteSensors;
+	input Integer channel rotateStepCompleteToSensors, logQuantityLiquidFilled, capBottleCompleteSensors, loadLidCompleteSensors, fillBottleCompleteSensors, placeBottleCompleteSensors, removeBottleCompleteSensors;
    	)
 ->
 {
 	// --------------- Private Signal ---------------
+	boolean signal bottleAtPos0Reg;
 	boolean signal bottleAtPos1Reg;
 	boolean signal bottleAtPos2Reg;
 	boolean signal bottleAtPos3Reg;
 	boolean signal bottleAtPos4Reg;
 	boolean signal bottleAtPos5Reg;
+	boolean signal bottleLeftPos5Reg;
 	int signal totalFluidInCurrentBottle;
 	int signal capBottleCompleteMemory;
 	int signal loadLidCompleteMemory;
 	int signal fillBottleCompleteMemory;
 	// ----------------------------------------------
 
+	emit bottleAtPos0Reg(false);
 	emit bottleAtPos1Reg(false);
 	emit bottleAtPos2Reg(false);
 	emit bottleAtPos3Reg(false);
 	emit bottleAtPos4Reg(false);
 	emit bottleAtPos5Reg(false);
+	emit bottleLeftPos5Reg(false);
 	emit totalFluidInCurrentBottle(0);
 	emit capBottleCompleteMemory(0);
 	emit loadLidCompleteMemory(0);
@@ -34,11 +38,38 @@ Sensors(
 		while(true)
 		{
 			await(conveyorPlantOn);
-			if ( true ) //bottleAtPos0
+			if((Boolean)#bottleAtPos0Reg == true)
 			{
 				emit bottleAtPos1Reg(true);
+				emit bottleAtPos0Reg(false);
+				if((Boolean)#bottleAtPos5Reg == true)
+				{
+					emit bottleLeftPos5Reg(true);
+				}
 				emit bottleAtPos5Reg(false);
 			}
+		}
+	}
+	// ----------------------------------------------
+	||
+	// ------------ placeBottle Complete ------------
+	{
+		while(true)
+		{
+			receive placeBottleCompleteSensors;
+			emit bottleAtPos0Reg(true);
+			pause;
+		}
+	}
+	// ----------------------------------------------
+	||
+	// ------------ removeBottleComplete ------------
+	{
+		while(true)
+		{
+			receive removeBottleCompleteSensors;
+			emit bottleLeftPos5Reg(false);
+			pause;
 		}
 	}
 	// ----------------------------------------------
@@ -164,6 +195,10 @@ Sensors(
 		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4; emit bottleAtPos4V;} pause;}}
 		||
 		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5; emit bottleAtPos5V;} pause;}}
+		||
+		{while(true){emit bottleAtPoint; pause;}}
+		||
+		{while(true){if((Boolean)#bottleLeftPos5Reg){emit bottleLeftPos5;} pause;}}
 	}
 	// ----------------------------------------------
 }
