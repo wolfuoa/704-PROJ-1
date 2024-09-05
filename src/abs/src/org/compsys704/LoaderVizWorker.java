@@ -10,17 +10,23 @@ public class LoaderVizWorker extends Worker{
 //		System.out.println(signame+"  "+status);
 		switch(signame){
 		case "pusherRetractedE":
-			System.out.println("Cpusher Retracted Viz");
+			if (status == true) {
+				System.out.println("pusher Retracted true Viz");
+			}
 			States.PUSHER_RETRACTED = status;
 			break;
 		case "pusherExtendedE":
-			System.out.println("pusher Extended Viz");
+			if (status == true) {
+				System.out.println("pusher Extended true Viz");
+			}
 			States.PUSHER_EXTENDED = status;
 			break;
 		case "armAtSourceE":
+			System.out.println("armAtSource Viz");
 			States.ARM_AT_SOURCE = status;
 			break;
 		case "armAtDestE":
+			System.out.println("armAtDest Viz");
 			States.ARM_AT_DEST = status;
 			break;
 		// Capper
