@@ -1,6 +1,8 @@
 import util.Constants;
 
 FRU(
+    output signal rotateStepCompleteToSensors;
+
     input Integer channel placeBottle, removeBottle, loadLidFaultTolerant, rotateStepFaultTolerant;
     output Integer channel placeBottleComplete, removeBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant;
 
@@ -73,6 +75,7 @@ FRU(
                 await(localReceiverRight);
             }
             send rotateStepCompleteFaultTolerant(0);
+            emit rotateStepCompleteToSensors;
             pause;
         }
 	}

@@ -95,6 +95,9 @@
 			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
 			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
 
+			<!-- SENSORS -->
+			<oSignal Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10080" />
+
 		</ClockDomain>
 	</SubSystem>
 </System>
