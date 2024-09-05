@@ -37,8 +37,10 @@ LidCapperPlant(
 			}
 		}
 	}
+	// -----------------------------------------
 	||
-	{// To viz
+	// ----------- To Visualization ------------
+	{
 		{while(true){present(gripperCylinderRotationAtMax){emit gripperCylinderRotationAtMaxV;} pause;}}
 		||
 		{while(true){present(gripperCylinderRotationAtOrigin){emit gripperCylinderRotationAtOriginV;} pause;}}
