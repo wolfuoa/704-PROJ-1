@@ -8,6 +8,8 @@ import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import util.Order;
+
 
 public class SignalClient implements ActionListener{
 
@@ -16,11 +18,25 @@ public class SignalClient implements ActionListener{
 	int port;
 	final String ip = "127.0.0.1";
 	
+	Order posOrder = null;
+	
 	String dest;
 	
 	public SignalClient(int p, String dest){
 		this.dest = dest;
 		port = p;
+		try {
+			s.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);;
+		}
+	}
+	
+	public SignalClient(int p, String dest, Order order){
+		this.dest = dest;
+		port = p;
+		this.posOrder = order;
 		try {
 			s.close();
 		} catch (IOException e) {
@@ -41,16 +57,22 @@ public class SignalClient implements ActionListener{
 				if(resp < 0)
 					throw new ConnectException("Not thru");
 			}
-			oos.writeObject(new Object[]{true});
-			Thread.sleep(50);
-			oos.writeObject(new Object[]{false});
+			if (posOrder != null) {
+				oos.writeObject(new Object[]{true, posOrder});
+				Thread.sleep(50);
+				oos.writeObject(new Object[]{false});
+				posOrder = null;
+			} else {
+				oos.writeObject(new Object[]{true});
+				Thread.sleep(50);
+				oos.writeObject(new Object[]{false});
+			}
 		}
 		catch (IOException | InterruptedException ee) {
 			try {s.close();} catch (IOException e1) {
 				e1.printStackTrace();
 				System.exit(1);
 			}
-		}
-		
+		}	
 	}
 }

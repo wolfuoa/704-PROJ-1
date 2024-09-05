@@ -17,18 +17,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import util.Order;
+
 public class ABS extends JFrame {
 	private JPanel panel;
 	
 	public ABS() {
 //		this.setPreferredSize(new Dimension(200, 300));
 		panel = new Canvas();
-		panel.setPreferredSize(new Dimension(700, 450));
+		panel.setPreferredSize(new Dimension(700, 600));
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
-		JButton request = new JButton("request");
-		request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
+		JButton request = new JButton("test pos");
+		request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, new Order(69, 5, 10, 12, 19)));
+		//request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL));
 		JButton refill = new JButton("refill");
 		refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
 		JPanel ss = new JPanel();
@@ -98,7 +101,7 @@ public class ABS extends JFrame {
 		this.add(pan3,c);
 		
 		this.setTitle("ABS Live");
-		this.setSize(800, 700);
+		this.setSize(800, 750);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(true);

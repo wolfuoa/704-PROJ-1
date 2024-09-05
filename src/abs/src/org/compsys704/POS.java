@@ -17,96 +17,75 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import javafx.scene.shape.Box;
+
 public class POS extends JFrame {
 	private JPanel panel;
 	
 	public POS() {
 //		this.setPreferredSize(new Dimension(200, 300));
-		 // Create a JLabel for the header text
-        JLabel headerLabel = new JLabel("Advantech ABS", JLabel.CENTER);
-        headerLabel.setFont(new Font("ARIAL", Font.BOLD, 50));
-        
-        JLabel header2 = new JLabel("Create a Batch Order", JLabel.LEFT);
-        header2.setFont(new Font("ARIAL", Font.BOLD, 20));
-        header2.setForeground(new Color(120, 66, 245));
-        //header2.SetColor(new Color(120, 66, 245));
-        
-        this.add(headerLabel);
-        this.add(header2);
+		 
+		// Layout System
+	    this.setLayout(new GridBagLayout());
+	    GridBagConstraints c = new GridBagConstraints();
+	    
+	    // Main Header
+	    JLabel headerLabel = new JLabel("Advantech ABS", JLabel.CENTER);
+	    headerLabel.setFont(new Font("ARIAL", Font.BOLD, 50));
+	    c.gridx = 0;  // First column
+	    c.gridy = 0;  // First row
+	    c.gridwidth = 2;  // Span two columns if necessary
+	    c.anchor = GridBagConstraints.CENTER;  // Center the label
+	    this.add(headerLabel, c);
+
+	    // Create and add header2 directly under headerLabel
+	    JLabel header2 = new JLabel("Create a Batch Order", JLabel.LEFT);
+	    header2.setFont(new Font("ARIAL", Font.BOLD, 25));
+	    header2.setForeground(new Color(120, 66, 245));
+	    c.gridy = 1;  // Second row
+	    c.gridwidth = 2;  // Span across two columns
+	    c.anchor = GridBagConstraints.WEST;  // Align to the left
+	    c.fill = GridBagConstraints.HORIZONTAL;  // Fill horizontally to the left
+	    this.add(header2, c);
+	    
+	    // Add a small blank space in the third row
+	    JPanel blankSpace = new JPanel();
+	    blankSpace.setPreferredSize(new java.awt.Dimension(0, 10));  // 10 pixels tall, 0 width
+	    c.gridy = 2;  // Third row
+	    c.weighty = 0;  // No extra vertical space allocated
+	    this.add(blankSpace, c);
+	    
+	    // Create and add header2 directly under headerLabel
+	    JLabel quantityLabel = new JLabel("Quantity:", JLabel.LEFT);
+	    quantityLabel.setFont(new Font("ARIAL", Font.BOLD, 20));
+	    c.gridy = 3;  // Second row
+	    c.gridwidth = 2;  // Span across two columns
+	    c.anchor = GridBagConstraints.WEST;  // Align to the left
+	    c.fill = GridBagConstraints.HORIZONTAL;  // Fill horizontally to the left
+	    this.add(quantityLabel, c);
+	    
+	    
+	    // Add other components like buttons, panels, etc.
+	    // Example: adding a panel with buttons
+	    JButton enable = new JButton("enable");
+	    enable.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.ENABLE_SIGNAL));
+	    JButton request = new JButton("request");
+	    request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
+	    JButton refill = new JButton("refill");
+	    refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
+
+	    JPanel ss = new JPanel();
+	    ss.add(enable);
+	    ss.add(request);
+	    ss.add(refill);
+
+	    c.gridy = 4;  // Third row
+	    c.gridwidth = 1;  // Reset to single column width
+	    this.add(ss, c);
 		
-		JButton enable = new JButton("enable");
-		enable.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.ENABLE_SIGNAL));
-		JButton request = new JButton("request");
-		request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
-		JButton refill = new JButton("refill");
-		refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
-		JPanel ss = new JPanel();
-		ss.add(enable);
-		ss.add(request);
-		ss.add(refill);
-		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.gridx = 0;
-		c.gridy = 0;
-
-		c.gridx = 0;
-		c.gridy = 1;
-		this.add(ss,c);
-		
-		// Radio buttons
-		SignalRadioClient src = new SignalRadioClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_Mode);
-		JRadioButton mmode = new JRadioButton("Manual");
-		mmode.setActionCommand("1");
-		mmode.addActionListener(src);
-		JRadioButton amode = new JRadioButton("Auto");
-		amode.setActionCommand("0");
-		amode.addActionListener(src);
-		amode.setSelected(true);
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(mmode);
-		bg.add(amode);
-		
-		JPanel pan = new JPanel(new GridLayout(1, 0));
-		pan.add(amode);
-		pan.add(mmode);
-		c.gridx = 0;
-		c.gridy = 2;
-		pan.setBorder(BorderFactory.createTitledBorder("Mode selector"));
-
-		// Checkboxes
-		JCheckBox pe = new JCheckBox("pusherExtend");
-		pe.setEnabled(false);
-		pe.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_PUSHER_EXTEND));
-//		JCheckBox pr = new JCheckBox("vacOff");
-//		pr.setEnabled(false);
-//		pr.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_VACOFF));
-		JCheckBox vo = new JCheckBox("vacOn");
-		vo.setEnabled(false);
-		vo.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_VACON));
-		JCheckBox as = new JCheckBox("armSource");
-		as.setEnabled(false);
-		as.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_ARM_SOURCE));
-		JCheckBox ad = new JCheckBox("armDest");
-		ad.setEnabled(false);
-		ad.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_ARM_DEST));
-
-		JPanel pan2 = new JPanel(new GridLayout(2, 2));
-		pan2.add(pe);
-//		pan2.add(pr);
-		pan2.add(vo);
-		pan2.add(as);
-		pan2.add(ad);
-		pan2.setBorder(BorderFactory.createTitledBorder("Manual control"));
-		src.setCheckBoxComponent(pan2);
-
-		JPanel pan3 = new JPanel(new GridLayout(0, 2));
-		pan3.add(pan);
-		pan3.add(pan2);
-		c.gridx = 0;
-		c.gridy = 2;
-		this.add(pan3,c);
 		
 		this.setTitle("POS");
+		this.setSize(400, 500);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
@@ -114,7 +93,7 @@ public class POS extends JFrame {
 
 	public static void main(String[] args) {
 		POS cl = new POS();
-		cl.pack();
+		//cl.pack();
 		cl.setVisible(true);
 		
 		SignalServer<POSWorker> server = new SignalServer<POSWorker>(Ports.PORT_LOADER_POS, POSWorker.class);
