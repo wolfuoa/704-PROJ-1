@@ -77,6 +77,8 @@ Sensors(
 			emit loadLidCompleteMemory(0);
 			emit fillBottleCompleteMemory(0);
 
+			System.out.println("[DEBUG] pos5:" + (Boolean)#bottleAtPos5Reg + " pos4:" + (Boolean)#bottleAtPos4Reg + " pos3:" + (Boolean)#bottleAtPos3Reg + " pos2:" + (Boolean)#bottleAtPos2Reg + " pos1:" + (Boolean)#bottleAtPos1Reg);
+
 			pause;
 		}	
 	}

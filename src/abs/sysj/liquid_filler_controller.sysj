@@ -21,73 +21,82 @@ LiquidFillerController(
     {
     	pause;
         receive fillBottle;
-        // present(bottleAtPos2){}
-
-        order = (Order)#fillBottle;
-
-        for(int liquid_num = 0; liquid_num < 4; liquid_num++)
+        present(bottleAtPos2)
         {
-        	emit currentLiquidVolume(order.getLiquidVolume(liquid_num));
-        	
-            await(enableLiquidFiller);
-            trap(E)
+            order = (Order)#fillBottle;
+
+            for(int liquid_num = 0; liquid_num < 4; liquid_num++)
             {
-                abort(liquidLoaded)
-                {
-                    sustain loadLiquid(liquid_num);
-                }
+                emit currentLiquidVolume(order.getLiquidVolume(liquid_num));
                 
-                if((Integer)#liquidLoaded != liquid_num)
+                await(enableLiquidFiller);
+                trap(E)
                 {
-                    exit(E);
+                    abort(liquidLoaded)
+                    {
+                        sustain loadLiquid(liquid_num);
+                    }
+                    
+                    if((Integer)#liquidLoaded != liquid_num)
+                    {
+                        exit(E);
+                    }
                 }
-            }
-            do
-            {
-                // Error
-            }
-            System.out.println("[DEBUG] filled liquid number " + liquid_num);
-            await(!enableLiquidFiller);
-
-
-            await(enableLiquidFiller);
-            trap(E)
-            {
-                abort(dosUnitFilled)
+                do
                 {
-                    {sustain dosUnitValveRetract((Integer)#currentLiquidVolume);}
+                    // Error
+                }
+                System.out.println("[DEBUG] filled liquid number " + liquid_num);
+                await(!enableLiquidFiller);
+
+
+                await(enableLiquidFiller);
+                trap(E)
+                {
+                    abort(dosUnitFilled)
+                    {
+                        {sustain dosUnitValveRetract((Integer)#currentLiquidVolume);}
+                        ||
+                        {sustain valveInjectorOn;}
+                    }
+
+                    if((Integer)#dosUnitFilled != (Integer)#currentLiquidVolume)
+                    {
+                        exit(E);
+                    }
+                }
+                do
+                {
+                    // Error
+                }
+                System.out.println("[DEBUG] dosUnitFilled");
+                await(!enableLiquidFiller);
+
+                await(enableLiquidFiller);
+                abort(dosUnitEvac)
+                {
+                    {sustain valveInletOn;}
                     ||
-                    {sustain valveInjectorOn;}
+                    {sustain dosUnitValveExtend;}
                 }
-
-                if((Integer)#dosUnitFilled != (Integer)#currentLiquidVolume)
-                {
-                    exit(E);
-                }
+                System.out.println("[DEBUG] dosUnitEvac");
+                await(!enableLiquidFiller);
+                
+                send logQuantityLiquidFilled((Integer)#dosUnitFilled);
+                pause;
+                
             }
-            do
-            {
-                // Error
-            }
-            System.out.println("[DEBUG] dosUnitFilled");
-            await(!enableLiquidFiller);
-
-            await(enableLiquidFiller);
-            abort(dosUnitEvac)
-            {
-                {sustain valveInletOn;}
-                ||
-                {sustain dosUnitValveExtend;}
-            }
-            System.out.println("[DEBUG] dosUnitEvac");
-            await(!enableLiquidFiller);
-            
-            send logQuantityLiquidFilled((Integer)#dosUnitFilled);
-            pause;
-            
+            send fillBottleComplete(0);
+            send fillBottleCompleteSensors(0);
+            send logQuantityLiquidFilled(-1);
         }
-        send fillBottleComplete(0);
-        send fillBottleCompleteSensors(0);
-        send logQuantityLiquidFilled(-1);
+        else
+        {
+            // bottle at position 2 not detected 
+            send fillBottleComplete(2);
+            System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 2 (liquid filler)" + "\u001B[0m");
+        }
+
+        
 	}
 }

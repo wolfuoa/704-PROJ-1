@@ -63,9 +63,11 @@
 
 			<!-- LID LOADER -->
 			<iChannel Name="loadLidCompleteSensors" From="LidLoaderControllerCD.loadLidCompleteSensors" />
+			<oSignal Name="bottleAtPos3" To="LidLoaderControllerCD.bottleAtPos3" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10050" />
 
 			<!-- LID CAPPER -->
 			<iChannel Name="capBottleCompleteSensors" From="LidCapperControllerCD.capBottleCompleteSensors" />
+			<oSignal Name="bottleAtPos4" To="LidCapperControllerCD.bottleAtPos4" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 
 			<!-- TO VISUALIZER -->
 			<oSignal Name="bottleAtPos1V" To="UI.bottleAtPos1V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
