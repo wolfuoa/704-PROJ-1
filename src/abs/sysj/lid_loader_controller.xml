@@ -1,8 +1,9 @@
 <System xmlns="http://systemjtechnology.com">
 	<Interconnection>
 		<Link Type="Destination">
-			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS0" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1000"/>
+			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
 
@@ -21,6 +22,15 @@
 			<oChannel Name="capBottle" To="LidCapperControllerCD.capBottle" />
 			<iChannel Name="capBottleComplete" From="LidCapperControllerCD.capBottleComplete" />
 
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+			
+			<!-- LID LOADER -->
+			<iChannel Name="loadLidCompleteSensors" From="LidLoaderControllerCD.loadLidCompleteSensors" />
+			
 		</ClockDomain>
 	</SubSystem>
 
@@ -50,6 +60,7 @@
 
 			<!-- SENSORS -->
 			<iSignal Name="bottleAtPos3" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
+			<oChannel Name="loadLidCompleteSensors" To="SensorsCD.loadLidCompleteSensors" />
 			
 		</ClockDomain>
 	</SubSystem>

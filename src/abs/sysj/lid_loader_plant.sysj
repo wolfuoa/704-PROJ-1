@@ -87,8 +87,10 @@ LidLoaderPlant(
 			pause;
 		}
 	}
+	// -----------------------------------------
 	||
-	{// To viz
+	// ----------- To Visualization ------------
+	{
 		{while(true){present(pusherRetracted){emit pusherRetractedE;} pause;}}
 		||
 		{while(true){present(pusherExtended){emit pusherExtendedE;} pause;}}

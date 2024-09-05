@@ -7,7 +7,7 @@ LiquidFillerController(
     output Integer signal loadLiquid, dosUnitValveRetract;
 
     input Order channel fillBottle;
-    output Integer channel fillBottleComplete, logQuantityLiquidFilled;
+    output Integer channel fillBottleComplete, fillBottleCompleteSensors, logQuantityLiquidFilled;
     )
 ->
 {
@@ -87,6 +87,7 @@ LiquidFillerController(
             
         }
         send fillBottleComplete(0);
+        send fillBottleCompleteSensors(0);
         send logQuantityLiquidFilled(-1);
 	}
 }

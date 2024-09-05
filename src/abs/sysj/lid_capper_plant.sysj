@@ -1,6 +1,7 @@
 LidCapperPlant(
 	input signal gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
 	output signal gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered;
+	output signal gripperCylinderRotationAtMaxV, gripperCylinderRotationAtOriginV, gripperCylinderLiftedV, gripperCylinderLoweredV;
    	)
 ->
 {
@@ -37,4 +38,15 @@ LidCapperPlant(
 		}
 	}
 	// -----------------------------------------
+	||
+	// ----------- To Visualization ------------
+	{
+		{while(true){present(gripperCylinderRotationAtMax){emit gripperCylinderRotationAtMaxV;} pause;}}
+		||
+		{while(true){present(gripperCylinderRotationAtOrigin){emit gripperCylinderRotationAtOriginV;} pause;}}
+		||
+		{while(true){present(gripperCylinderLifted){emit gripperCylinderLiftedV;} pause;}}
+		||
+		{while(true){present(gripperCylinderLowered){emit gripperCylinderLoweredV;} pause;}}
+	}
 }

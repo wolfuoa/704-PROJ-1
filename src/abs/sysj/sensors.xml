@@ -3,6 +3,8 @@
 		<Link Type="Destination">
 			<Interface SubSystem="SS30" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1003"/>
 			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
+			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
+			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
@@ -10,9 +12,7 @@
 	<SubSystem Name="SS30">
 		<ClockDomain Name="RotaryTurntableControllerCD" Class="RotaryTurntableController">
 			
-			<!-- MPR -->
-			<iChannel Name="rotateStep" From="MPRCD.rotateStep" />
-			<oChannel Name="rotateStepComplete" To="MPRCD.rotateStepComplete" />
+			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
 			
 		</ClockDomain>
 	</SubSystem>
@@ -22,7 +22,24 @@
 
             <!-- SENSORS -->
 			<oChannel Name="logQuantityLiquidFilled" To="SensorsCD.logQuantityLiquidFilled" />
+			<oChannel Name="fillBottleCompleteSensors" To="SensorsCD.fillBottleCompleteSensors" />
 
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS50">
+		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
+
+			<oChannel Name="loadLidCompleteSensors" To="SensorsCD.loadLidCompleteSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS60">
+		<ClockDomain Name="LidCapperControllerCD" Class="LidCapperController">
+			
+			<oChannel Name="capBottleCompleteSensors" To="SensorsCD.capBottleCompleteSensors" />
+			
 		</ClockDomain>
 	</SubSystem>
 
@@ -36,12 +53,32 @@
 			<!-- ROTARY TURNTABLE -->
 			<oSignal Name="turntableAlignedWithSensor" To="RotaryTurntableControllerCD.turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10030" />
 			<iSignal Name="rotaryTurntablePlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
-			<iChannel Name="rotateStepComplete" From="RotaryTurntableControllerCD.rotateStepComplete" />
+			<iChannel Name="rotateStepCompleteToSensors" From="RotaryTurntableControllerCD.rotateStepCompleteToSensors" />
 
 			<!-- LIQUID FILLER -->
 			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />
+			<iChannel Name="fillBottleCompleteSensors" From="LiquidFillerControllerCD.fillBottleCompleteSensors" />
 			<oSignal Name="bottleAtPos2" To="LiquidFillerControllerCD.bottleAtPos2" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 			<oSignal Name="overflowSensed" To="LiquidFillerControllerCD.overflowSensed" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
+
+			<!-- LID LOADER -->
+			<iChannel Name="loadLidCompleteSensors" From="LidLoaderControllerCD.loadLidCompleteSensors" />
+
+			<!-- LID CAPPER -->
+			<iChannel Name="capBottleCompleteSensors" From="LidCapperControllerCD.capBottleCompleteSensors" />
+
+			<!-- TO VISUALIZER -->
+			<oSignal Name="bottleAtPos1V" To="UI.bottleAtPos1V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos2V" To="UI.bottleAtPos2V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos3V" To="UI.bottleAtPos3V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos4V" To="UI.bottleAtPos4V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos5V" To="UI.bottleAtPos5V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="capBottleCompleteV" To="UI.capBottleCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="capBottleIncompleteV" To="UI.capBottleIncompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="loadLidCompleteV" To="UI.loadLidCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="loadLidIncompleteV" To="UI.loadLidIncompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="fillBottleCompleteV" To="UI.fillBottleCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="fillBottleIncompleteV" To="UI.fillBottleIncompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			
 		</ClockDomain>
 	</SubSystem>

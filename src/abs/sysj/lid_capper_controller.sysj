@@ -2,7 +2,7 @@ LidCapperController(
 	input signal bottleAtPos4, gripperCylinderRotationAtMax, gripperCylinderRotationAtOrigin, gripperCylinderLifted, gripperCylinderLowered, enableLidCapper;
 	output signal gripperCylinderExtend, gripperCylinderRotate, gripperCylinderCounterRotate, gripperCapClampOn, gripperBottleClampOn;
 	input Integer channel capBottle;
-	output Integer channel capBottleComplete;
+	output Integer channel capBottleComplete, capBottleCompleteSensors;
    	)
 ->
 {
@@ -52,5 +52,7 @@ LidCapperController(
 		await(!enableLidCapper);
 		
 		send capBottleComplete(0);
+		send capBottleCompleteSensors(0);
+
 	}
 }

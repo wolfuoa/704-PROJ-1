@@ -22,6 +22,7 @@
 
 			<!-- LIQUID FILLER -->
 			<iChannel Name="logQuantityLiquidFilled" From="LiquidFillerControllerCD.logQuantityLiquidFilled" />
+			<iChannel Name="fillBottleCompleteSensors" From="LiquidFillerControllerCD.fillBottleCompleteSensors" />
 			
 		</ClockDomain>
 	</SubSystem>
@@ -50,7 +51,7 @@
 			<iSignal Name="bottleAtPos2" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
 			<iSignal Name="overflowSensed" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10040" />
 			<oChannel Name="logQuantityLiquidFilled" To="SensorsCD.logQuantityLiquidFilled" />
-
+			<oChannel Name="fillBottleCompleteSensors" To="SensorsCD.fillBottleCompleteSensors" />
 
 		</ClockDomain>
 	</SubSystem>

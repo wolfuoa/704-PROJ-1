@@ -1,9 +1,9 @@
 Sensors(
 	input signal conveyorPlantOn, rotaryTurntablePlantOn;
 	output signal bottleAtPos1, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, turntableAlignedWithSensor, overflowSensed;
+	output signal bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V, capBottleCompleteV, capBottleIncompleteV, loadLidCompleteV, loadLidIncompleteV, fillBottleCompleteV, fillBottleIncompleteV;
 
-	input Integer channel rotateStepComplete, logQuantityLiquidFilled;
-
+	input Integer channel rotateStepCompleteToSensors, logQuantityLiquidFilled, capBottleCompleteSensors, loadLidCompleteSensors, fillBottleCompleteSensors;
    	)
 ->
 {
@@ -14,6 +14,9 @@ Sensors(
 	boolean signal bottleAtPos4Reg;
 	boolean signal bottleAtPos5Reg;
 	int signal totalFluidInCurrentBottle;
+	int signal capBottleCompleteMemory;
+	int signal loadLidCompleteMemory;
+	int signal fillBottleCompleteMemory;
 	// ----------------------------------------------
 
 	emit bottleAtPos1Reg(false);
@@ -22,6 +25,9 @@ Sensors(
 	emit bottleAtPos4Reg(false);
 	emit bottleAtPos5Reg(false);
 	emit totalFluidInCurrentBottle(0);
+	emit capBottleCompleteMemory(0);
+	emit loadLidCompleteMemory(0);
+	emit fillBottleCompleteMemory(0);
 
 	// ---------------- bottleAtPos1 ----------------
 	{
@@ -59,13 +65,18 @@ Sensors(
 	{
 		while(true)
 		{
-			receive rotateStepComplete;
+			receive rotateStepCompleteToSensors;
 			emit bottleAtPos5Reg((Boolean)#bottleAtPos4Reg);
 			emit bottleAtPos4Reg((Boolean)#bottleAtPos3Reg);
 			emit bottleAtPos3Reg((Boolean)#bottleAtPos2Reg);
 			emit bottleAtPos2Reg((Boolean)#bottleAtPos1Reg);
 			emit bottleAtPos1Reg(false);
 			System.out.println("Turn");
+
+			emit capBottleCompleteMemory(0);
+			emit loadLidCompleteMemory(0);
+			emit fillBottleCompleteMemory(0);
+
 			pause;
 		}	
 	}
@@ -92,22 +103,65 @@ Sensors(
 	}
 	// ----------------------------------------------
 	||
+	// ------------- Overflow Broadcast -------------
 	{
 		{while(true){if((Integer)#totalFluidInCurrentBottle > 200){emit overflowSensed; System.out.println("Error");} pause;}}
 	}
-	
+	// ----------------------------------------------
+	||
+	// ---------- Machine Complete Signals ----------
+	{
+		{
+			while(true)
+			{
+				receive capBottleCompleteSensors;
+				emit capBottleCompleteMemory(1);
+				pause;
+			}
+		}
+		||
+		{
+			while(true)
+			{
+				receive loadLidCompleteSensors;
+				emit loadLidCompleteMemory(1);
+				pause;
+			}
+		}
+		||
+		{
+			while(true)
+			{
+				receive fillBottleCompleteSensors;
+				emit fillBottleCompleteMemory(1);
+				pause;
+			}
+		}
+	}
+	// ----------------------------------------------
+	||
+	// --------- Broadcast Complete Signals ---------
+	{
+		{while(true){if((Integer)#capBottleCompleteMemory == 1){emit capBottleCompleteV; } else {emit capBottleIncompleteV; } pause;}}
+		||
+		{while(true){if((Integer)#loadLidCompleteMemory == 1){emit loadLidCompleteV; } else {emit loadLidIncompleteV; } pause;}}
+		||
+		{while(true){if((Integer)#fillBottleCompleteMemory == 1){emit fillBottleCompleteV; } else {emit fillBottleIncompleteV; } pause;}}
+		
+	}
+	// ----------------------------------------------
 	||
 	// ----------- Bottle Position Memory -----------
 	{
-		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1; emit bottleAtPos1V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2; emit bottleAtPos2V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos3Reg){emit bottleAtPos3; emit bottleAtPos3V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos4Reg){emit bottleAtPos4; emit bottleAtPos4V;} pause;}}
 		||
-		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5;} pause;}}
+		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5; emit bottleAtPos5V;} pause;}}
 	}
 	// ----------------------------------------------
 }

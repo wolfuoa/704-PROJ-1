@@ -8,11 +8,18 @@
 			<iSignal Name="gripperCylinderCounterRotate" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10061" />
 			<iSignal Name="gripperCapClampOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10061" />
 			<iSignal Name="gripperBottleClampOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10061" />
+
 			<oSignal Name="gripperCylinderRotationAtMax" To="LidCapperControllerCD.gripperCylinderRotationAtMax" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 			<oSignal Name="gripperCylinderRotationAtOrigin" To="LidCapperControllerCD.gripperCylinderRotationAtOrigin" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 			<oSignal Name="gripperCylinderLifted" To="LidCapperControllerCD.gripperCylinderLifted" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 			<oSignal Name="gripperCylinderLowered" To="LidCapperControllerCD.gripperCylinderLowered" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 			
+			<!-- TO VISUALIZER -->
+			<oSignal Name="gripperCylinderRotationAtMaxV" To="UI.gripperCylinderRotationAtMaxV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="gripperCylinderRotationAtOriginV" To="UI.gripperCylinderRotationAtOriginV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="gripperCylinderLiftedV" To="UI.gripperCylinderLiftedV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="gripperCylinderLoweredV" To="UI.gripperCylinderLoweredV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+
 		</ClockDomain>
 	</SubSystem>
 </System>
