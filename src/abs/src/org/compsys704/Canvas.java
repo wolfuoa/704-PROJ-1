@@ -59,8 +59,8 @@ public class Canvas extends JPanel {
 			bottleFillerDoneDyn = bottleFillers.getSubimage(0, 82, 115, 82);
 			
 			BufferedImage bottleCappers = ImageIO.read(new File("res/lid_capper_on_and_off.png"));
-			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 126, 93);
-			bottleCapperDoneDyn = bottleCappers.getSubimage(0, 93, 126, 92);
+			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 125, 96);
+			bottleCapperDoneDyn = bottleCappers.getSubimage(0, 96, 125, 94);
 			
 			BufferedImage bi = ImageIO.read(new File("res/arm.png"));
 			arm1 = bi.getSubimage(0, 0, 64, 256);
