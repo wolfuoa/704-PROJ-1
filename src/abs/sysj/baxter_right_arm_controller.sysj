@@ -5,7 +5,7 @@ BaxterRightArmController(
 	output String signal commandRight;
 	
 	input Integer channel baxterRightArmCommand;
-	output Integer channel baxterRightArmCommandComplete;
+	output Integer channel baxterRightArmCommandComplete, removeBottleCompleteSensors;
    	)
 ->
 {
@@ -18,52 +18,62 @@ BaxterRightArmController(
         {
         // ---------------- REMOVE BOTTLE FROM END ----------------
         case 1: // COMMAND_REMOVE_BOTTLE
-            // present(bottleLeftPos5){}
-            abort(commandFeedbackRight)
+            present(bottleLeftPos5)
             {
-                sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
-            }
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
+                }
 
-            abort(commandFeedbackRight)
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right ON_REMOVAL_POINT");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("grip right CLOSED");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right ABOVE_PACKAGE");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right ON_PACKAGE");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("grip right OPEN");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right ABOVE_PACKAGE");
+                }
+
+                abort(commandFeedbackRight)
+                {
+                    sustain commandRight("move_arm right IDLE");
+                }
+
+                send baxterRightArmCommandComplete(0);
+                send removeBottleCompleteSensors(0);
+                System.out.println("[DEBUG] moved bottle from end of conveyor to package (baxter right arm)");
+            }
+            else
             {
-                sustain commandRight("move_arm right ON_REMOVAL_POINT");
+                send baxterRightArmCommandComplete(2);
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at end of conveyor (baxter right arm)" + "\u001B[0m");
             }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("grip right CLOSED");
-            }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
-            }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("move_arm right ABOVE_PACKAGE");
-            }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("move_arm right ON_PACKAGE");
-            }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("grip right OPEN");
-            }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("move_arm right ABOVE_PACKAGE");
-            }
-
-            abort(commandFeedbackRight)
-            {
-                sustain commandRight("move_arm right IDLE");
-            }
-
             break;
 		// --------------------------------------------------------
         
@@ -104,6 +114,8 @@ BaxterRightArmController(
                 sustain commandRight("move_arm right IDLE");
             }
 
+            send baxterRightArmCommandComplete(0);
+
             break;
         // --------------------------------------------------------
         
@@ -113,7 +125,6 @@ BaxterRightArmController(
         // --------------------------------------------------------
         }
 		
-		send baxterRightArmCommandComplete(0);
 		pause;
 	}
 }

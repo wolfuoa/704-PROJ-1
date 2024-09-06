@@ -46,7 +46,14 @@ FRU(
             receive removeBottle;
             emit localTransmitterRight(1); // COMMAND_REMOVE_BOTTLE
             await(localReceiverRight);
-            send removeBottleComplete(0);
+            if((Integer)#localReceiverRight == 0)
+            {
+                send removeBottleComplete(0);
+            }
+            else
+            {
+                send removeBottleComplete(2);
+            }
             pause;
         }
 	}

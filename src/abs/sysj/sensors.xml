@@ -5,6 +5,7 @@
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
+			<Interface SubSystem="SS710" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1071"/>
 			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 		</Link>
@@ -41,6 +42,15 @@
 
 			<!-- SENSORS -->
 			<oChannel Name="placeBottleCompleteSensors" To="SensorsCD.placeBottleCompleteSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS710">
+		<ClockDomain Name="BaxterRightArmControllerCD" Class="BaxterRightArmController">
+			
+			<!-- SENSORS -->
+			<oChannel Name="removeBottleCompleteSensors" To="SensorsCD.removeBottleCompleteSensors" />
 			
 		</ClockDomain>
 	</SubSystem>
@@ -86,6 +96,10 @@
 			<!-- BAXTER LEFT ARM CONTROLLER -->
 			<oSignal Name="bottleAtPoint" To="BaxterLeftArmControllerCD.bottleAtPoint" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10700" />
 			<iChannel Name="placeBottleCompleteSensors" From="BaxterLeftArmControllerCD.placeBottleCompleteSensors" />
+
+			<!-- BAXTER RIGHT ARM CONTROLLER -->
+			<oSignal Name="bottleLeftPos5" To="BaxterRightArmControllerCD.bottleLeftPos5" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10710" />
+			<iChannel Name="removeBottleCompleteSensors" From="BaxterRightArmControllerCD.removeBottleCompleteSensors" />
 
 			<!-- TO VISUALIZER -->
 			<oSignal Name="bottleAtPos1V" To="UI.bottleAtPos1V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
