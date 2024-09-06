@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import util.RoboticArm;
+
 public class LoaderVizWorker extends Worker{
 
 	@Override
@@ -65,6 +67,9 @@ public class LoaderVizWorker extends Worker{
 		case "rightArmV":
 			//Value Signal
 			break;
+		case "leftArmV":
+			//Value Signal
+			break;
 		case "WPgrippedE":
 			if(States.GRIPPED && States.ARM_AT_SOURCE){
 				if(!status)
@@ -87,6 +92,14 @@ public class LoaderVizWorker extends Worker{
 	@Override
 	public void setValueSignal(boolean status, Object objectData){
 		switch(signame){
+		case "leftArmV":
+			States.LEFT_ARM = status;
+			States.LEFT_ARM_OBJECT = (RoboticArm) objectData;
+			System.out.println("Viz Left Robotic arm recived status " + States.LEFT_ARM_OBJECT.getArmStatus());
+		case "rightArmV":
+			States.RIGHT_ARM = status;
+			States.RIGHT_ARM_OBJECT = (RoboticArm) objectData;
+			System.out.println("Viz Right Robotic arm recived status " + States.RIGHT_ARM_OBJECT.getArmStatus());
 		default:
 			System.out.println("signal + object arrived " + signame);
 		}
@@ -111,7 +124,7 @@ public class LoaderVizWorker extends Worker{
 		);
 	
 	static final List<String> lidLoaderSignals = Arrays.asList("pusherRetractedE","pusherExtendedE","armAtSourceE","armAtDestE");
-	static final List<String> baxterSignals = Arrays.asList("rightArmV");
+	static final List<String> baxterSignals = Arrays.asList("rightArmV", "leftArmV");
 	static final List<String> signames = new ArrayList<>();
 	
 	@Override

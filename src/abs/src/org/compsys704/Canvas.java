@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import util.RoboticArm;
 
 public class Canvas extends JPanel {
 	BufferedImage arm1;
@@ -35,9 +36,11 @@ public class Canvas extends JPanel {
 	BufferedImage completeBottle;
 	
 	BufferedImage Base; 
+	BufferedImage BaxterPickupBase;
 		public Canvas(){
 		try {
 			Base= ImageIO.read(new File("res/static_state.png"));
+			BaxterPickupBase =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
 			
 			BufferedImage allBottles = ImageIO.read(new File("res/bottle.png"));
 			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
@@ -79,6 +82,12 @@ public class Canvas extends JPanel {
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
 		g.drawImage(Base, 0,0, null);
+		
+		if (States.RIGHT_ARM_OBJECT != null &&
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_REMOVAL_POINT &&
+				States.RIGHT_ARM_OBJECT.getGripperStatus() == RoboticArm.GripperStatus.CLOSED) {
+			g.drawImage(BaxterPickupBase, 0, 0, null);
+		}
 		
 		if (States.BOTTLE_AT_POS1) {
 			g.drawImage(emptyBottle, 355, 320, null);
