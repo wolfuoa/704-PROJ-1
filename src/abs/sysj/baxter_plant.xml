@@ -9,6 +9,10 @@
             <!-- SELF RIGHT CONTROLLER -->
 			<oSignal Name="commandFeedbackRight" To="BaxterRightArmControllerCD.commandFeedbackRight" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10710" />
 			<iSignal Name="commandRight" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10701" />
+			
+			<!-- VISUALIZATION -->
+			<oSignal Name="leftArmV" To="UI.leftArmV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="rightArmV" To="UI.rightArmV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 
 		</ClockDomain>
 	</SubSystem>
