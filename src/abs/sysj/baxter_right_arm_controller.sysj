@@ -50,6 +50,8 @@ BaxterRightArmController(
                     sustain commandRight("move_arm right ABOVE_PACKAGE");
                 }
                 await(!enableBaxterRight);
+                
+                send removeBottleCompleteSensors(0);
 
                 abort(commandFeedbackRight)
                 {
@@ -76,7 +78,6 @@ BaxterRightArmController(
                 await(!enableBaxterRight);
 
                 send baxterRightArmCommandComplete(0);
-                send removeBottleCompleteSensors(0);
                 System.out.println("[DEBUG] moved bottle from end of conveyor to package (baxter right arm)");
             }
             else
