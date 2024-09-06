@@ -1,5 +1,7 @@
 package org.compsys704;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,7 +35,9 @@ public class LoaderVizWorker extends Worker{
 		case "capBottleCompleteV":
 			System.out.println("Capper Complete Viz");
 			States.BOTTLE_CAPPED = status;
-			break;			
+			break;
+		case "capBottleIncompleteV":
+			break;	
 		//Liquid Filler
 			//Lid Loader
 		case "liquidFilled":
@@ -71,26 +75,31 @@ public class LoaderVizWorker extends Worker{
 	}
 	
 	static final List<String> sensorsSignals = Arrays.asList(
-		    "bottleAtPointV",
-		    "bottleAtPos0V",
+//		    "bottleAtPointV",
+//		    "bottleAtPos0V",
 		    "bottleAtPos1V",
-		    "bottleAtPos2V",
-		    "bottleAtPos3V",
-		    "bottleAtPos4V",
-		    "bottleAtPos5V",
-		    "bottleLeftPos5V",
+//		    "bottleAtPos2V",
+//		    "bottleAtPos3V",
+//		    "bottleAtPos4V",
+//		    "bottleAtPos5V",
+//		    "bottleLeftPos5V",
 		    "capBottleCompleteV",
-		    "capBottleIncompleteV",
-		    "loadLidCompleteV",
-		    "loadLidIncompleteV",
-		    "fillBottleCompleteV",
-		    "fillBottleIncompleteV"
+		    "capBottleIncompleteV"
+//		    "loadLidCompleteV",
+//		    "loadLidIncompleteV",
+//		    "fillBottleCompleteV",
+//		    "fillBottleIncompleteV"
 		);
-	static final List<String> signames = Arrays.asList("bottleAtPos1V", "rightArmV","capBottleCompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
+	static final List<String> lidLoaderSignals = Arrays.asList("pusherRetractedE","pusherExtendedE","armAtSourceE","armAtDestE");
+	static final List<String> baxterSignals = Arrays.asList("rightArmV");
+	static final List<String> signames = new ArrayList<>();
 	
 	@Override
 	public boolean hasSignal(String sn) {
+		signames.addAll(sensorsSignals);
+		signames.addAll(lidLoaderSignals);
+	    signames.addAll(baxterSignals);
 		return signames.contains(sn);
 	}
 
