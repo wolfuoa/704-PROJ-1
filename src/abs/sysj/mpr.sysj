@@ -1,11 +1,11 @@
 import run.GUI;
-//import run.POSGUI;
+import run.POSGUI;
 import util.Order;
 
 
 MPR(
 	input signal enableMPR;
-
+	input Order signal posOrder;
 	input Integer channel conveyorStepComplete, capBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant, fillBottleComplete, placeBottleComplete, removeBottleComplete;
 	output Integer channel conveyorStep, capBottle, loadLidFaultTolerant, rotateStepFaultTolerant, placeBottle, removeBottle;
 	output Order channel fillBottle;
@@ -13,7 +13,7 @@ MPR(
 ->
 {
 	new Thread(new GUI()).start();
-	//new Thread(new POSGUI()).start();
+	new Thread(new POSGUI()).start();
 
 	String signal RESET; 
 	String signal BLACK; 
@@ -40,6 +40,12 @@ MPR(
 	
 	while(true)
 	{
+			
+		// posOrder retrival
+		//await(posOrder);
+        //Order recievedOrder = #posOrder;
+        //System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
+        //System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
 
 		System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 		iteration++;

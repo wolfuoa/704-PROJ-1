@@ -30,9 +30,9 @@ LidLoaderController(
 			sustain pusherExtend;
 		}
 		System.out.println("[DEBUG] pusher extended");
-		await(!enableLidLoader);
+		abort(!enableLidLoader){sustain pusherExtend;}
 		
-		await(enableLidLoader);
+		abort(enableLidLoader){sustain pusherExtend;}
 		abort(pusherRetracted)
 		{
 			halt;
@@ -70,4 +70,5 @@ LidLoaderController(
 		send loadLidCompleteSensors(0);
 		// -----------------------------------------
 	}
+	
 }
