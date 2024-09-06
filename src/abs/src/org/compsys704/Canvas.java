@@ -31,6 +31,8 @@ public class Canvas extends JPanel {
 	
 	//Bottles
 	BufferedImage emptyBottle;
+	BufferedImage liquidFilledBottle;
+	BufferedImage completeBottle;
 	
 	BufferedImage Base; 
 		public Canvas(){
@@ -39,6 +41,8 @@ public class Canvas extends JPanel {
 			
 			BufferedImage allBottles = ImageIO.read(new File("res/bottle.png"));
 			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
+			liquidFilledBottle = allBottles.getSubimage(0, 38, 45, 38);
+			completeBottle = allBottles.getSubimage(0, 76, 45, 36);
 			
 			BufferedImage lidLoaderArms = ImageIO.read(new File("res/cap_loader/cap_rotating_arm_source_and_destination.png"));
 			lidLoaderArmSourceDyn = lidLoaderArms.getSubimage(0, 0, 52, 98);
@@ -64,6 +68,7 @@ public class Canvas extends JPanel {
 			p1 = bi.getSubimage(0, 0, 238, 68);
 			p2 = bi.getSubimage(238, 0, 172, 68);
 			cap = ImageIO.read(new File("res/cap.png"));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -75,11 +80,25 @@ public class Canvas extends JPanel {
 		super.paintComponent(g);
 		g.drawImage(Base, 0,0, null);
 		
-		g.drawImage(emptyBottle, 320, 320, null);
-
 		if (States.BOTTLE_AT_POS1) {
-			g.drawImage(emptyBottle, 350, 320, null);
+			g.drawImage(emptyBottle, 355, 320, null);
+		}
+		if(States.BOTTLE_AT_POS2) {
+			g.drawImage(emptyBottle, 360, 280, null);
+		}
+		if(States.BOTTLE_AT_POS3) {
+			g.drawImage(liquidFilledBottle, 400, 265, null);
+		}
+		if(States.BOTTLE_AT_POS4) {
+			g.drawImage(completeBottle, 435, 285, null);
+		}
+		if(States.BOTTLE_AT_POS5) {
+			g.drawImage(completeBottle, 440, 320, null);
 		} 
+		if(States.BOTTLE_LEFT_POS5) {
+			g.drawImage(completeBottle, 485, 320, null);
+			
+		}
 		
 		
 		//Liquid Filler

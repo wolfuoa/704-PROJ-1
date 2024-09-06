@@ -46,6 +46,25 @@ public class LoaderVizWorker extends Worker{
 		case "bottleAtPos1V":
 			States.BOTTLE_AT_POS1 = status;
 			break;
+		case "bottleAtPos2V":
+			States.BOTTLE_AT_POS2 = status;
+			break;
+		case "bottleAtPos3V":
+			States.BOTTLE_AT_POS3 = status;
+			break;
+		case "bottleAtPos4V":
+			States.BOTTLE_AT_POS4 = status;
+			break;
+		case "bottleAtPos5V":
+			States.BOTTLE_AT_POS5 = status;
+			break;
+		case "bottleLeftPos5V":
+			States.BOTTLE_LEFT_POS5 = status;
+			break;
+			
+		case "rightArmV":
+			//Value Signal
+			break;
 		case "WPgrippedE":
 			if(States.GRIPPED && States.ARM_AT_SOURCE){
 				if(!status)
@@ -78,11 +97,11 @@ public class LoaderVizWorker extends Worker{
 //		    "bottleAtPointV",
 //		    "bottleAtPos0V",
 		    "bottleAtPos1V",
-//		    "bottleAtPos2V",
-//		    "bottleAtPos3V",
-//		    "bottleAtPos4V",
-//		    "bottleAtPos5V",
-//		    "bottleLeftPos5V",
+		    "bottleAtPos2V",
+		    "bottleAtPos3V",
+		    "bottleAtPos4V",
+		    "bottleAtPos5V",
+		    "bottleLeftPos5V",
 		    "capBottleCompleteV",
 		    "capBottleIncompleteV"
 //		    "loadLidCompleteV",

@@ -22,4 +22,9 @@ public class States {
 	public static volatile boolean BOTTLE_CAPPED = false;
 	
 	public static volatile boolean BOTTLE_AT_POS1 = false;
+	public static volatile boolean BOTTLE_AT_POS2 = false;
+	public static volatile boolean BOTTLE_AT_POS3 = false;
+	public static volatile boolean BOTTLE_AT_POS4 = false;
+	public static volatile boolean BOTTLE_AT_POS5 = false;
+	public static volatile boolean BOTTLE_LEFT_POS5 = false;
 }
