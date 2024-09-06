@@ -1,7 +1,7 @@
 Sensors(
 	input signal conveyorPlantOn, rotaryTurntablePlantOn;
 	output signal bottleAtPoint, bottleAtPos1Conveyor, bottleAtPos1FRU, bottleAtPos2, bottleAtPos3, bottleAtPos4, bottleAtPos5, bottleLeftPos5, turntableAlignedWithSensor, overflowSensed;
-	output signal bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V, capBottleCompleteV, capBottleIncompleteV, loadLidCompleteV, loadLidIncompleteV, fillBottleCompleteV, fillBottleIncompleteV;
+	output signal bottleAtPointV, bottleLeftPos5V, bottleAtPos0V, bottleAtPos1V, bottleAtPos2V, bottleAtPos3V, bottleAtPos4V, bottleAtPos5V, capBottleCompleteV, capBottleIncompleteV, loadLidCompleteV, loadLidIncompleteV, fillBottleCompleteV, fillBottleIncompleteV;
 
 	input Integer channel rotateStepCompleteToSensors, logQuantityLiquidFilled, capBottleCompleteSensors, loadLidCompleteSensors, fillBottleCompleteSensors, placeBottleCompleteSensors, removeBottleCompleteSensors;
    	)
@@ -186,6 +186,10 @@ Sensors(
 	||
 	// ----------- Bottle Position Memory -----------
 	{
+		{while(true){emit bottleAtPoint; emit bottleAtPointV; pause;}}
+		||
+		{while(true){if((Boolean)#bottleAtPos0Reg){emit bottleAtPos0V;} pause;}}
+		||
 		{while(true){if((Boolean)#bottleAtPos1Reg){emit bottleAtPos1Conveyor; emit bottleAtPos1FRU; emit bottleAtPos1V;} pause;}}
 		||
 		{while(true){if((Boolean)#bottleAtPos2Reg){emit bottleAtPos2; emit bottleAtPos2V;} pause;}}
@@ -196,9 +200,7 @@ Sensors(
 		||
 		{while(true){if((Boolean)#bottleAtPos5Reg){emit bottleAtPos5; emit bottleAtPos5V;} pause;}}
 		||
-		{while(true){emit bottleAtPoint; pause;}}
-		||
-		{while(true){if((Boolean)#bottleLeftPos5Reg){emit bottleLeftPos5;} pause;}}
+		{while(true){if((Boolean)#bottleLeftPos5Reg){emit bottleLeftPos5; emit bottleLeftPos5V;} pause;}}
 	}
 	// ----------------------------------------------
 }

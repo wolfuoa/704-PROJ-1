@@ -102,11 +102,14 @@
 			<iChannel Name="removeBottleCompleteSensors" From="BaxterRightArmControllerCD.removeBottleCompleteSensors" />
 
 			<!-- TO VISUALIZER -->
+			<oSignal Name="bottleAtPointV" To="UI.bottleAtPointV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos0V" To="UI.bottleAtPos0V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos1V" To="UI.bottleAtPos1V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos2V" To="UI.bottleAtPos2V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos3V" To="UI.bottleAtPos3V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos4V" To="UI.bottleAtPos4V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos5V" To="UI.bottleAtPos5V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleLeftPos5V" To="UI.bottleLeftPos5V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="capBottleCompleteV" To="UI.capBottleCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="capBottleIncompleteV" To="UI.capBottleIncompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="loadLidCompleteV" To="UI.loadLidCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
