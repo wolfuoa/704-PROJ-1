@@ -50,6 +50,8 @@ BaxterLeftArmController(
                 }
                 await(!enableBaxterLeft);
                 
+                send placeBottleCompleteSensors(0);
+                
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ON_CONVEYOR_START");
@@ -75,7 +77,7 @@ BaxterLeftArmController(
                 await(!enableBaxterLeft);
 
                 send baxterLeftArmCommandComplete(0);
-                send placeBottleCompleteSensors(0);
+                
                 System.out.println("[DEBUG] moved bottle from point to conveyor (baxter left arm)");
             }
             else
