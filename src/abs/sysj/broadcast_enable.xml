@@ -17,6 +17,13 @@
 			<!-- TO LID CAPPER -->
 			<oSignal Name="enableLidCapper" To="LidCapperControllerCD.enableLidCapper" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
 
+			<!-- TO BAXTER LEFT ARM -->
+			<oSignal Name="enableBaxterLeft" To="BaxterLeftArmControllerCD.enableBaxterLeft" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10700" />
+			
+			<!-- TO BAXTER RIGHT ARM -->
+			<oSignal Name="enableBaxterRight" To="BaxterRightArmControllerCD.enableBaxterRight" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10710" />
+			
+
 		</ClockDomain>
 	</SubSystem>
 </System>
