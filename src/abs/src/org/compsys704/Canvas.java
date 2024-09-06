@@ -16,7 +16,8 @@ public class Canvas extends JPanel {
 	BufferedImage p2;
 	BufferedImage loader;
 	BufferedImage cap;
-
+	
+	//Machines
 	BufferedImage tTStatic;
 	BufferedImage lidLoaderStationStatic;
 	BufferedImage lidLoaderArmSourceDyn;
@@ -28,11 +29,16 @@ public class Canvas extends JPanel {
 	BufferedImage bottleCapperDoneDyn;
 	BufferedImage bottleCapperNotDoneDyn;
 	
+	//Bottles
+	BufferedImage emptyBottle;
+	
 	BufferedImage Base; 
 		public Canvas(){
 		try {
 			Base= ImageIO.read(new File("res/static_state.png"));
 			
+			BufferedImage allBottles = ImageIO.read(new File("res/bottle.png"));
+			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
 			
 			BufferedImage lidLoaderArms = ImageIO.read(new File("res/cap_loader/cap_rotating_arm_source_and_destination.png"));
 			lidLoaderArmSourceDyn = lidLoaderArms.getSubimage(0, 0, 52, 98);
@@ -67,8 +73,14 @@ public class Canvas extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-
 		g.drawImage(Base, 0,0, null);
+		
+		g.drawImage(emptyBottle, 320, 320, null);
+
+		if (States.BOTTLE_AT_POS1) {
+			g.drawImage(emptyBottle, 350, 320, null);
+		} 
+		
 		
 		//Liquid Filler
 		if (States.BOTTLE_FILLED) {
@@ -98,12 +110,6 @@ public class Canvas extends JPanel {
 			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
 		}
 		
-		//Liquid Capper
-		if (States.BOTTLE_CAPPED) {
-			g.drawImage(bottleCapperDoneDyn, 442, 221, null);
-		} else {
-			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
-		}
 		
 		
 //		g.drawImage(loader, 0, 100, null);

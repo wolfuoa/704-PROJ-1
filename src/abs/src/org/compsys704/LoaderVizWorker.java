@@ -39,6 +39,9 @@ public class LoaderVizWorker extends Worker{
 		case "liquidFilled":
 			States.BOTTLE_FILLED = status;
 			break;	
+		case "bottleAtPos1V":
+			States.BOTTLE_AT_POS1 = status;
+			break;
 		case "WPgrippedE":
 			if(States.GRIPPED && States.ARM_AT_SOURCE){
 				if(!status)
@@ -67,8 +70,24 @@ public class LoaderVizWorker extends Worker{
 		
 	}
 	
+	static final List<String> sensorsSignals = Arrays.asList(
+		    "bottleAtPointV",
+		    "bottleAtPos0V",
+		    "bottleAtPos1V",
+		    "bottleAtPos2V",
+		    "bottleAtPos3V",
+		    "bottleAtPos4V",
+		    "bottleAtPos5V",
+		    "bottleLeftPos5V",
+		    "capBottleCompleteV",
+		    "capBottleIncompleteV",
+		    "loadLidCompleteV",
+		    "loadLidIncompleteV",
+		    "fillBottleCompleteV",
+		    "fillBottleIncompleteV"
+		);
+	static final List<String> signames = Arrays.asList("bottleAtPos1V", "rightArmV","capBottleCompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
-	static final List<String> signames = Arrays.asList("rightArmV","capBottleCompleteV", "pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
 	
 	@Override
 	public boolean hasSignal(String sn) {

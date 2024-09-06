@@ -13,9 +13,6 @@
 			<!-- VISUALIZATION -->
 			<oSignal Name="leftArmV" To="UI.leftArmV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="rightArmV" To="UI.rightArmV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
-
-			<!-- SENSORS -->
-			<oSignal Name="rightArmV" To="UI.rightArmV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			
 		</ClockDomain>
 	</SubSystem>
