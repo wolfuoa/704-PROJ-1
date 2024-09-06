@@ -5,7 +5,7 @@ BaxterLeftArmController(
 	output String signal commandLeft;
 	
 	input Integer channel baxterLeftArmCommand;
-	output Integer channel baxterLeftArmCommandComplete;
+	output Integer channel baxterLeftArmCommandComplete, placeBottleCompleteSensors;
    	)
 ->
 {
@@ -13,56 +13,65 @@ BaxterLeftArmController(
 	{
 		receive baxterLeftArmCommand;
 
-        System.out.println((Integer)#baxterLeftArmCommand);
-
         switch((Integer)#baxterLeftArmCommand)
         {
         // --------------- PLACE BOTTLE ON CONVEYOR ---------------
         case 0: // COMMAND_PLACE_BOTTLE
-        	// present(bottleAtPoint){}
-            abort(commandFeedbackLeft)
+        	present(bottleAtPoint)
             {
-                sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left ON_COLLECTION_POINT");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("grip left CLOSED");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left ON_CONVEYOR_START");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("grip left OPEN");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
+                }
+                
+                abort(commandFeedbackLeft)
+                {
+                    sustain commandLeft("move_arm left IDLE");
+                }
+
+                send baxterLeftArmCommandComplete(0);
+                send placeBottleCompleteSensors(0);
+                System.out.println("[DEBUG] moved bottle from point to conveyor (baxter left arm)");
             }
-            
-            abort(commandFeedbackLeft)
+            else
             {
-                sustain commandLeft("move_arm left ON_COLLECTION_POINT");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("grip left CLOSED");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("move_arm left ON_CONVEYOR_START");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("grip left OPEN");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
-            }
-            
-            abort(commandFeedbackLeft)
-            {
-                sustain commandLeft("move_arm left IDLE");
+                send baxterLeftArmCommandComplete(2);
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at point (baxter left arm)" + "\u001B[0m");
             }
             break;
 		// --------------------------------------------------------
@@ -113,6 +122,8 @@ BaxterLeftArmController(
             {
                 sustain commandLeft("move_arm left IDLE");
             }
+
+            send baxterLeftArmCommandComplete(0);
             
             break;
         // --------------------------------------------------------
@@ -122,8 +133,7 @@ BaxterLeftArmController(
             break;
         // --------------------------------------------------------
         }
-		
-		send baxterLeftArmCommandComplete(0);
+
 		pause;
 	}
 }

@@ -1,5 +1,5 @@
 LidLoaderController(
-		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request,bottleAtPos3, enableLidLoader;
+		input signal pusherRetracted,pusherExtended,WPgripped,armAtSource,armAtDest,empty,request, enableLidLoader;
 		output signal pusherExtend,vacOn,armSource,armDest;
 
 		input Integer channel loadLid;
@@ -9,9 +9,8 @@ LidLoaderController(
 
 	while(true)
 	{
-		
+		pause;
 		receive loadLid;
-
 		abort(!empty)
 		{
 			halt;
@@ -69,6 +68,7 @@ LidLoaderController(
 
 		send loadLidComplete(0);
 		send loadLidCompleteSensors(0);
+		// -----------------------------------------
 	}
 	
 }

@@ -2,9 +2,7 @@ import util.RoboticArm;
 
 BaxterPlant(
 	input String signal commandLeft, commandRight;
-	output signal commandFeedbackLeft, commandFeedbackRight;
-	
-	output RoboticArm signal rightArmV;
+	output signal commandFeedbackLeft, commandFeedbackRight, leftArmV, rightArmV;
    	)
 ->
 {
@@ -112,8 +110,8 @@ BaxterPlant(
     // -------------- Broadcast --------------
     {
         {while(true){emit rightArmV((RoboticArm)#rightArm); pause;}}
-    //    ||
-    //    {while(true){emit leftArmV((RoboticArm)#leftArm); pause;}}
+        ||
+        {while(true){emit leftArmV((RoboticArm)#leftArm); pause;}}
     }
     // ---------------------------------------
 }

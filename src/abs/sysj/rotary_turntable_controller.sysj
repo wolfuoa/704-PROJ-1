@@ -1,5 +1,5 @@
 RotaryTurntableController(
-	input signal turntableAlignedWithSensor, bottleAtPos1;
+	input signal turntableAlignedWithSensor;
 	output signal rotaryTurntableTrigger;
 	input Integer channel rotateStep;
 	output Integer channel rotateStepComplete;
