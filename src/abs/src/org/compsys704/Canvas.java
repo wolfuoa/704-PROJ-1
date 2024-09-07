@@ -36,12 +36,20 @@ public class Canvas extends JPanel {
 	BufferedImage completeBottle;
 	
 	BufferedImage Base; 
-	BufferedImage BaxterPickupBase;
+	BufferedImage BaxterRemoveF;
+	BufferedImage BaxterPlaceTTF;
 		public Canvas(){
 		try {
-			Base= ImageIO.read(new File("res/static_state.png"));
-			BaxterPickupBase =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
 			
+			/*----------------------------------Baxter Layouts------------------------------------------------*/
+			Base= ImageIO.read(new File("res/static_state.png"));
+			BaxterRemoveF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
+			BaxterPlaceTTF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_place_Bottle.png"));
+			
+			
+			
+			
+			/*----------------------------------Baxter Layouts END---------------------------------------------*/
 			BufferedImage allBottles = ImageIO.read(new File("res/bottle.png"));
 			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
 			liquidFilledBottle = allBottles.getSubimage(0, 38, 45, 38);
@@ -83,15 +91,29 @@ public class Canvas extends JPanel {
 		super.paintComponent(g);
 		g.drawImage(Base, 0,0, null);
 		
+		//Baxter Place on Conveyor
+		if (States.LEFT_ARM &&
+				States.LEFT_ARM_OBJECT != null &&
+				(States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_COLLECTION_POINT 
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_COLLECTION_POINT
+				)){
+			g.drawImage(BaxterPlaceTTF, 0, 0, null);
+		}
+		if (States.BOTTLE_AT_POS0) {
+			g.drawImage(emptyBottle, 318, 320, null);
+		} 
+		
+		
 		if (States.RIGHT_ARM_OBJECT != null &&
 				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_REMOVAL_POINT &&
 				States.RIGHT_ARM_OBJECT.getGripperStatus() == RoboticArm.GripperStatus.CLOSED) {
-			g.drawImage(BaxterPickupBase, 0, 0, null);
+			g.drawImage(BaxterRemoveF, 0, 0, null);
 		}
 		
 		if (States.BOTTLE_AT_POS1) {
 			g.drawImage(emptyBottle, 355, 320, null);
-		}
+		} 
 		if(States.BOTTLE_AT_POS2) {
 			g.drawImage(emptyBottle, 360, 280, null);
 		}

@@ -48,6 +48,9 @@ public class LoaderVizWorker extends Worker{
 		case "liquidFilled":
 			States.BOTTLE_FILLED = status;
 			break;	
+		case "bottleAtPos0V":
+			States.BOTTLE_AT_POS0 = status;
+			break;
 		case "bottleAtPos1V":
 			States.BOTTLE_AT_POS1 = status;
 			break;
@@ -117,7 +120,7 @@ public class LoaderVizWorker extends Worker{
 	
 	static final List<String> sensorsSignals = Arrays.asList(
 //		    "bottleAtPointV",
-//		    "bottleAtPos0V",
+		    "bottleAtPos0V",
 		    "bottleAtPos1V",
 		    "bottleAtPos2V",
 		    "bottleAtPos3V",

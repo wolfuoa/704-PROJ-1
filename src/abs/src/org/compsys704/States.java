@@ -23,6 +23,7 @@ public class States {
 	//Bottle Capper
 	public static volatile boolean BOTTLE_CAPPED = false;
 	
+	public static volatile boolean BOTTLE_AT_POS0 = false;
 	public static volatile boolean BOTTLE_AT_POS1 = false;
 	public static volatile boolean BOTTLE_AT_POS2 = false;
 	public static volatile boolean BOTTLE_AT_POS3 = false;
