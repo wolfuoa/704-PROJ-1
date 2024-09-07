@@ -21,9 +21,9 @@ To run the simulated ABS, follow the following steps:
 - lib: Contains essential libraries required to run the project
 - res: Contains images used in the POS and Visualizer
 - src: contains 3 sub folders
-- - org/compsys704: Contains the Java fliles 
-- - run: Contains simple Java files that start files in the above folder
-- - util: Contains utility Java files 
+  - org/compsys704: Contains the Java fliles 
+  - run: Contains simple Java files that start files in the above folder
+  - util: Contains utility Java files 
 - sysj: Contains the systemJ files for the MPR, machine controllers, and plant models
 
 The Java code for the POS and Visualization are located within `src/org/compsys704`
