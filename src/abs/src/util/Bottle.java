@@ -32,10 +32,11 @@ public class Bottle {
 
     public void addInfo(String info) {
         // Get and format the current date and time
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String formattedNow = now.format(formatter);
-
+        //LocalDateTime now = LocalDateTime.now();
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        //String formattedNow = now.format(formatter);
+    	String formattedNow = "testDate";
+    		
         this.info = this.info + "\n" + "[" + formattedNow + "] " + info;
     }
 

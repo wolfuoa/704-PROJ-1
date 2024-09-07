@@ -48,13 +48,9 @@ MPR(
 	while(true)
 	{
 
-		//for (int i = 0; i < bottleNums; i++) {
-		//	if (i % 2 == 0) {
-		//		bottles[i] = new Bottle("asdf");
-		//	} else {
-		//		bottles[i] = new Bottle("other");
-		//	}
-		//}
+		// once all bottles have been processed, do not keep making bottles
+		//if(iteration == bottleNums) {bottleNums = 0;}
+		//bottles.clear();
 
 
 
@@ -90,15 +86,17 @@ MPR(
 			receive rotateStepCompleteFaultTolerant;
 			System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
 			await(!enableMPR);
+
+			bottles[iteration].addInfo("test123");
 			
 			await(enableMPR);
 			{
 				Order test = new Order(4,80,40,30,50);
-				bottles[iteration].addInfo("New order received");
+				//bottles[iteration].addInfo("New order received");
 				System.out.println((String)#YELLOW + "Fill Bottle Start" + (String)#RESET);
 				send fillBottle(test);
 				receive fillBottleComplete;
-				bottles[iteration].addInfo("Bottle filled");
+				//bottles[iteration].addInfo("Bottle filled");
 				System.out.println((String)#GREEN + "Fill Bottle Complete" + (String)#RESET);
 			}
 			||
@@ -123,8 +121,6 @@ MPR(
 			System.out.println("Remove Bottle Complete");
 			await(!enableMPR);	
 
-			// once all bottles have been processes, do not keep making bottles
-			if(iteration == bottleNums) {bottleNums = 0;}
 			pause;
 		}
 
