@@ -39,7 +39,7 @@ MPR(
 	emit WHITE("\u001B[37m");
 
 	//temp override for bottles in order
-	int bottleNums = 3;
+	int bottleNums = 5;
 
 	// array of Bottle objects, called bottles
 	Bottle[] bottles = new Bottle[bottleNums];
@@ -133,7 +133,7 @@ MPR(
 				System.out.println("===== Printing out final order logfile =====");
 				System.out.println(log);
 				
-				//bottles[0] = writeLogToFile(log);
+				bottles[0].writeLogToFile(log);
 
 				
 		        // Clear the bottles array

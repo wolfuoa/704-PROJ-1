@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.io.File;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 public class Bottle {
 
@@ -35,10 +40,21 @@ public class Bottle {
         return this.info;
     }
 
-    public void writeLogToFile(String log) {
-        String path = System.getProperty("user.dir");
+    public void writeLogToFile(String log)
+    {
+        String workingDirectory = System.getProperty("user.dir");
+        Path filePath = Paths.get(workingDirectory, "logfile.txt");
         
-        System.out.println("Working Directory = " + path);
+        try {
+            // Write the log string to the file
+            Files.write(filePath, log.getBytes());
+            
+            System.out.println("Logfile written to working directory: " + filePath.toAbsolutePath());
+        } 
+        catch (IOException e) 
+        {
+            System.err.println("An error occurred while writing the file: " + e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
