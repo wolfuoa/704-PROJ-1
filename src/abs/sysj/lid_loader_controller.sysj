@@ -74,9 +74,10 @@ LidLoaderController(
 		}
 		else
 		{
+			System.out.println("Error -> Lid Loader");
 			send loadLidComplete(1);
 		}
-		
+		pause;
 	}
 	
 }

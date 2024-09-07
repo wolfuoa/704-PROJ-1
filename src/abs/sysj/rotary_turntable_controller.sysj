@@ -19,7 +19,9 @@ RotaryTurntableController(
 		}
 		else
 		{
+			System.out.println("Error -> Rotary Turntable");
 			send rotateStepComplete(1);
 		}
+		pause;
 	}
 }
