@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import util.RoboticArm;
 
 public class Canvas extends JPanel {
 	BufferedImage arm1;
@@ -16,7 +17,8 @@ public class Canvas extends JPanel {
 	BufferedImage p2;
 	BufferedImage loader;
 	BufferedImage cap;
-
+	
+	//Machines
 	BufferedImage tTStatic;
 	BufferedImage lidLoaderStationStatic;
 	BufferedImage lidLoaderArmSourceDyn;
@@ -28,11 +30,32 @@ public class Canvas extends JPanel {
 	BufferedImage bottleCapperDoneDyn;
 	BufferedImage bottleCapperNotDoneDyn;
 	
+	//Bottles
+	BufferedImage emptyBottle;
+	BufferedImage liquidFilledBottle;
+	BufferedImage completeBottle;
+	
 	BufferedImage Base; 
+	BufferedImage BaxterRemoveI;
+	BufferedImage BaxterRemoveF;
+	BufferedImage BaxterPlaceTTF;
 		public Canvas(){
 		try {
-			Base= ImageIO.read(new File("res/static_state.png"));
 			
+			/*----------------------------------Baxter Layouts------------------------------------------------*/
+			Base= ImageIO.read(new File("res/static_state.png"));
+			BaxterRemoveI =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
+			BaxterRemoveF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_F.png"));
+			BaxterPlaceTTF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_place_Bottle.png"));
+			
+			
+			
+			
+			/*----------------------------------Baxter Layouts END---------------------------------------------*/
+			BufferedImage allBottles = ImageIO.read(new File("res/bottle.png"));
+			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
+			liquidFilledBottle = allBottles.getSubimage(0, 38, 45, 38);
+			completeBottle = allBottles.getSubimage(0, 76, 45, 36);
 			
 			BufferedImage lidLoaderArms = ImageIO.read(new File("res/cap_loader/cap_rotating_arm_source_and_destination.png"));
 			lidLoaderArmSourceDyn = lidLoaderArms.getSubimage(0, 0, 52, 98);
@@ -46,8 +69,8 @@ public class Canvas extends JPanel {
 			bottleFillerDoneDyn = bottleFillers.getSubimage(0, 82, 115, 82);
 			
 			BufferedImage bottleCappers = ImageIO.read(new File("res/lid_capper_on_and_off.png"));
-			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 126, 93);
-			bottleCapperDoneDyn = bottleCappers.getSubimage(0, 93, 126, 92);
+			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 125, 96);
+			bottleCapperDoneDyn = bottleCappers.getSubimage(0, 96, 125, 94);
 			
 			BufferedImage bi = ImageIO.read(new File("res/arm.png"));
 			arm1 = bi.getSubimage(0, 0, 64, 256);
@@ -58,6 +81,7 @@ public class Canvas extends JPanel {
 			p1 = bi.getSubimage(0, 0, 238, 68);
 			p2 = bi.getSubimage(238, 0, 172, 68);
 			cap = ImageIO.read(new File("res/cap.png"));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -67,8 +91,58 @@ public class Canvas extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g){
 		super.paintComponent(g);
-
 		g.drawImage(Base, 0,0, null);
+		
+		//Baxter Place on Conveyor
+		if (States.LEFT_ARM &&
+				States.LEFT_ARM_OBJECT != null &&
+				(States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_COLLECTION_POINT 
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_COLLECTION_POINT
+				)){
+			g.drawImage(BaxterPlaceTTF, 0, 0, null);
+		}
+		if (States.BOTTLE_AT_POS0) {
+			g.drawImage(emptyBottle, 318, 320, null);
+		} 
+		
+		//Baxter Remove From Conveyor
+		if(States.BOTTLE_LEFT_POS5) {
+			g.drawImage(completeBottle, 490, 315, null);
+			
+		}
+		if (States.RIGHT_ARM_OBJECT != null &&
+				(States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_REMOVAL_POINT
+				||
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_REMOVAL_POINT
+				)){
+			g.drawImage(BaxterRemoveI, 0, 0, null);
+		}
+			// Moving item away from conveyor
+		if (States.RIGHT_ARM_OBJECT != null &&
+				(States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_PACKAGE
+				||
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_PACKAGE
+				)){
+			g.drawImage(BaxterRemoveF, 0, 0, null);
+		}
+		
+		if (States.BOTTLE_AT_POS1) {
+			g.drawImage(emptyBottle, 355, 320, null);
+		} 
+		if(States.BOTTLE_AT_POS2) {
+			g.drawImage(emptyBottle, 360, 280, null);
+		}
+		if(States.BOTTLE_AT_POS3) {
+			g.drawImage(liquidFilledBottle, 400, 265, null);
+		}
+		if(States.BOTTLE_AT_POS4) {
+			g.drawImage(completeBottle, 435, 285, null);
+		}
+		if(States.BOTTLE_AT_POS5) {
+			g.drawImage(completeBottle, 440, 320, null);
+		} 
+		
 		
 		//Liquid Filler
 		if (States.BOTTLE_FILLED) {
@@ -98,12 +172,6 @@ public class Canvas extends JPanel {
 			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
 		}
 		
-		//Liquid Capper
-		if (States.BOTTLE_CAPPED) {
-			g.drawImage(bottleCapperDoneDyn, 442, 221, null);
-		} else {
-			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
-		}
 		
 		
 //		g.drawImage(loader, 0, 100, null);

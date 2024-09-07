@@ -11,6 +11,8 @@ public abstract class Worker implements Runnable {
 	ObjectInputStream ois = null;
 
 	public abstract void setSignal(boolean status);
+	
+	public abstract void setValueSignal(boolean status, Object objectData);
 
 	public abstract boolean hasSignal(String sn);
 
@@ -44,7 +46,14 @@ public abstract class Worker implements Runnable {
 			while (true) {
 				Object[] o = (Object[]) ois.readObject();
 				
-				System.out.println("\u001B[33m" + o.toString() + "\u001B[0m");
+				if(o.length > 1 && o[1] != null) {
+					if(initTimeElapsed())
+						setValueSignal((Boolean) o[0], o[1]);
+				} else {
+					if(initTimeElapsed())
+						setSignal((Boolean) o[0]);
+				}
+				
 				if(initTimeElapsed())
 					setSignal((Boolean) o[0]);
 			}
@@ -60,4 +69,5 @@ public abstract class Worker implements Runnable {
 			}
 		}
 	}
+
 }
