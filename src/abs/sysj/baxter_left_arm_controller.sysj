@@ -1,7 +1,7 @@
 import util.Constants;
 
 BaxterLeftArmController(
-	input signal bottleAtPoint, commandFeedbackLeft;
+	input signal bottleAtPoint, commandFeedbackLeft, enableBaxterLeft;
 	output String signal commandLeft;
 	
 	input Integer channel baxterLeftArmCommand;
@@ -19,53 +19,65 @@ BaxterLeftArmController(
         case 0: // COMMAND_PLACE_BOTTLE
         	present(bottleAtPoint)
             {
+                await(enableBaxterLeft);
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
                 }
+                await(!enableBaxterLeft);
                 
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ON_COLLECTION_POINT");
                 }
                 
+                await(enableBaxterLeft);
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("grip left CLOSED");
                 }
+                await(!enableBaxterLeft);
                 
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ABOVE_COLLECTION_POINT");
                 }
                 
+                await(enableBaxterLeft);
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
                 }
+                await(!enableBaxterLeft);
+                
+                send placeBottleCompleteSensors(0);
                 
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ON_CONVEYOR_START");
                 }
                 
+                await(enableBaxterLeft);
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("grip left OPEN");
                 }
+                await(!enableBaxterLeft);
                 
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left ABOVE_CONVEYOR_START");
                 }
                 
+                await(enableBaxterLeft);
                 abort(commandFeedbackLeft)
                 {
                     sustain commandLeft("move_arm left IDLE");
                 }
+                await(!enableBaxterLeft);
 
                 send baxterLeftArmCommandComplete(0);
-                send placeBottleCompleteSensors(0);
+                
                 System.out.println("[DEBUG] moved bottle from point to conveyor (baxter left arm)");
             }
             else
@@ -78,6 +90,8 @@ BaxterLeftArmController(
 		
 		// ---------------- LOAD LID FAULT COMMAND ----------------
         case 2: // COMMAND LOAD LID
+
+            await(enableBaxterLeft);
             abort(commandFeedbackLeft)
             {
                 sustain commandLeft("move_arm left ABOVE_LID_SURPLUS");
@@ -88,6 +102,7 @@ BaxterLeftArmController(
                 sustain commandLeft("move_arm left ON_LID_SURPLUS");
             }
 
+            await(enableBaxterLeft);
             abort(commandFeedbackLeft)
             {
                 sustain commandLeft("grip left CLOSED");
@@ -98,6 +113,7 @@ BaxterLeftArmController(
                 sustain commandLeft("move_arm left ABOVE_LID_SURPLUS");
             }
             
+            await(enableBaxterLeft);
             abort(commandFeedbackLeft)
             {
                 sustain commandLeft("move_arm left ABOVE_POSITION_THREE");
@@ -107,7 +123,8 @@ BaxterLeftArmController(
             {
                 sustain commandLeft("move_arm left ON_POSITION_THREE");
             }
-            
+
+            await(enableBaxterLeft);
             abort(commandFeedbackLeft)
             {
                 sustain commandLeft("grip left OPEN");
@@ -118,6 +135,7 @@ BaxterLeftArmController(
                 sustain commandLeft("move_arm left ABOVE_POSITION_THREE");
             }
 
+            await(enableBaxterLeft);
             abort(commandFeedbackLeft)
             {
                 sustain commandLeft("move_arm left IDLE");

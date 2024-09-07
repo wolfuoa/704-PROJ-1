@@ -35,4 +35,7 @@ public class States {
 	public static volatile RoboticArm LEFT_ARM_OBJECT = null;
 	public static volatile boolean RIGHT_ARM = false;
 	public static volatile RoboticArm RIGHT_ARM_OBJECT = null;
+
+	//POS
+	public static volatile boolean ORDER_COMPLETE = false;
 }

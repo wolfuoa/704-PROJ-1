@@ -7,7 +7,7 @@ FRU(
     output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
     input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
 
-    input signal bottleAtPos1FRU, bottleAtPos3;
+    input signal bottleAtPos1FRU, bottleAtPos3, capOnBottleAtPos1;
     output Integer channel rotateStepCompleteToSensors;
    	)
 ->
@@ -90,7 +90,7 @@ FRU(
 		while(true)
         {
             receive rotateStepFaultTolerant;
-            present(bottleAtPos1FRU)
+            present(bottleAtPos1FRU && !capOnBottleAtPos1)
             {
                 send rotateStep(0);
                 receive rotateStepComplete;
@@ -104,7 +104,7 @@ FRU(
             }
             else 
             {
-                System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 1  (FRU -> Rotary Turntable)" + "\u001B[0m");
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 1 or bottle is capped  (FRU -> Rotary Turntable)" + "\u001B[0m");
                 send rotateStepCompleteFaultTolerant(2);
             }
             pause;

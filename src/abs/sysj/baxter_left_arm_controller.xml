@@ -28,6 +28,9 @@
 	
 	<SubSystem Name="SS700" Local="true">
 		<ClockDomain Name="BaxterLeftArmControllerCD" Class="BaxterLeftArmController">
+
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableBaxterLeft" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10700" />
 			
 			<!-- FRU -->
 			<iChannel Name="baxterLeftArmCommand" From="FRUCD.baxterLeftArmCommand" />

@@ -13,6 +13,9 @@ public class LoaderVizWorker extends Worker{
 	public void setSignal(boolean status) {
 //		System.out.println(signame+"  "+status);
 		switch(signame){
+		case "orderComplete":
+			States.ORDER_COMPLETE = status;
+			System.out.println("Recieved Complete Signal");
 		case "pusherRetractedE":
 			if (status == true) {
 				System.out.println("pusher Retracted true Viz");

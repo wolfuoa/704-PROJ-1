@@ -1,12 +1,16 @@
 package org.compsys704;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -14,82 +18,185 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import javafx.scene.shape.Box;
+import util.Order;
 
 public class POS extends JFrame {
-	private JPanel panel;
+	private static JSpinner quantitySpinner;
+	private static JSlider oneSlider;
+	private static JSlider twoSlider;
+	private static JSlider threeSlider;
+	private static JSlider fourSlider;
+	private JLabel label1;
+	private JLabel label2;
+	private JLabel label3;
+	private JLabel label4;
+
+    private static List<Order> orderQueue;
+	
 	
 	public POS() {
-//		this.setPreferredSize(new Dimension(200, 300));
-		 
-		// Layout System
-	    this.setLayout(new GridBagLayout());
-	    GridBagConstraints c = new GridBagConstraints();
-	    
-	    // Main Header
-	    JLabel headerLabel = new JLabel("Advantech ABS", JLabel.CENTER);
-	    headerLabel.setFont(new Font("ARIAL", Font.BOLD, 50));
-	    c.gridx = 0;  // First column
-	    c.gridy = 0;  // First row
-	    c.gridwidth = 2;  // Span two columns if necessary
-	    c.anchor = GridBagConstraints.CENTER;  // Center the label
-	    this.add(headerLabel, c);
+        // Layout System
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
 
-	    // Create and add header2 directly under headerLabel
-	    JLabel header2 = new JLabel("Create a Batch Order", JLabel.LEFT);
-	    header2.setFont(new Font("ARIAL", Font.BOLD, 25));
-	    header2.setForeground(new Color(120, 66, 245));
-	    c.gridy = 1;  // Second row
-	    c.gridwidth = 2;  // Span across two columns
-	    c.anchor = GridBagConstraints.WEST;  // Align to the left
-	    c.fill = GridBagConstraints.HORIZONTAL;  // Fill horizontally to the left
-	    this.add(header2, c);
-	    
-	    // Add a small blank space in the third row
-	    JPanel blankSpace = new JPanel();
-	    blankSpace.setPreferredSize(new java.awt.Dimension(0, 10));  // 10 pixels tall, 0 width
-	    c.gridy = 2;  // Third row
-	    c.weighty = 0;  // No extra vertical space allocated
-	    this.add(blankSpace, c);
-	    
-	    // Create and add header2 directly under headerLabel
-	    JLabel quantityLabel = new JLabel("Quantity:", JLabel.LEFT);
-	    quantityLabel.setFont(new Font("ARIAL", Font.BOLD, 20));
-	    c.gridy = 3;  // Second row
-	    c.gridwidth = 2;  // Span across two columns
-	    c.anchor = GridBagConstraints.WEST;  // Align to the left
-	    c.fill = GridBagConstraints.HORIZONTAL;  // Fill horizontally to the left
-	    this.add(quantityLabel, c);
-	    
-	    
-	    // Add other components like buttons, panels, etc.
-	    // Example: adding a panel with buttons
-	    JButton enable = new JButton("enable");
-	    enable.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.ENABLE_SIGNAL));
-	    JButton request = new JButton("request");
-	    request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.REQUEST_SIGNAL));
-	    JButton refill = new JButton("refill");
-	    refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
+        // Main Header
+        JLabel headerLabel = new JLabel("Advantech ABS", JLabel.CENTER);
+        headerLabel.setFont(new Font("ARIAL", Font.BOLD, 50));
+        c.gridx = 0;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.CENTER;
+        c.insets = new Insets(10, 30, 10, 30);  // Add padding around the header
+        this.add(headerLabel, c);
 
-	    JPanel ss = new JPanel();
-	    ss.add(enable);
-	    ss.add(request);
-	    ss.add(refill);
+        // Create and add header2 directly under headerLabel
+        JLabel header2 = new JLabel("Create a Batch Order", JLabel.LEFT);
+        header2.setFont(new Font("ARIAL", Font.BOLD, 25));
+        header2.setForeground(new Color(120, 66, 245));
+        c.gridy = 1;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(10, 10, 0, 10);  // Padding with no bottom margin
+        this.add(header2, c);
 
-	    c.gridy = 4;  // Third row
-	    c.gridwidth = 1;  // Reset to single column width
-	    this.add(ss, c);
-		
-		
-		this.setTitle("POS");
-		this.setSize(400, 500);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setResizable(false);
+        // Add a small blank space in the third row
+        JPanel blankSpace = new JPanel();
+        blankSpace.setPreferredSize(new Dimension(0, 10));
+        c.gridy = 2;
+        c.weighty = 0;
+        this.add(blankSpace, c);
+
+        // Add quantity label
+        JLabel quantityLabel = new JLabel("Quantity");
+        quantityLabel.setFont(new Font("ARIAL", Font.BOLD, 20));
+        c.gridy = 3;
+        c.gridwidth = 2;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        this.add(quantityLabel, c);
+        
+     // Creating a spinner with an initial value of 1, minimum of 1, maximum of 100, and step size of 1
+        quantitySpinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1));
+        c.gridx = 1;
+        this.add(quantitySpinner, c);
+
+        // Initialize sliders and labels
+        label1 = new JLabel("Liquid 1: 0ml");
+        oneSlider = new JSlider(0, 200, 0);
+        oneSlider.setPreferredSize(new Dimension(200, 30));  // Set preferred size of the slider
+        oneSlider.addChangeListener(e -> updateSliders(oneSlider, label1, 1));
+
+        // Add label1 to the left (first column)
+        c.gridy = 4;
+        c.gridx = 0;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        c.gridwidth = 1;
+        c.insets = new Insets(10, 10, 5, 10);  // Add padding around the label
+        this.add(label1, c);
+
+        // Add oneSlider to the right (second column)
+        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        c.insets = new Insets(10, 10, 5, 10);  // Add padding around the slider
+        this.add(oneSlider, c);
+
+        // Repeat for other sliders and labels
+        label2 = new JLabel("Liquid 2: 0ml");
+        twoSlider = new JSlider(0, 200, 0);
+        twoSlider.setPreferredSize(new Dimension(200, 30));
+        twoSlider.addChangeListener(e -> updateSliders(twoSlider, label2, 2));
+
+        c.gridy = 5;
+        c.gridx = 0;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        this.add(label2, c);
+
+        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        this.add(twoSlider, c);
+
+        label3 = new JLabel("Liquid 3: 0ml");
+        threeSlider = new JSlider(0, 200, 0);
+        threeSlider.setPreferredSize(new Dimension(200, 30));
+        threeSlider.addChangeListener(e -> updateSliders(threeSlider, label3, 3));
+
+        c.gridy = 6;
+        c.gridx = 0;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        this.add(label3, c);
+
+        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        this.add(threeSlider, c);
+
+        label4 = new JLabel("Liquid 4: 0ml");
+        fourSlider = new JSlider(0, 200, 0);
+        fourSlider.setPreferredSize(new Dimension(200, 30));
+        fourSlider.addChangeListener(e -> updateSliders(fourSlider, label4, 4));
+
+        c.gridy = 7;
+        c.gridx = 0;
+        c.fill = GridBagConstraints.NONE;
+        c.weightx = 0;
+        this.add(label4, c);
+
+        c.gridx = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        this.add(fourSlider, c);
+        
+        // Create a new button
+        JButton submitButton = new JButton("Order");
+        // Add an external method as the ActionListener using a lambda expression
+        submitButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
+        Ports.POS_ORDER_SIGNAL, 
+        true
+        ));
+        
+        // Add the button in the first column
+        c.gridy = 8;
+        c.gridx = 0;
+        this.add(submitButton, c);
+
+        this.setTitle("POS");
+        this.setSize(500, 700);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+    }
+	
+	public void updateSliders(JSlider slider, JLabel label, int number) {
+		label.setText("Liquid " + number + ": " + slider.getValue() + "%");
 	}
+	
+//	public void submitOrder(ActionEvent e) {
+//        Order newOrder = ;
+//        new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, newOrder);
+//        System.out.println("Order Sent");
+//        System.out.println(newOrder.getQuantity());
+//        System.out.println(newOrder.getLiquidVolume(1));
+//    }
+
+    public static Order getCurrentOrder(){
+        return new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue());
+
+    }
+
 
 	public static void main(String[] args) {
 		POS cl = new POS();

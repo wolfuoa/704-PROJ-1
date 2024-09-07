@@ -9,6 +9,7 @@ public class POSWorker extends Worker{
 	public void setSignal(boolean status) {
 //		System.out.println(signame+"  "+status);
 		switch(signame){
+		
 		case "pusherRetractedE":
 			States.PUSHER_RETRACTED = status;
 			break;
@@ -50,7 +51,7 @@ public class POSWorker extends Worker{
 	}
 	
 	
-	static final List<String> signames = Arrays.asList("pusherRetractedE","pusherExtendedE","WPgrippedE","armAtSourceE","armAtDestE","emptyE");
+	static final List<String> signames = Arrays.asList();
 	
 	@Override
 	public boolean hasSignal(String sn) {
