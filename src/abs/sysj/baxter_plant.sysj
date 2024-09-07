@@ -109,9 +109,9 @@ BaxterPlant(
     ||
     // -------------- Broadcast --------------
     {
-        {while(true){emit rightArmV((RoboticArm)#rightArm); pause;}}
+        {while(true){present(rightArm){emit rightArmV((RoboticArm)#rightArm);} pause;}}
         ||
-        {while(true){emit leftArmV((RoboticArm)#leftArm); pause;}}
+        {while(true){present(leftArm){emit leftArmV((RoboticArm)#leftArm);} pause;}}
     }
     // ---------------------------------------
 }

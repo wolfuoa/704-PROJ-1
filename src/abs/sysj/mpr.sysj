@@ -7,6 +7,7 @@ import util.Bottle;
 
 MPR(
 	input signal enableMPR;
+	output signal orderComplete;
 	input Order signal posOrder;
 	input Integer channel conveyorStepComplete, capBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant, fillBottleComplete, placeBottleComplete, removeBottleComplete;
 	output Integer channel conveyorStep, capBottle, loadLidFaultTolerant, rotateStepFaultTolerant, placeBottle, removeBottle;
@@ -14,6 +15,7 @@ MPR(
    	)
 ->
 {
+
 	new Thread(new GUI()).start();
 	new Thread(new POSGUI()).start();
 	new Thread(new DT()).start();
@@ -38,6 +40,8 @@ MPR(
 	emit CYAN("\u001B[36m");
 	emit WHITE("\u001B[37m");
 
+	int ITERATION_OFFSET_CONSTANT = 5;
+
 	//temp override for bottles in order
 	int bottleNums = 5;
 
@@ -49,17 +53,23 @@ MPR(
 	{
 
 		// posOrder retrival
-		//await(posOrder);
-        //Order recievedOrder = #posOrder;
-        //System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
-        //System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
-		//bottleNums = recievedOrder.getQuantity();
+		await(posOrder);
+        Order recievedOrder = (Order)#posOrder;
+        System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
+        System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
+		bottleNums = recievedOrder.getQuantity();
 
 		Order receivedOrder = new Order(1,10,11,12,13);
 		
 		
+		// Takes Six iterations for the first bottle to complete
+		// Beyond this point each additional signal will produce a bottle
+		// Hence, for a batch size of 3 bottles, it takes 8 iterations
+		// So, we need to add 5 to the total system iterations
+		// We also need to prevent more bottles from being loaded onto the conveyor.
+		// Therefore, we will encase the place bottle logic in "if(iteration < bottleNums)"
 
-		for(int iteration = 0; iteration < bottleNums; iteration++) 
+		for(int iteration = 0; iteration < bottleNums + ITERATION_OFFSET_CONSTANT; iteration++) 
 		{
 			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 			bottles[iteration] = new Bottle(iteration, "");
@@ -73,7 +83,14 @@ MPR(
 			receive placeBottleComplete;
 			System.out.println("Place Bottle Complete");
 			if((Integer)#placeBottleComplete == 0) {bottles[iteration].addInfo("Place Bottle Complete");}
-			await(!enableMPR);	
+			await(!enableMPR);
+
+			await(enableMPR);
+			send removeBottle(0);
+			receive removeBottleComplete;
+			System.out.println("Remove Bottle Complete");
+			if((Integer)#removeBottleComplete == 0) {bottles[iteration].addInfo("Remove Bottle Complete");}
+			await(!enableMPR);
 			
 			await(enableMPR);
 			System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
@@ -93,9 +110,10 @@ MPR(
 			
 			await(enableMPR);
 			{
-				Order test = new Order(4,80,40,30,50);
+				// Order test = new Order(4,80,40,30,50);
+				// bottles[iteration].addInfo("New order received");
 				System.out.println((String)#YELLOW + "Fill Bottle Start" + (String)#RESET);
-				send fillBottle(test);
+				send fillBottle((Order)#posOrder);
 				receive fillBottleComplete;
 				System.out.println((String)#GREEN + "Fill Bottle Complete" + (String)#RESET);
 			}
@@ -120,13 +138,6 @@ MPR(
 			if((Integer)#loadLidCompleteFaultTolerant == 0) {bottles[iteration].addInfo("Load Lid Complete");}
 			if((Integer)#capBottleComplete == 0) 			{bottles[iteration].addInfo("Cap Bottle Complete");}
 
-			await(enableMPR);
-			send removeBottle(0);
-			receive removeBottleComplete;
-			System.out.println("Remove Bottle Complete");
-			if((Integer)#removeBottleComplete == 0) {bottles[iteration].addInfo("Remove Bottle Complete");}
-			await(!enableMPR);	
-
 			//print out logs after processing all bottles
 			if(iteration == bottleNums-1)
 			{
@@ -142,6 +153,8 @@ MPR(
 			}
 			pause;
 		}
+
+		emit orderComplete;
 
 		pause;
 	}

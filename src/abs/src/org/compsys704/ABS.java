@@ -30,7 +30,7 @@ public class ABS extends JFrame {
 		JButton enable = new JButton("enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
 		JButton request = new JButton("test pos");
-		request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, new Order(69, 5, 10, 12, 19)));
+		//request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, new Order(69, 5, 10, 12, 19)));
 		//request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL));
 		JButton refill = new JButton("refill");
 		refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));

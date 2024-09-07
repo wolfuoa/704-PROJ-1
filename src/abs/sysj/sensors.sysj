@@ -128,6 +128,7 @@ Sensors(
 			}
 			else
 			{
+				System.out.println("[DEBUG] Bottle in position 2 filled with " + (Integer)#logQuantityLiquidFilled + "ml.");
 				totalFluidInBottle += (Integer)#logQuantityLiquidFilled;
 			}
 			emit totalFluidInCurrentBottle(totalFluidInBottle);
