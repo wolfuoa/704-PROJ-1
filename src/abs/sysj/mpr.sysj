@@ -1,6 +1,8 @@
 import run.GUI;
 import run.POSGUI;
+import run.DT;
 import util.Order;
+import util.Bottle;
 
 
 MPR(
@@ -14,6 +16,7 @@ MPR(
 {
 	new Thread(new GUI()).start();
 	new Thread(new POSGUI()).start();
+	new Thread(new DT()).start();
 
 	String signal RESET; 
 	String signal BLACK; 
@@ -35,70 +38,99 @@ MPR(
 	emit CYAN("\u001B[36m");
 	emit WHITE("\u001B[37m");
 
-	int iteration = 0;
-	
-	
+	//temp override for bottles in order
+	int bottleNums = 1;
+
+	// array of Bottle objects, called bottles
+	Bottle[] bottles = new Bottle[bottleNums];
+	System.out.println("created bottles array");
+
 	while(true)
 	{
-			
+
+		// once all bottles have been processed, do not keep making bottles
+		//if(iteration == bottleNums) {bottleNums = 0;}
+		//bottles.clear();
+
+
+
 		// posOrder retrival
 		//await(posOrder);
         //Order recievedOrder = #posOrder;
         //System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
         //System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
+		//bottleNums = recievedOrder.getQuantity();
 
-		System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
-		iteration++;
 
-		await(enableMPR);
-		send placeBottle(0);
-		receive placeBottleComplete;
-		System.out.println("Place Bottle Complete");
-		await(!enableMPR);	
-		
-		await(enableMPR);
-		System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
-		send conveyorStep(0);
-		receive conveyorStepComplete;
-		System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
-		await(!enableMPR);
-
-		await(enableMPR);
-		System.out.println((String)#YELLOW + "Rotary Turntable Start" + (String)#RESET);
-		send rotateStepFaultTolerant(0);
-		receive rotateStepCompleteFaultTolerant;
-		System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
-		await(!enableMPR);
-		
-		await(enableMPR);
+		for(int iteration = 0; iteration < bottleNums; iteration++) 
 		{
-			Order test = new Order(4,80,40,30,50);
-			System.out.println((String)#YELLOW + "Fill Bottle Start" + (String)#RESET);
-			send fillBottle(test);
-			receive fillBottleComplete;
-			System.out.println((String)#GREEN + "Fill Bottle Complete" + (String)#RESET);
-		}
-		||
-		{
-			System.out.println((String)#YELLOW + "Load Lid Start" + (String)#RESET);
-			send loadLidFaultTolerant(0);
-			receive loadLidCompleteFaultTolerant;
-			System.out.println((String)#GREEN + "Load Lid Complete" + (String)#RESET);
-		}
-		||
-		{
-			System.out.println((String)#YELLOW + "Cap Bottle Start" + (String)#RESET);
-			send capBottle(0);
-			receive capBottleComplete;
-			System.out.println((String)#GREEN + "Cap Bottle Complete" + (String)#RESET);
-		}
-		await(!enableMPR);
-		
-		await(enableMPR);
-		send removeBottle(0);
-		receive removeBottleComplete;
-		System.out.println("Remove Bottle Complete");
-		await(!enableMPR);	
+			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
+			bottles[iteration] = new Bottle(iteration, "START OF LOG");
 
+			await(enableMPR);
+			send placeBottle(0);
+			receive placeBottleComplete;
+			System.out.println("Place Bottle Complete");
+			await(!enableMPR);	
+			
+			await(enableMPR);
+			System.out.println((String)#YELLOW + "Conveyor Start" + (String)#RESET);
+			send conveyorStep(0);
+			receive conveyorStepComplete;
+			System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
+			await(!enableMPR);
+
+			await(enableMPR);
+			System.out.println((String)#YELLOW + "Rotary Turntable Start" + (String)#RESET);
+			send rotateStepFaultTolerant(0);
+			receive rotateStepCompleteFaultTolerant;
+			System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
+			await(!enableMPR);
+
+			bottles[iteration].addInfo("test123");
+			
+			await(enableMPR);
+			{
+				Order test = new Order(4,80,40,30,50);
+				//bottles[iteration].addInfo("New order received");
+				System.out.println((String)#YELLOW + "Fill Bottle Start" + (String)#RESET);
+				send fillBottle(test);
+				receive fillBottleComplete;
+				//bottles[iteration].addInfo("Bottle filled");
+				System.out.println((String)#GREEN + "Fill Bottle Complete" + (String)#RESET);
+			}
+			||
+			{
+				System.out.println((String)#YELLOW + "Load Lid Start" + (String)#RESET);
+				send loadLidFaultTolerant(0);
+				receive loadLidCompleteFaultTolerant;
+				System.out.println((String)#GREEN + "Load Lid Complete" + (String)#RESET);
+			}
+			||
+			{
+				System.out.println((String)#YELLOW + "Cap Bottle Start" + (String)#RESET);
+				send capBottle(0);
+				receive capBottleComplete;
+				System.out.println((String)#GREEN + "Cap Bottle Complete" + (String)#RESET);
+			}
+			await(!enableMPR);
+			
+			await(enableMPR);
+			send removeBottle(0);
+			receive removeBottleComplete;
+			System.out.println("Remove Bottle Complete");
+			await(!enableMPR);	
+
+			pause;
+		}
+
+		//print out logs after processing all bottles
+		for (int i = 0; i < bottleNums; i++) {
+			System.out.println("===== Printing out bottle number: " + i + "=====");
+			bottles[i].testPrint();
+			halt;
+		}
+
+		pause;
 	}
 }
