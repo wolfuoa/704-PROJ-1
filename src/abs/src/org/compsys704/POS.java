@@ -28,11 +28,11 @@ import javafx.scene.shape.Box;
 import util.Order;
 
 public class POS extends JFrame {
-	private JSpinner quantitySpinner;
-	private JSlider oneSlider;
-	private JSlider twoSlider;
-	private JSlider threeSlider;
-	private JSlider fourSlider;
+	private static JSpinner quantitySpinner;
+	private static JSlider oneSlider;
+	private static JSlider twoSlider;
+	private static JSlider threeSlider;
+	private static JSlider fourSlider;
 	private JLabel label1;
 	private JLabel label2;
 	private JLabel label3;
@@ -86,8 +86,8 @@ public class POS extends JFrame {
         this.add(quantitySpinner, c);
 
         // Initialize sliders and labels
-        label1 = new JLabel("Liquid 1: 0%");
-        oneSlider = new JSlider(0, 100, 0);
+        label1 = new JLabel("Liquid 1: 0ml");
+        oneSlider = new JSlider(0, 200, 0);
         oneSlider.setPreferredSize(new Dimension(200, 30));  // Set preferred size of the slider
         oneSlider.addChangeListener(e -> updateSliders(oneSlider, label1, 1));
 
@@ -109,8 +109,8 @@ public class POS extends JFrame {
         this.add(oneSlider, c);
 
         // Repeat for other sliders and labels
-        label2 = new JLabel("Liquid 2: 0%");
-        twoSlider = new JSlider(0, 100, 0);
+        label2 = new JLabel("Liquid 2: 0ml");
+        twoSlider = new JSlider(0, 200, 0);
         twoSlider.setPreferredSize(new Dimension(200, 30));
         twoSlider.addChangeListener(e -> updateSliders(twoSlider, label2, 2));
 
@@ -125,8 +125,8 @@ public class POS extends JFrame {
         c.weightx = 1;
         this.add(twoSlider, c);
 
-        label3 = new JLabel("Liquid 3: 0%");
-        threeSlider = new JSlider(0, 100, 0);
+        label3 = new JLabel("Liquid 3: 0ml");
+        threeSlider = new JSlider(0, 200, 0);
         threeSlider.setPreferredSize(new Dimension(200, 30));
         threeSlider.addChangeListener(e -> updateSliders(threeSlider, label3, 3));
 
@@ -141,8 +141,8 @@ public class POS extends JFrame {
         c.weightx = 1;
         this.add(threeSlider, c);
 
-        label4 = new JLabel("Liquid 4: 0%");
-        fourSlider = new JSlider(0, 100, 0);
+        label4 = new JLabel("Liquid 4: 0ml");
+        fourSlider = new JSlider(0, 200, 0);
         fourSlider.setPreferredSize(new Dimension(200, 30));
         fourSlider.addChangeListener(e -> updateSliders(fourSlider, label4, 4));
 
@@ -160,7 +160,10 @@ public class POS extends JFrame {
         // Create a new button
         JButton submitButton = new JButton("Order");
         // Add an external method as the ActionListener using a lambda expression
-        submitButton.addActionListener(e -> submitOrder(e));
+        submitButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
+        Ports.POS_ORDER_SIGNAL, 
+        true
+        ));
         
         // Add the button in the first column
         c.gridy = 8;
@@ -178,12 +181,17 @@ public class POS extends JFrame {
 		label.setText("Liquid " + number + ": " + slider.getValue() + "%");
 	}
 	
-	public void submitOrder(ActionEvent e) {
-        Order newOrder = new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue());
-       
-        System.out.println("Order Sent");
-        System.out.println(newOrder.getQuantity());
-        System.out.println(newOrder.getLiquidVolume(1));
+//	public void submitOrder(ActionEvent e) {
+//        Order newOrder = ;
+//        new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, newOrder);
+//        System.out.println("Order Sent");
+//        System.out.println(newOrder.getQuantity());
+//        System.out.println(newOrder.getLiquidVolume(1));
+//    }
+
+    public static Order getCurrentOrder(){
+        return new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue());
+
     }
 
 
