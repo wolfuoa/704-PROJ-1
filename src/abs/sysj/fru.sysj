@@ -8,7 +8,7 @@ FRU(
     input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
 
     input signal bottleAtPos1FRU, bottleAtPos3, capOnBottleAtPos1;
-    output Integer channel rotateStepCompleteToSensors;
+    output Integer channel rotateStepCompleteToSensors, loadLidCompleteSensors;
    	)
 ->
 {
@@ -67,13 +67,14 @@ FRU(
             present(bottleAtPos3)
             {
                 send loadLid(0);
-            receive loadLidComplete;
-            if((Integer)#loadLidComplete == 1)
-            {
-                emit localTransmitterLeft(2); // COMMAND_LOAD_LID
-                await(localReceiverLeft);
-            }
-            send loadLidCompleteFaultTolerant(0);
+                receive loadLidComplete;
+                if((Integer)#loadLidComplete == 1)
+                {
+                    emit localTransmitterLeft(2); // COMMAND_LOAD_LID
+                    await(localReceiverLeft);
+                }
+                send loadLidCompleteFaultTolerant(0);
+                send loadLidCompleteSensors(0);
             }
             else
             {

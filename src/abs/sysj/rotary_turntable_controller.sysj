@@ -1,5 +1,5 @@
 RotaryTurntableController(
-	input signal turntableAlignedWithSensor;
+	input signal turntableAlignedWithSensor, rotaryTurntableFault;
 	output signal rotaryTurntableTrigger;
 	input Integer channel rotateStep;
 	output Integer channel rotateStepComplete;
@@ -9,10 +9,19 @@ RotaryTurntableController(
 	while(true)
 	{
 		receive rotateStep;
-		abort(turntableAlignedWithSensor)
+		present(!rotaryTurntableFault)
 		{
-			sustain rotaryTurntableTrigger;
+			abort(turntableAlignedWithSensor)
+			{
+				sustain rotaryTurntableTrigger;
+			}
+			send rotateStepComplete(0);
 		}
-		send rotateStepComplete(0);
+		else
+		{
+			System.out.println("Error -> Rotary Turntable");
+			send rotateStepComplete(1);
+		}
+		pause;
 	}
 }

@@ -2,7 +2,6 @@
 	<Interconnection>
 		<Link Type="Destination">
 			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
-			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
 			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
 			<Interface SubSystem="SS710" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1071"/>
@@ -18,14 +17,6 @@
 			<oChannel Name="logQuantityLiquidFilled" To="SensorsCD.logQuantityLiquidFilled" />
 			<oChannel Name="fillBottleCompleteSensors" To="SensorsCD.fillBottleCompleteSensors" />
 
-		</ClockDomain>
-	</SubSystem>
-
-	<SubSystem Name="SS50">
-		<ClockDomain Name="LidLoaderControllerCD" Class="LidLoaderController">
-
-			<oChannel Name="loadLidCompleteSensors" To="SensorsCD.loadLidCompleteSensors" />
-			
 		</ClockDomain>
 	</SubSystem>
 
@@ -60,6 +51,7 @@
 			
 			<!-- SENSORS -->
 			<oChannel Name="rotateStepCompleteToSensors" To="SensorsCD.rotateStepCompleteToSensors" />
+			<oChannel Name="loadLidCompleteSensors" To="SensorsCD.loadLidCompleteSensors" />
 
 		</ClockDomain>
 	</SubSystem>
@@ -85,9 +77,6 @@
 			<oSignal Name="bottleAtPos2" To="LiquidFillerControllerCD.bottleAtPos2" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 			<oSignal Name="overflowSensed" To="LiquidFillerControllerCD.overflowSensed" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10040" />
 
-			<!-- LID LOADER -->
-			<iChannel Name="loadLidCompleteSensors" From="LidLoaderControllerCD.loadLidCompleteSensors" />
-
 			<!-- LID CAPPER -->
 			<iChannel Name="capBottleCompleteSensors" From="LidCapperControllerCD.capBottleCompleteSensors" />
 			<oSignal Name="bottleAtPos4" To="LidCapperControllerCD.bottleAtPos4" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
@@ -96,6 +85,7 @@
 			<oSignal Name="bottleAtPos1FRU" To="FRUCD.bottleAtPos1FRU" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
 			<oSignal Name="bottleAtPos3" To="FRUCD.bottleAtPos3" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
 			<oSignal Name="capOnBottleAtPos1" To="FRUCD.capOnBottleAtPos1" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
+			<iChannel Name="loadLidCompleteSensors" From="FRUCD.loadLidCompleteSensors" />
 
 			<!-- BAXTER LEFT ARM CONTROLLER -->
 			<oSignal Name="bottleAtPoint" To="BaxterLeftArmControllerCD.bottleAtPoint" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10700" />
