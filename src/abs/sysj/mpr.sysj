@@ -72,8 +72,6 @@ MPR(
 
 		for(int iteration = 0; iteration < bottleNums + ITERATION_OFFSET_CONSTANT; iteration++) 
 		{
-			emit orderComplete;
-			
 			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 			bottles[iteration] = new Bottle(iteration, "START OF LOG");
 
@@ -140,6 +138,8 @@ MPR(
 			bottles[i].testPrint();
 			halt;
 		}
+
+		emit orderComplete;
 
 		pause;
 	}
