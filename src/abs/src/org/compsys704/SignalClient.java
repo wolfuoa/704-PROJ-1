@@ -19,6 +19,7 @@ public class SignalClient implements ActionListener{
 	final String ip = "127.0.0.1";
 	
 	Order posOrder = null;
+	Boolean isOrder = false;
 	
 	String dest;
 	
@@ -45,6 +46,18 @@ public class SignalClient implements ActionListener{
 		}
 	}
 
+	public SignalClient(int p, String dest, Boolean isOrder){
+		this.dest = dest;
+		port = p;
+		this.isOrder = isOrder;
+		try {
+			s.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);;
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
@@ -57,8 +70,9 @@ public class SignalClient implements ActionListener{
 				if(resp < 0)
 					throw new ConnectException("Not thru");
 			}
-			if (posOrder != null) {
-				oos.writeObject(new Object[]{true, posOrder});
+			if (isOrder == true) {
+				System.out.println("Signal Client Order Sent with Q: " + POS.getCurrentOrder().getQuantity() + "L1: " + POS.getCurrentOrder().getLiquidVolume(1));
+				oos.writeObject(new Object[]{true, POS.getCurrentOrder()});
 				Thread.sleep(50);
 				oos.writeObject(new Object[]{false});
 				posOrder = null;
