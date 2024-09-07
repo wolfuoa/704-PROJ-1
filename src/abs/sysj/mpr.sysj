@@ -39,7 +39,7 @@ MPR(
 	emit WHITE("\u001B[37m");
 
 	//temp override for bottles in order
-	int bottleNums = 1;
+	int bottleNums = 5;
 
 	// array of Bottle objects, called bottles
 	Bottle[] bottles = new Bottle[bottleNums];
@@ -72,6 +72,7 @@ MPR(
 			send placeBottle(0);
 			receive placeBottleComplete;
 			System.out.println("Place Bottle Complete");
+			if((Integer)#placeBottleComplete == 0) {bottles[iteration].addInfo("Place Bottle Complete");}
 			await(!enableMPR);	
 			
 			await(enableMPR);
@@ -79,6 +80,7 @@ MPR(
 			send conveyorStep(0);
 			receive conveyorStepComplete;
 			System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
+			if((Integer)#conveyorStepComplete == 0) {bottles[iteration].addInfo("Conveyor Complete");}
 			await(!enableMPR);
 
 			await(enableMPR);
@@ -86,6 +88,7 @@ MPR(
 			send rotateStepFaultTolerant(0);
 			receive rotateStepCompleteFaultTolerant;
 			System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
+			if((Integer)#rotateStepCompleteFaultTolerant == 0) {bottles[iteration].addInfo("Rotary Turntable Complete");}
 			await(!enableMPR);
 			
 			await(enableMPR);
@@ -112,38 +115,30 @@ MPR(
 			}
 			await(!enableMPR);
 
-			// Add liquid filled to log if filler completed
-			if((Integer)#fillBottleComplete == 0)
-			{
-				bottles[iteration].addInfo("Bottle filled");
-			}
-			
+			// Add to log if operations completed
+			if((Integer)#fillBottleComplete == 0) 			{bottles[iteration].addInfo("Bottle filled");}
+			if((Integer)#loadLidCompleteFaultTolerant == 0) {bottles[iteration].addInfo("Load Lid Complete");}
+			if((Integer)#capBottleComplete == 0) 			{bottles[iteration].addInfo("Cap Bottle Complete");}
+
 			await(enableMPR);
 			send removeBottle(0);
 			receive removeBottleComplete;
 			System.out.println("Remove Bottle Complete");
+			if((Integer)#removeBottleComplete == 0) {bottles[iteration].addInfo("Remove Bottle Complete");}
 			await(!enableMPR);	
 
 			//print out logs after processing all bottles
 			if(iteration == bottleNums-1)
 			{
 				String log = "";
-
-				for (int i = 0; i < bottleNums; i++) {
-					log += bottles[i].getLog();
-				}
+				for (int i = 0; i < bottleNums; i++) {log += bottles[i].getLog();}
 				System.out.println("===== Printing out final order logfile =====");
 				System.out.println(log);
 				bottles[0].writeLogToFile(log);
 
-				
 		        // Clear the bottles array
-		        for (int i = 0; i < bottles.length; i++) 
-		        {
-		            bottles[i] = null;
-		        }
+		        for (int i = 0; i < bottles.length; i++) {bottles[i] = null;}
 				bottleNums = 0;
-
 			}
 			pause;
 		}
