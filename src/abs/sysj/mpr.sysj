@@ -3,6 +3,7 @@ import run.POSGUI;
 import run.DT;
 import util.Order;
 import util.Bottle;
+import util.BottleList;
 
 
 MPR(
@@ -46,13 +47,12 @@ MPR(
 	int bottleNums = 5;
 
 	// array of Bottle objects, called bottles
-	Bottle[] bottles = new Bottle[bottleNums];
-	System.out.println("created bottles array");
+	BottleList bottles = new BottleList();
 
 	while(true)
 	{
 
-		// posOrder retrival
+		// posOrder retrieval
 		await(posOrder);
         Order recievedOrder = (Order)#posOrder;
         System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
@@ -71,25 +71,27 @@ MPR(
 
 		for(int iteration = 0; iteration < bottleNums + ITERATION_OFFSET_CONSTANT; iteration++) 
 		{
-			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
-			bottles[iteration] = new Bottle(iteration, "");
+			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);	
+			bottles.addBottle(iteration, "");
 
-			// Add recipie to log
-			bottles[iteration].addInfo("Received recipe: "+ receivedOrder.getRecipeString()); //[TODO] add order parameters here
+			// Add recipe to log
+			bottles.getBottle(iteration).addInfo("Received recipe: "+ receivedOrder.getRecipeString());
 
-
-			await(enableMPR);
-			send placeBottle(0);
-			receive placeBottleComplete;
-			System.out.println("Place Bottle Complete");
-			if((Integer)#placeBottleComplete == 0) {bottles[iteration].addInfo("Place Bottle Complete");}
-			await(!enableMPR);
+			if(iteration < bottleNums)
+			{
+				await(enableMPR);
+				send placeBottle(0);
+				receive placeBottleComplete;
+				System.out.println("Place Bottle Complete");
+				if((Integer)#placeBottleComplete == 0) {bottles.getBottle(iteration).addInfo("Place Bottle Complete");}
+				await(!enableMPR);
+			}
 
 			await(enableMPR);
 			send removeBottle(0);
 			receive removeBottleComplete;
 			System.out.println("Remove Bottle Complete");
-			if((Integer)#removeBottleComplete == 0) {bottles[iteration].addInfo("Remove Bottle Complete");}
+			if((Integer)#removeBottleComplete == 0) {bottles.getBottle(iteration).addInfo("Remove Bottle Complete");}
 			await(!enableMPR);
 			
 			await(enableMPR);
@@ -97,7 +99,7 @@ MPR(
 			send conveyorStep(0);
 			receive conveyorStepComplete;
 			System.out.println((String)#GREEN + "Conveyor Complete" + (String)#RESET);
-			if((Integer)#conveyorStepComplete == 0) {bottles[iteration].addInfo("Conveyor Complete");}
+			if((Integer)#conveyorStepComplete == 0) {bottles.getBottle(iteration).addInfo("Conveyor Complete");}
 			await(!enableMPR);
 
 			await(enableMPR);
@@ -105,7 +107,7 @@ MPR(
 			send rotateStepFaultTolerant(0);
 			receive rotateStepCompleteFaultTolerant;
 			System.out.println((String)#GREEN + "Rotary Turntable Complete" + (String)#RESET);
-			if((Integer)#rotateStepCompleteFaultTolerant == 0) {bottles[iteration].addInfo("Rotary Turntable Complete");}
+			if((Integer)#rotateStepCompleteFaultTolerant == 0) {bottles.getBottle(iteration).addInfo("Rotary Turntable Complete");}
 			await(!enableMPR);
 			
 			await(enableMPR);
@@ -134,25 +136,21 @@ MPR(
 			await(!enableMPR);
 
 			// Add to log if operations completed
-			if((Integer)#fillBottleComplete == 0) 			{bottles[iteration].addInfo("Bottle filled");}
-			if((Integer)#loadLidCompleteFaultTolerant == 0) {bottles[iteration].addInfo("Load Lid Complete");}
-			if((Integer)#capBottleComplete == 0) 			{bottles[iteration].addInfo("Cap Bottle Complete");}
+			if((Integer)#fillBottleComplete == 0) {bottles.getBottle(iteration).addInfo("Bottle filled");}
+			if((Integer)#loadLidCompleteFaultTolerant == 0) {bottles.getBottle(iteration).addInfo("Load Lid Complete");}
+			if((Integer)#capBottleComplete == 0) {bottles.getBottle(iteration).addInfo("Cap Bottle Complete");}
 
-			//print out logs after processing all bottles
-			if(iteration == bottleNums-1)
-			{
-				String log = "";
-				for (int i = 0; i < bottleNums; i++) {log += bottles[i].getLog();}
-				System.out.println("===== Printing out final order logfile =====");
-				System.out.println(log);
-				bottles[0].writeLogToFile(log);
-
-		        // Clear the bottles array
-		        for (int i = 0; i < bottles.length; i++) {bottles[i] = null;}
-				bottleNums = 0;
-			}
 			pause;
 		}
+
+		String log = "";
+		for (int i = 0; i < bottleNums; i++) {log += bottles.getBottle(i).getLog();}
+		System.out.println("===== Printing out final order logfile =====");
+		System.out.println(log);
+		bottles.getBottle(0).writeLogToFile(log);
+
+		// Clear the bottles array
+		bottles.clean();
 
 		emit orderComplete;
 

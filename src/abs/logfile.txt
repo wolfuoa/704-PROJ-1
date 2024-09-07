@@ -1,16 +1,22 @@
 
 Bottle Identification number: 0
-[2024-09-07 14:45:37.993] Received recipe: 
-[2024-09-07 14:45:41.998] Bottle filled
+[2024-09-07 19:08:55.887] Received recipe: liquid_0: 10ml liquid_1: 11ml liquid_2: 12ml liquid_3: 13ml
+[2024-09-07 19:08:58.311] Place Bottle Complete
+[2024-09-07 19:08:58.600] Conveyor Complete
+[2024-09-07 19:08:58.719] Rotary Turntable Complete
+[2024-09-07 19:09:02.634] Bottle filled
 Bottle Identification number: 1
-[2024-09-07 14:45:42.146] Received recipe: 
-[2024-09-07 14:45:44.975] Bottle filled
+[2024-09-07 19:09:02.636] Received recipe: liquid_0: 10ml liquid_1: 11ml liquid_2: 12ml liquid_3: 13ml
+[2024-09-07 19:09:03.447] Place Bottle Complete
+[2024-09-07 19:09:03.724] Conveyor Complete
+[2024-09-07 19:09:03.926] Rotary Turntable Complete
+[2024-09-07 19:09:06.085] Bottle filled
+[2024-09-07 19:09:06.085] Load Lid Complete
 Bottle Identification number: 2
-[2024-09-07 14:45:45.110] Received recipe: 
-[2024-09-07 14:45:48.021] Bottle filled
-Bottle Identification number: 3
-[2024-09-07 14:45:48.186] Received recipe: 
-[2024-09-07 14:45:51.013] Bottle filled
-Bottle Identification number: 4
-[2024-09-07 14:45:51.174] Received recipe: 
-[2024-09-07 14:45:53.965] Bottle filled
+[2024-09-07 19:09:06.087] Received recipe: liquid_0: 10ml liquid_1: 11ml liquid_2: 12ml liquid_3: 13ml
+[2024-09-07 19:09:07.146] Place Bottle Complete
+[2024-09-07 19:09:07.416] Conveyor Complete
+[2024-09-07 19:09:07.506] Rotary Turntable Complete
+[2024-09-07 19:09:09.303] Bottle filled
+[2024-09-07 19:09:09.303] Load Lid Complete
+[2024-09-07 19:09:09.303] Cap Bottle Complete

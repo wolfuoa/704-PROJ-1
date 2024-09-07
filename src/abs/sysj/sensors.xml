@@ -68,7 +68,10 @@
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
 			<!-- CONVEYOR -->
+			<oSignal Name="bottleAtPos0Conveyor" To="ConveyorControllerCD.bottleAtPos0Conveyor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
 			<oSignal Name="bottleAtPos1Conveyor" To="ConveyorControllerCD.bottleAtPos1Conveyor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
+			<oSignal Name="bottleAtPos5Conveyor" To="ConveyorControllerCD.bottleAtPos5Conveyor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
+			<oSignal Name="bottleLeftPos5Conveyor" To="ConveyorControllerCD.bottleLeftPos5Conveyor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
 			<iSignal Name="conveyorPlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
 			
 			<!-- ROTARY TURNTABLE -->

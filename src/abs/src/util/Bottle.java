@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.*;
+
 
 public class Bottle {
 
@@ -32,9 +34,6 @@ public class Bottle {
         this.info = this.info + "\n" + "[" + formattedNow + "] " + info;
     }
 
-    public void printLogToConsole() {
-        System.out.println(this.info);
-    }
 
     public String getLog() {
         return this.info;

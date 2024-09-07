@@ -27,7 +27,10 @@
 			<oSignal Name="motConveyorOn" To="ConveyorPlantCD.motConveyorOn" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10021" />
 			
 			<!-- SENSORS -->
+			<iSignal Name="bottleAtPos0Conveyor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
 			<iSignal Name="bottleAtPos1Conveyor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			<iSignal Name="bottleAtPos5Conveyor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
+			<iSignal Name="bottleLeftPos5Conveyor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10020" />
 			
 		</ClockDomain>
 	</SubSystem>
