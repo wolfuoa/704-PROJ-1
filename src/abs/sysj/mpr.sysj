@@ -39,7 +39,7 @@ MPR(
 	emit WHITE("\u001B[37m");
 
 	//temp override for bottles in order
-	int bottleNums = 5;
+	int bottleNums = 1;
 
 	// array of Bottle objects, called bottles
 	Bottle[] bottles = new Bottle[bottleNums];
@@ -55,7 +55,9 @@ MPR(
         //System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
 		//bottleNums = recievedOrder.getQuantity();
 
-
+		Order receivedOrder = new Order(1,10,11,12,13);
+		
+		
 
 		for(int iteration = 0; iteration < bottleNums; iteration++) 
 		{
@@ -63,7 +65,7 @@ MPR(
 			bottles[iteration] = new Bottle(iteration, "");
 
 			// Add recipie to log
-			bottles[iteration].addInfo("Received recipe: "); //[TODO] add order parameters here
+			bottles[iteration].addInfo("Received recipe: "+ receivedOrder.getRecipeString()); //[TODO] add order parameters here
 
 
 			await(enableMPR);
@@ -132,7 +134,6 @@ MPR(
 				}
 				System.out.println("===== Printing out final order logfile =====");
 				System.out.println(log);
-				
 				bottles[0].writeLogToFile(log);
 
 				
