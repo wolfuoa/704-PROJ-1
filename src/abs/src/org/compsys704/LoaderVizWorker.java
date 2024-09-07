@@ -48,6 +48,7 @@ public class LoaderVizWorker extends Worker{
 		case "liquidFilled":
 			States.BOTTLE_FILLED = status;
 			break;	
+		// Bottle At Position
 		case "bottleAtPos0V":
 			States.BOTTLE_AT_POS0 = status;
 			break;
@@ -76,6 +77,9 @@ public class LoaderVizWorker extends Worker{
 		case "leftArmV":
 			//Value Signal
 			break;
+		case "liquidLoadedV":
+			//Value Signal
+			break;
 		case "WPgrippedE":
 			if(States.GRIPPED && States.ARM_AT_SOURCE){
 				if(!status)
@@ -90,7 +94,7 @@ public class LoaderVizWorker extends Worker{
 			States.MAG_EMPTY = status;
 			break;
 		default: 
-			System.err.println("Wrong sig name : "+signame);
+			System.err.println("Wrong sig name in setSignal : "+signame);
 			System.exit(1);
 		}
 	}
@@ -111,6 +115,10 @@ public class LoaderVizWorker extends Worker{
 			if (status == true) {
 				System.out.println("Viz Right Robotic arm recived status " + States.RIGHT_ARM_OBJECT.getArmStatus() + " " + States.RIGHT_ARM_OBJECT.getGripperStatus());
 			}
+			break;
+		case "liquidLoadedV":
+			States.LIQUID_TO_FILL = (int) objectData; 
+			System.out.println("Viz Recieved Liquid LoadedV value signal");
 			break;
 		default:
 			System.out.println("signal + object arrived " + signame);
@@ -137,6 +145,7 @@ public class LoaderVizWorker extends Worker{
 	
 	static final List<String> lidLoaderSignals = Arrays.asList("pusherRetractedE","pusherExtendedE","armAtSourceE","armAtDestE");
 	static final List<String> baxterSignals = Arrays.asList("rightArmV", "leftArmV");
+	static final List<String> liquidLoaderSignals = Arrays.asList("liquidLoadedV");
 	static final List<String> signames = new ArrayList<>();
 	
 	@Override
@@ -144,6 +153,7 @@ public class LoaderVizWorker extends Worker{
 		signames.addAll(sensorsSignals);
 		signames.addAll(lidLoaderSignals);
 	    signames.addAll(baxterSignals);
+	    signames.addAll(liquidLoaderSignals);
 		return signames.contains(sn);
 	}
 
