@@ -5,6 +5,8 @@ LiquidFillerPlant(
     output signal dosUnitEvac;
     output Integer signal liquidLoaded, dosUnitFilled;
 
+	output Integer signal liquidLoadedV;
+
 	output signal dosUnitEvacV;
     )
 ->
@@ -39,8 +41,8 @@ LiquidFillerPlant(
 	// ----------- To Visualization ------------
 	{
 		{while(true){present(dosUnitEvac){emit dosUnitEvacV;} pause;}}
-		//||
-		//[TODO] send valued liquidLoaded
+		||
+		{while(true){present(liquidLoaded){emit liquidLoadedV((Integer)#liquidLoaded);} pause;}}
 		//||
 		//[TODO] send valued dosUnitFilled
 		//||

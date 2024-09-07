@@ -4,6 +4,8 @@
 			<Interface SubSystem="SS40" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1004"/>
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
 			<Interface SubSystem="SS60" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1006"/>
+			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
+			<Interface SubSystem="SS710" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1071"/>
 			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 		</Link>
@@ -35,6 +37,24 @@
 		</ClockDomain>
 	</SubSystem>
 
+	<SubSystem Name="SS700">
+		<ClockDomain Name="BaxterLeftArmControllerCD" Class="BaxterLeftArmController">
+
+			<!-- SENSORS -->
+			<oChannel Name="placeBottleCompleteSensors" To="SensorsCD.placeBottleCompleteSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
+	<SubSystem Name="SS710">
+		<ClockDomain Name="BaxterRightArmControllerCD" Class="BaxterRightArmController">
+			
+			<!-- SENSORS -->
+			<oChannel Name="removeBottleCompleteSensors" To="SensorsCD.removeBottleCompleteSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
+
 	<SubSystem Name="SS100">
 		<ClockDomain Name="FRUCD" Class="FRU">
 			
@@ -48,7 +68,7 @@
 		<ClockDomain Name="SensorsCD" Class="Sensors">
 			
 			<!-- CONVEYOR -->
-			<oSignal Name="bottleAtPos1" To="ConveyorControllerCD.bottleAtPos1" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
+			<oSignal Name="bottleAtPos1Conveyor" To="ConveyorControllerCD.bottleAtPos1Conveyor" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10020" />
 			<iSignal Name="conveyorPlantOn" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10080" />
 			
 			<!-- ROTARY TURNTABLE -->
@@ -67,13 +87,30 @@
 
 			<!-- LID CAPPER -->
 			<iChannel Name="capBottleCompleteSensors" From="LidCapperControllerCD.capBottleCompleteSensors" />
+			<oSignal Name="bottleAtPos4" To="LidCapperControllerCD.bottleAtPos4" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10060" />
+
+			<!-- FRU -->
+			<oSignal Name="bottleAtPos1FRU" To="FRUCD.bottleAtPos1FRU" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
+			<oSignal Name="bottleAtPos3" To="FRUCD.bottleAtPos3" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
+			<oSignal Name="capOnBottleAtPos1" To="FRUCD.capOnBottleAtPos1" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
+
+			<!-- BAXTER LEFT ARM CONTROLLER -->
+			<oSignal Name="bottleAtPoint" To="BaxterLeftArmControllerCD.bottleAtPoint" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10700" />
+			<iChannel Name="placeBottleCompleteSensors" From="BaxterLeftArmControllerCD.placeBottleCompleteSensors" />
+
+			<!-- BAXTER RIGHT ARM CONTROLLER -->
+			<oSignal Name="bottleLeftPos5" To="BaxterRightArmControllerCD.bottleLeftPos5" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10710" />
+			<iChannel Name="removeBottleCompleteSensors" From="BaxterRightArmControllerCD.removeBottleCompleteSensors" />
 
 			<!-- TO VISUALIZER -->
+			<oSignal Name="bottleAtPointV" To="UI.bottleAtPointV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleAtPos0V" To="UI.bottleAtPos0V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos1V" To="UI.bottleAtPos1V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos2V" To="UI.bottleAtPos2V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos3V" To="UI.bottleAtPos3V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos4V" To="UI.bottleAtPos4V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="bottleAtPos5V" To="UI.bottleAtPos5V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="bottleLeftPos5V" To="UI.bottleLeftPos5V" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="capBottleCompleteV" To="UI.capBottleCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="capBottleIncompleteV" To="UI.capBottleIncompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			<oSignal Name="loadLidCompleteV" To="UI.loadLidCompleteV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />

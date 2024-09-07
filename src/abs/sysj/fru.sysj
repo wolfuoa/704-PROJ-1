@@ -7,6 +7,7 @@ FRU(
     output Integer channel loadLid, rotateStep, baxterLeftArmCommand, baxterRightArmCommand;
     input Integer channel loadLidComplete, rotateStepComplete, baxterLeftArmCommandComplete, baxterRightArmCommandComplete;
 
+    input signal bottleAtPos1FRU, bottleAtPos3, capOnBottleAtPos1;
     output Integer channel rotateStepCompleteToSensors;
    	)
 ->
@@ -25,7 +26,14 @@ FRU(
 			receive placeBottle;
             emit localTransmitterLeft(0); // COMMAND_PLACE_BOTTLE
             await(localReceiverLeft);
-            send placeBottleComplete(0);
+            if((Integer)#localReceiverLeft == 0)
+            {
+                send placeBottleComplete(0);
+            }
+            else
+            {
+                send placeBottleComplete(2);
+            }
             pause;
 		}
 	}
@@ -38,7 +46,14 @@ FRU(
             receive removeBottle;
             emit localTransmitterRight(1); // COMMAND_REMOVE_BOTTLE
             await(localReceiverRight);
-            send removeBottleComplete(0);
+            if((Integer)#localReceiverRight == 0)
+            {
+                send removeBottleComplete(0);
+            }
+            else
+            {
+                send removeBottleComplete(2);
+            }
             pause;
         }
 	}
@@ -49,7 +64,9 @@ FRU(
 		while(true)
         {
             receive loadLidFaultTolerant;
-            send loadLid(0);
+            present(bottleAtPos3)
+            {
+                send loadLid(0);
             receive loadLidComplete;
             if((Integer)#loadLidComplete == 1)
             {
@@ -57,6 +74,12 @@ FRU(
                 await(localReceiverLeft);
             }
             send loadLidCompleteFaultTolerant(0);
+            }
+            else
+            {
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 3  (FRU -> Lid Loader)" + "\u001B[0m");
+                send loadLidCompleteFaultTolerant(2);
+            }
             pause;
         }
 	}
@@ -67,15 +90,23 @@ FRU(
 		while(true)
         {
             receive rotateStepFaultTolerant;
-            send rotateStep(0);
-            receive rotateStepComplete;
-            if((Integer)#rotateStepComplete == 1)
+            present(bottleAtPos1FRU && !capOnBottleAtPos1)
             {
-                emit localTransmitterRight(3); // COMMAND_ROTATE_TURNTABLE
-                await(localReceiverRight);
+                send rotateStep(0);
+                receive rotateStepComplete;
+                if((Integer)#rotateStepComplete == 1)
+                {
+                    emit localTransmitterRight(3); // COMMAND_ROTATE_TURNTABLE
+                    await(localReceiverRight);
+                }
+                send rotateStepCompleteFaultTolerant(0);
+                send rotateStepCompleteToSensors(0);
             }
-            send rotateStepCompleteFaultTolerant(0);
-            send rotateStepCompleteToSensors(0);
+            else 
+            {
+                System.out.println("\u001B[31m" + "[DEBUG] no bottle at pos 1 or bottle is capped  (FRU -> Rotary Turntable)" + "\u001B[0m");
+                send rotateStepCompleteFaultTolerant(2);
+            }
             pause;
         }
 	}
@@ -87,7 +118,7 @@ FRU(
             while(true)
             {
                 receive baxterLeftArmCommandComplete;
-                emit localReceiverLeft(0);
+                emit localReceiverLeft((Integer)#baxterLeftArmCommandComplete);
                 pause;
             }
         }
@@ -96,7 +127,7 @@ FRU(
             while(true)
             {
                 receive baxterRightArmCommandComplete;
-                emit localReceiverRight(0);
+                emit localReceiverRight((Integer)#baxterRightArmCommandComplete);
                 pause;
             }
         }

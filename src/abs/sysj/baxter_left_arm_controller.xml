@@ -2,9 +2,19 @@
 	<Interconnection>
 		<Link Type="Destination">
 			<Interface SubSystem="SS700" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1070"/>
+			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 		</Link>
 	</Interconnection>
+
+	<SubSystem Name="SS80">
+		<ClockDomain Name="SensorsCD" Class="Sensors">
+
+			<!-- BAXTER LEFT ARM CONTROLLER -->
+			<iChannel Name="placeBottleCompleteSensors" From="BaxterLeftArmControllerCD.placeBottleCompleteSensors" />
+			
+		</ClockDomain>
+	</SubSystem>
 	
 	<SubSystem Name="SS100">
 		<ClockDomain Name="FRUCD" Class="FRU">
@@ -18,6 +28,9 @@
 	
 	<SubSystem Name="SS700" Local="true">
 		<ClockDomain Name="BaxterLeftArmControllerCD" Class="BaxterLeftArmController">
+
+			<!-- SIGNALS FROM BROADCAST ENABLE -->
+			<iSignal Name="enableBaxterLeft" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10700" />
 			
 			<!-- FRU -->
 			<iChannel Name="baxterLeftArmCommand" From="FRUCD.baxterLeftArmCommand" />
@@ -29,6 +42,7 @@
 
 			<!-- SENSORS -->
 			<iSignal Name="bottleAtPoint" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10700" />
+			<oChannel Name="placeBottleCompleteSensors" To="SensorsCD.placeBottleCompleteSensors" />
 			
 		</ClockDomain>
 	</SubSystem>

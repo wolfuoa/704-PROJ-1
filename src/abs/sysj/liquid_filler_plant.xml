@@ -16,6 +16,7 @@
 			
 			<!-- TO VISUALIZER -->
 			<oSignal Name="dosUnitEvacV" To="UI.dosUnitEvacV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="liquidLoadedV" To="UI.liquidLoadedV" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 
 		</ClockDomain>
 	</SubSystem>
