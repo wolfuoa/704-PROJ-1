@@ -54,10 +54,10 @@ MPR(
 
 		// posOrder retrieval
 		await(posOrder);
-        Order recievedOrder = (Order)#posOrder;
+        Order receivedOrder = (Order)#posOrder;
         System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
-        System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
-		bottleNums = recievedOrder.getQuantity();
+        System.out.println((String)#PURPLE + "Quantity is " + receivedOrder.getQuantity() + (String)#RESET);
+		bottleNums = receivedOrder.getQuantity();
 		
 		
 		// Takes Six iterations for the first bottle to complete

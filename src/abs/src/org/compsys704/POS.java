@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -39,7 +40,7 @@ public class POS extends JFrame {
 	private JLabel label3;
 	private JLabel label4;
 
-    private static List<Order> orderQueue;
+    private static List<Order> orderQueue = new ArrayList<>();
 	
 	
 	public POS() {
@@ -163,15 +164,38 @@ public class POS extends JFrame {
         // Create a new button
         JButton submitButton = new JButton("Order");
         // Add an external method as the ActionListener using a lambda expression
-        submitButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
+        submitButton.addActionListener(e -> {
+        	System.out.print("POS order added to queue");
+        	orderQueue.add(new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue()));
+        	System.out.println("The size is: " + orderQueue.size());
+        });
+        
+     // Create a new button
+        JButton sendOrderButton = new JButton("Make Order");
+        // Add an external method as the ActionListener using a lambda expression
+        sendOrderButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
         Ports.POS_ORDER_SIGNAL, 
         true
         ));
         
-        // Add the button in the first column
+     // Create a new panel to hold the buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 2, 10, 0)); // 1 row, 2 columns, 10px gap between buttons
+
+        // Add buttons to the panel
+        buttonPanel.add(submitButton);
+        buttonPanel.add(sendOrderButton);
+
+        // Set up the GridBagConstraints for the panel
         c.gridy = 8;
         c.gridx = 0;
-        this.add(submitButton, c);
+        c.gridwidth = 2; // Span across 2 columns
+        c.weightx = 1.0; // Take up the full horizontal space
+        c.fill = GridBagConstraints.HORIZONTAL; // Stretch the panel horizontally
+        c.insets = new Insets(5, 5, 5, 5); // Optional: add padding
+
+        // Add the panel containing buttons to the layout
+        this.add(buttonPanel, c);
 
         this.setTitle("POS");
         this.setSize(500, 700);
@@ -193,7 +217,9 @@ public class POS extends JFrame {
 //    }
 
     public static Order getCurrentOrder(){
-        return new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue());
+    	Order order = orderQueue.get(0);
+    	orderQueue.remove(0);
+        return order;
 
     }
 
