@@ -2,6 +2,7 @@ package util;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.io.File;
 
 
 public class Bottle {
@@ -28,6 +29,16 @@ public class Bottle {
 
     public void printLogToConsole() {
         System.out.println(this.info);
+    }
+
+    public String getLog() {
+        return this.info;
+    }
+
+    public void writeLogToFile(String log) {
+        String path = System.getProperty("user.dir");
+        
+        System.out.println("Working Directory = " + path);
     }
 
     public static void main(String[] args) {

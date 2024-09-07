@@ -39,7 +39,7 @@ MPR(
 	emit WHITE("\u001B[37m");
 
 	//temp override for bottles in order
-	int bottleNums = 1;
+	int bottleNums = 3;
 
 	// array of Bottle objects, called bottles
 	Bottle[] bottles = new Bottle[bottleNums];
@@ -47,12 +47,6 @@ MPR(
 
 	while(true)
 	{
-
-		// once all bottles have been processed, do not keep making bottles
-		//if(iteration == bottleNums) {bottleNums = 0;}
-		//bottles.clear();
-
-
 
 		// posOrder retrival
 		//await(posOrder);
@@ -63,15 +57,13 @@ MPR(
 
 
 
-
 		for(int iteration = 0; iteration < bottleNums; iteration++) 
 		{
 			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
-			bottles[iteration] = new Bottle(iteration, "START OF LOG");
+			bottles[iteration] = new Bottle(iteration, "");
 
 			// Add recipie to log
 			bottles[iteration].addInfo("Received recipe: "); //[TODO] add order parameters here
-
 
 
 			await(enableMPR);
@@ -130,14 +122,29 @@ MPR(
 			System.out.println("Remove Bottle Complete");
 			await(!enableMPR);	
 
-			pause;
-		}
+			//print out logs after processing all bottles
+			if(iteration == bottleNums-1)
+			{
+				String log = "";
 
-		//print out logs after processing all bottles
-		for (int i = 0; i < bottleNums; i++) {
-			System.out.println("===== Printing out final order logfile =====");
-			bottles[i].printLogToConsole();
-			halt;
+				for (int i = 0; i < bottleNums; i++) {
+					log += bottles[i].getLog();
+				}
+				System.out.println("===== Printing out final order logfile =====");
+				System.out.println(log);
+				
+				//bottles[0] = writeLogToFile(log);
+
+				
+		        // Clear the bottles array
+		        for (int i = 0; i < bottles.length; i++) 
+		        {
+		            bottles[i] = null;
+		        }
+				bottleNums = 0;
+
+			}
+			pause;
 		}
 
 		pause;
