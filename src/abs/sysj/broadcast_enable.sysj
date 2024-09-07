@@ -8,7 +8,7 @@ BroadcastEnable(
     while(true)
     {
 		await(enable);
-		System.out.println("received enable signal");
+		//System.out.println("received enable signal");
 		
 		emit enableMPR;
 		//emit enableConveyor;

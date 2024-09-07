@@ -1,5 +1,7 @@
 package org.compsys704;
 
+import util.RoboticArm;
+
 public class States {
 	
 	
@@ -20,6 +22,20 @@ public class States {
 	
 	//Bottle Capper
 	public static volatile boolean BOTTLE_CAPPED = false;
+	
+	public static volatile boolean BOTTLE_AT_POS0 = false;
+	public static volatile boolean BOTTLE_AT_POS1 = false;
+	public static volatile boolean BOTTLE_AT_POS2 = false;
+	public static volatile boolean BOTTLE_AT_POS3 = false;
+	public static volatile boolean BOTTLE_AT_POS4 = false;
+	public static volatile boolean BOTTLE_AT_POS5 = false;
+	public static volatile boolean BOTTLE_LEFT_POS5 = false;
+	
+	//Baxter
+	public static volatile boolean LEFT_ARM = false;
+	public static volatile RoboticArm LEFT_ARM_OBJECT = null;
+	public static volatile boolean RIGHT_ARM = false;
+	public static volatile RoboticArm RIGHT_ARM_OBJECT = null;
 
 	//POS
 	public static volatile boolean ORDER_COMPLETE = false;
