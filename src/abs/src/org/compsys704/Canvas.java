@@ -42,6 +42,9 @@ public class Canvas extends JPanel {
 	BufferedImage BaxterRemoveI;
 	BufferedImage BaxterRemoveF;
 	BufferedImage BaxterPlaceTTF;
+	BufferedImage BaxterSpinTTO;
+	BufferedImage BaxterSpinTTOAndPlacePos1;
+	BufferedImage BaxterLoadLidNoOtherEvent;
 		public Canvas(){
 		try {
 			
@@ -50,7 +53,10 @@ public class Canvas extends JPanel {
 			BaxterRemoveI =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
 			BaxterRemoveF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_F.png"));
 			BaxterPlaceTTF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_place_Bottle.png"));
-			
+			BaxterSpinTTO =  ImageIO.read(new File("res/Baxter_layouts/B_Rotate_EB_I.png"));
+			BaxterSpinTTOAndPlacePos1 = ImageIO.read(new File("res/Baxter_layouts/B_Rotate_EB_F.png"));
+			BaxterSpinTTOAndPlacePos1 = ImageIO.read(new File("res/Baxter_layouts/B_Rotate_EB_F.png"));
+			BaxterLoadLidNoOtherEvent = ImageIO.read(new File("res/Baxter_layouts/B_LLoader_General_F.png"));
 			
 			
 			
@@ -134,14 +140,57 @@ public class Canvas extends JPanel {
 			g.drawImage(BaxterRemoveF, 0, 0, null);
 		}
 		
+		//3.)
+		//Baxter turntable fault tolerance mode
+		if (States.RIGHT_ARM_OBJECT != null &&
+				(States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_ROTARY_TURNTABLE
+				||
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_ROTARY_TURNTABLE
+				)){
+			g.drawImage(BaxterSpinTTO, 0, 0, null);
+		}
+		
+		//4.)
+		//Baxter turntable fault and placing at pos1
+		if (States.RIGHT_ARM_OBJECT != null &&
+				((States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_ROTARY_TURNTABLE
+				||
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_ROTARY_TURNTABLE
+				))
+				&&
+				((States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_COLLECTION_POINT 
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_COLLECTION_POINT
+				))
+				){
+			g.drawImage(BaxterSpinTTOAndPlacePos1, 0, 0, null);
+		}
+		
+		//Must put bottle under baxter, to show baxter has capped the botle
+		if(States.BOTTLE_AT_POS3) {
+			g.drawImage(liquidFilledBottle, 400, 265, null);
+		}
+		//5. )
+		//Baxter Lid loading ONLY
+		if (States.LEFT_ARM &&
+				States.LEFT_ARM_OBJECT != null &&
+				(States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_LID_SURPLUS
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_LID_SURPLUS
+				)){
+			g.drawImage(BaxterLoadLidNoOtherEvent, 0, 0, null);
+		}
+		
+		
+		
+		
+		/****************************************BAXTER FINISHED *****************************************************/
+		
 		if (States.BOTTLE_AT_POS1) {
 			g.drawImage(emptyBottle, 355, 320, null);
 		} 
 		if(States.BOTTLE_AT_POS2) {
 			g.drawImage(emptyBottle, 360, 280, null);
-		}
-		if(States.BOTTLE_AT_POS3) {
-			g.drawImage(liquidFilledBottle, 400, 265, null);
 		}
 		if(States.BOTTLE_AT_POS4) {
 			g.drawImage(completeBottle, 435, 285, null);
