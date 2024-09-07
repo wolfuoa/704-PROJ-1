@@ -7,6 +7,7 @@ import util.Bottle;
 
 MPR(
 	input signal enableMPR;
+	output signal orderComplete;
 	input Order signal posOrder;
 	input Integer channel conveyorStepComplete, capBottleComplete, loadLidCompleteFaultTolerant, rotateStepCompleteFaultTolerant, fillBottleComplete, placeBottleComplete, removeBottleComplete;
 	output Integer channel conveyorStep, capBottle, loadLidFaultTolerant, rotateStepFaultTolerant, placeBottle, removeBottle;
@@ -14,6 +15,7 @@ MPR(
    	)
 ->
 {
+
 	new Thread(new GUI()).start();
 	new Thread(new POSGUI()).start();
 	new Thread(new DT()).start();
@@ -49,12 +51,10 @@ MPR(
 
 	while(true)
 	{
-
+			
 		// once all bottles have been processed, do not keep making bottles
 		//if(iteration == bottleNums) {bottleNums = 0;}
 		//bottles.clear();
-
-
 
 		// posOrder retrival
 		await(posOrder);
@@ -72,6 +72,8 @@ MPR(
 
 		for(int iteration = 0; iteration < bottleNums + ITERATION_OFFSET_CONSTANT; iteration++) 
 		{
+			emit orderComplete;
+			
 			System.out.println((String)#BLUE + "Starting iteration " + iteration + (String)#RESET);
 			bottles[iteration] = new Bottle(iteration, "START OF LOG");
 

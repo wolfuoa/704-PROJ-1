@@ -60,8 +60,10 @@
 
 			<!-- SIGNALS FROM BROADCAST ENABLE -->
 			<iSignal Name="enableMPR" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
-			<iSignal Name="posOrder" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
 			
+			<!-- POS GUI -->
+			<iSignal Name="posOrder" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
+			<oSignal Name="orderComplete" To="UI.orderComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
 			
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />
@@ -84,6 +86,8 @@
 			<!-- LIQUID FILLER -->	
 			<oChannel Name="fillBottle" To="LiquidFillerControllerCD.fillBottle" />
 			<iChannel Name="fillBottleComplete" From="LiquidFillerControllerCD.fillBottleComplete" />
+
+
 
 		</ClockDomain>
 	</SubSystem>

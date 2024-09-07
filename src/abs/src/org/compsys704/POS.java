@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -37,6 +38,8 @@ public class POS extends JFrame {
 	private JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
+
+    private static List<Order> orderQueue;
 	
 	
 	public POS() {
