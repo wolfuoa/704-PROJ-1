@@ -58,8 +58,6 @@ MPR(
         System.out.println((String)#PURPLE + "Recieved pos Order Object" + (String)#RESET);
         System.out.println((String)#PURPLE + "Quantity is " + recievedOrder.getQuantity() + (String)#RESET);
 		bottleNums = recievedOrder.getQuantity();
-
-		Order receivedOrder = new Order(1,10,11,12,13);
 		
 		
 		// Takes Six iterations for the first bottle to complete
