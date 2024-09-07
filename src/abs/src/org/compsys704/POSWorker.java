@@ -11,6 +11,8 @@ public class POSWorker extends Worker{
 		switch(signame){
 		case "orderComplete":
 			States.ORDER_COMPLETE = status;
+			States.SEND_ORDER_STATUS = true;
+			POS.sendOrderButton.setEnabled(true);
 			System.out.println("Recieved Complete Signal POSworker");
 		
 		case "pusherRetractedE":

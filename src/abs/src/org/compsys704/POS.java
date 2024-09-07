@@ -39,7 +39,9 @@ public class POS extends JFrame {
 	private JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
-
+	public static JButton sendOrderButton;
+	
+	
     private static List<Order> orderQueue = new ArrayList<>();
 	
 	
@@ -168,15 +170,19 @@ public class POS extends JFrame {
         	System.out.print("POS order added to queue");
         	orderQueue.add(new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue()));
         	System.out.println("The size is: " + orderQueue.size());
+        	if (States.SEND_ORDER_STATUS) {
+        		sendOrderButton.setEnabled(true);
+        	}
         });
         
      // Create a new button
-        JButton sendOrderButton = new JButton("Make Order");
+        sendOrderButton = new JButton("Make Order");
         // Add an external method as the ActionListener using a lambda expression
         sendOrderButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
         Ports.POS_ORDER_SIGNAL, 
         true
         ));
+        sendOrderButton.setEnabled(false);
         
      // Create a new panel to hold the buttons
         JPanel buttonPanel = new JPanel();
@@ -208,21 +214,14 @@ public class POS extends JFrame {
 		label.setText("Liquid " + number + ": " + slider.getValue() + "%");
 	}
 	
-//	public void submitOrder(ActionEvent e) {
-//        Order newOrder = ;
-//        new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, newOrder);
-//        System.out.println("Order Sent");
-//        System.out.println(newOrder.getQuantity());
-//        System.out.println(newOrder.getLiquidVolume(1));
-//    }
 
     public static Order getCurrentOrder(){
+		System.out.println("the SC size is: " + orderQueue.size());
     	Order order = orderQueue.get(0);
     	orderQueue.remove(0);
         return order;
 
     }
-
 
 	public static void main(String[] args) {
 		POS cl = new POS();

@@ -40,4 +40,5 @@ public class States {
 
 	//POS
 	public static volatile boolean ORDER_COMPLETE = false;
+	public static Boolean SEND_ORDER_STATUS= true;
 }
