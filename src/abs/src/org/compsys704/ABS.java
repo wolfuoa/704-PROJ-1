@@ -27,11 +27,11 @@ public class ABS extends JFrame {
 		panel = new Canvas();
 		panel.setPreferredSize(new Dimension(700, 600));
 		panel.setBackground(Color.WHITE);
-		JButton enable = new JButton("enable");
+		JButton enable = new JButton("Enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
-		JButton request = new JButton("B2");
-		//request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.BREAK_LID_LOADER_SIGNAL));
-		JButton refill = new JButton("B3");
+		JButton refillBtn = new JButton("Refill");
+		refillBtn.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
+//		JButton refill = new JButton("B3");
 		//refill.addActionListener(new SignalClient(Ports.PORT_ROTARY_TT_CONTROLLER, Ports.BREAK_TT_SIGNAL));
 
 		JCheckBox bllCheckBox = new JCheckBox("Break Lid Loader");
@@ -44,6 +44,7 @@ public class ABS extends JFrame {
 
 		JPanel ss = new JPanel();
 		ss.add(enable);
+		ss.add(refillBtn);
 		ss.add(bllCheckBox);
 		ss.add(bttCheckBox);
 		this.setLayout(new GridBagLayout());

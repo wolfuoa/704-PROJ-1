@@ -21,6 +21,11 @@ public class Order implements Serializable {
     public int getQuantity() {
         return this.quantity;
     }
+    
+    public String getRecipeString() {
+        return "liquid_0: " + Integer.toString(this.volume_liquid_0) + "ml liquid_1: " + Integer.toString(this.volume_liquid_1) +
+        	   "ml liquid_2: " + Integer.toString(this.volume_liquid_2) + "ml liquid_3: " + Integer.toString(this.volume_liquid_3) + "ml";
+    }
 
     public int getLiquidVolume(int liquid_num) {
     	switch(liquid_num)

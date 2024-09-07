@@ -91,7 +91,7 @@ FRU(
 		while(true)
         {
             receive rotateStepFaultTolerant;
-            present(bottleAtPos1FRU && !capOnBottleAtPos1)
+            present(!capOnBottleAtPos1)
             {
                 send rotateStep(0);
                 receive rotateStepComplete;

@@ -1,5 +1,5 @@
 ConveyorController(
-	input signal bottleAtPos1Conveyor;
+	input signal bottleAtPos1Conveyor, bottleAtPos0Conveyor, bottleAtPos5Conveyor, bottleLeftPos5Conveyor;
 	output signal motConveyorOn;
 	
 	input Integer channel conveyorStep;
@@ -10,11 +10,19 @@ ConveyorController(
 	while(true)
 	{
 		receive conveyorStep;
-		abort(bottleAtPos1Conveyor)
+		present(bottleAtPos0Conveyor || bottleAtPos5Conveyor)
 		{
+			abort(bottleAtPos1Conveyor || bottleLeftPos5Conveyor)
+			{
 			sustain motConveyorOn;
-		}
+			}
 		
-		send conveyorStepComplete(0);
+			send conveyorStepComplete(0);
+		}
+		else
+		{
+			send conveyorStepComplete(2);
+		}
+		pause;
 	}
 }
