@@ -95,11 +95,17 @@ public class LoaderVizWorker extends Worker{
 		case "leftArmV":
 			States.LEFT_ARM = status;
 			States.LEFT_ARM_OBJECT = (RoboticArm) objectData;
-			System.out.println("Viz Left Robotic arm recived status " + States.LEFT_ARM_OBJECT.getArmStatus());
+			if (status == true) {
+				System.out.println("Viz Left Robotic arm recived status " + States.LEFT_ARM_OBJECT.getArmStatus() + " " + States.LEFT_ARM_OBJECT.getGripperStatus());
+			}
+			break;
 		case "rightArmV":
 			States.RIGHT_ARM = status;
 			States.RIGHT_ARM_OBJECT = (RoboticArm) objectData;
-			System.out.println("Viz Right Robotic arm recived status " + States.RIGHT_ARM_OBJECT.getArmStatus());
+			if (status == true) {
+				System.out.println("Viz Right Robotic arm recived status " + States.RIGHT_ARM_OBJECT.getArmStatus() + " " + States.RIGHT_ARM_OBJECT.getGripperStatus());
+			}
+			break;
 		default:
 			System.out.println("signal + object arrived " + signame);
 		}
