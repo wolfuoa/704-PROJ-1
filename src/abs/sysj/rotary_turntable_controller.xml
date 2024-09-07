@@ -28,6 +28,9 @@
 			
 			<!-- SENSORS -->
 			<iSignal Name="turntableAlignedWithSensor" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
+
+			<!-- VISUALIZATION -->
+			<iSignal Name="rotaryTurntableFault" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10030" />
 			
 		</ClockDomain>
 	</SubSystem>

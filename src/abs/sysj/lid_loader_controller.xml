@@ -40,7 +40,7 @@
 			<oSignal Name="armSource"    To="LidLoaderPlantCD.armSource"    Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 
-			<!-- POS GUI -->
+			<!-- VISUALIZATION -->
 			<iSignal Name="lidLoaderFault" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			
 		</ClockDomain>
