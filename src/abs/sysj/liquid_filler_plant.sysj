@@ -42,7 +42,7 @@ LiquidFillerPlant(
 	{
 		{while(true){present(dosUnitEvac){emit dosUnitEvacV;} pause;}}
 		||
-		{while(true){present(liquidLoaded){emit liquidLoadedV((Integer)#liquidLoaded); System.out.println("Sent the Liquid LoadedV signal");} pause;}}
+		{while(true){present(liquidLoaded){emit liquidLoadedV((Integer)#liquidLoaded);} pause;}}
 		//||
 		//[TODO] send valued dosUnitFilled
 		//||
