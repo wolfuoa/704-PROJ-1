@@ -92,6 +92,7 @@
 			<!-- FRU -->
 			<oSignal Name="bottleAtPos1FRU" To="FRUCD.bottleAtPos1FRU" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
 			<oSignal Name="bottleAtPos3" To="FRUCD.bottleAtPos3" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
+			<oSignal Name="capOnBottleAtPos1" To="FRUCD.capOnBottleAtPos1" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10100" />
 
 			<!-- BAXTER LEFT ARM CONTROLLER -->
 			<oSignal Name="bottleAtPoint" To="BaxterLeftArmControllerCD.bottleAtPoint" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10700" />
