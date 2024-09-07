@@ -44,7 +44,9 @@ public class Canvas extends JPanel {
 	BufferedImage BaxterPlaceTTF;
 	BufferedImage BaxterSpinTTO;
 	BufferedImage BaxterSpinTTOAndPlacePos1;
-	BufferedImage BaxterLoadLidNoOtherEvent;
+	BufferedImage BaxterLoadLidNoOtherEventI;
+	BufferedImage BaxterLoadLidNoOtherEventF;
+	BufferedImage BaxterLoadLidFRemoveFromConvF;
 		public Canvas(){
 		try {
 			
@@ -55,9 +57,9 @@ public class Canvas extends JPanel {
 			BaxterPlaceTTF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_place_Bottle.png"));
 			BaxterSpinTTO =  ImageIO.read(new File("res/Baxter_layouts/B_Rotate_EB_I.png"));
 			BaxterSpinTTOAndPlacePos1 = ImageIO.read(new File("res/Baxter_layouts/B_Rotate_EB_F.png"));
-			BaxterSpinTTOAndPlacePos1 = ImageIO.read(new File("res/Baxter_layouts/B_Rotate_EB_F.png"));
-			BaxterLoadLidNoOtherEvent = ImageIO.read(new File("res/Baxter_layouts/B_LLoader_General_F.png"));
-			
+			BaxterLoadLidNoOtherEventI = ImageIO.read(new File("res/Baxter_layouts/B_LLoader_General_I.png"));
+			BaxterLoadLidNoOtherEventF = ImageIO.read(new File("res/Baxter_layouts/B_LLoader_General_F.png"));
+			BaxterLoadLidFRemoveFromConvF = ImageIO.read(new File("res/Baxter_layouts/B_LLoader_Remove_from_Conv_FF.png"));
 			
 			
 			/*----------------------------------Baxter Layouts END---------------------------------------------*/
@@ -151,6 +153,49 @@ public class Canvas extends JPanel {
 		}
 		
 		//4.)
+		//Capped Bottle and liquid filler must be placed here to show that Baxter is using hte faul tolerance mode
+		if(States.BOTTLE_AT_POS3) {
+			g.drawImage(liquidFilledBottle, 400, 265, null);
+			
+		}
+		if(States.BOTTLE_AT_POS2) {
+			g.drawImage(emptyBottle, 360, 280, null);
+		}
+		
+		
+		// Liquid Filler
+		if (States.LIQUID_TO_FILL == 0) {
+			g.drawImage(L1, 280, 233, null);
+		} else if (States.LIQUID_TO_FILL == 1) {
+			g.drawImage(L2, 280, 233, null);
+		} else if (States.LIQUID_TO_FILL == 2) {
+			g.drawImage(L3, 280, 233, null);
+		}
+		 else if (States.LIQUID_TO_FILL == 3) {
+				g.drawImage(L4, 280, 233, null);
+		}
+		//5. )
+		//Baxter Lid loading ONLY Initial
+		if (States.LEFT_ARM &&
+				States.LEFT_ARM_OBJECT != null &&
+				(States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_LID_SURPLUS
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_LID_SURPLUS
+				)){
+			g.drawImage(BaxterLoadLidNoOtherEventI, 0, 0, null);
+		}
+		
+		// Baxter Lid Loading ONLY Final
+		if (States.LEFT_ARM &&
+				States.LEFT_ARM_OBJECT != null &&
+				(States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_POSITION_THREE
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_POSITION_THREE
+				)){
+			g.drawImage(BaxterLoadLidNoOtherEventF, 0, 0, null);
+		}
+		
+		// ----------- Baxter both arm actions modes ----------------------------------
 		//Baxter turntable fault and placing at pos1
 		if (States.RIGHT_ARM_OBJECT != null &&
 				((States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_ROTARY_TURNTABLE
@@ -166,32 +211,28 @@ public class Canvas extends JPanel {
 			g.drawImage(BaxterSpinTTOAndPlacePos1, 0, 0, null);
 		}
 		
-		//Must put bottle under baxter, to show baxter has capped the botle
-		if(States.BOTTLE_AT_POS3) {
-			g.drawImage(liquidFilledBottle, 400, 265, null);
-		}
-		//5. )
-		//Baxter Lid loading ONLY
-		if (States.LEFT_ARM &&
-				States.LEFT_ARM_OBJECT != null &&
-				(States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_LID_SURPLUS
+		//Baxter Load Lid Plus remove from item from converyor
+		if (States.RIGHT_ARM_OBJECT != null &&
+				((States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_PACKAGE
 				||
-				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_LID_SURPLUS
-				)){
-			g.drawImage(BaxterLoadLidNoOtherEvent, 0, 0, null);
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_PACKAGE
+				))
+				&&
+				((States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_POSITION_THREE
+				||
+				States.LEFT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_POSITION_THREE
+				))
+				){
+			g.drawImage(BaxterLoadLidFRemoveFromConvF, 0, 0, null);
 		}
 		
 		
 		
 		
 		/****************************************BAXTER FINISHED *****************************************************/
-		
 		if (States.BOTTLE_AT_POS1) {
 			g.drawImage(emptyBottle, 355, 320, null);
 		} 
-		if(States.BOTTLE_AT_POS2) {
-			g.drawImage(emptyBottle, 360, 280, null);
-		}
 		if(States.BOTTLE_AT_POS4) {
 			g.drawImage(completeBottle, 435, 285, null);
 		}
@@ -207,16 +248,6 @@ public class Canvas extends JPanel {
 //			g.drawImage(bottleFillerNotDoneDyn, 280, 233, null);
 //		}
 		
-		if (States.LIQUID_TO_FILL == 0) {
-			g.drawImage(L1, 280, 233, null);
-		} else if (States.LIQUID_TO_FILL == 1) {
-			g.drawImage(L2, 280, 233, null);
-		} else if (States.LIQUID_TO_FILL == 2) {
-			g.drawImage(L3, 280, 233, null);
-		}
-		 else if (States.LIQUID_TO_FILL == 3) {
-				g.drawImage(L4, 280, 233, null);
-			}
 	
 		//Lid Loader
 			// Arm
