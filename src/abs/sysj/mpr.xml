@@ -63,7 +63,7 @@
 			
 			<!-- POS GUI -->
 			<iSignal Name="posOrder" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10000" />
-			<oSignal Name="orderComplete" To="UI.orderComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20000" />
+			<oSignal Name="orderComplete" To="UI.orderComplete" Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="20001" />
 			
 			<!-- CONVEYOR -->
 			<oChannel Name="conveyorStep" To="ConveyorControllerCD.conveyorStep" />

@@ -2,7 +2,7 @@ package org.compsys704;
 
 public class Ports {
 	//public static final String REQUEST_SIGNAL = "LidLoaderControllerCD.request";
-	//public static final String REFILL_SIGNAL = "LidLoaderPlantCD.refill";
+	public static final String REFILL_SIGNAL = "LidLoaderPlantCD.refill";
 	public static final String BREAK_LID_LOADER_SIGNAL = "LidLoaderControllerCD.lidLoaderFault";
 	public static final String BREAK_TT_SIGNAL = "RotaryTurntableControllerCD.rotaryTurntableFault";
 	public static final String ENABLE_SIGNAL = "BroadcastEnableCD.enable";
