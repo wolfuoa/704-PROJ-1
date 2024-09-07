@@ -1,7 +1,7 @@
 import util.Constants;
 
 BaxterRightArmController(
-	input signal bottleLeftPos5, commandFeedbackRight;
+	input signal bottleLeftPos5, commandFeedbackRight, enableBaxterRight;
 	output String signal commandRight;
 	
 	input Integer channel baxterRightArmCommand;
@@ -20,53 +20,64 @@ BaxterRightArmController(
         case 1: // COMMAND_REMOVE_BOTTLE
             present(bottleLeftPos5)
             {
+                await(enableBaxterRight);
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
                 }
+                await(!enableBaxterRight);
 
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right ON_REMOVAL_POINT");
                 }
 
+                await(enableBaxterRight);
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("grip right CLOSED");
                 }
+                await(!enableBaxterRight);
 
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right ABOVE_REMOVAL_POINT");
                 }
 
+                await(enableBaxterRight);
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right ABOVE_PACKAGE");
                 }
+                await(!enableBaxterRight);
+                
+                send removeBottleCompleteSensors(0);
 
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right ON_PACKAGE");
                 }
 
+                await(enableBaxterRight);
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("grip right OPEN");
                 }
+                await(!enableBaxterRight);
 
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right ABOVE_PACKAGE");
                 }
 
+                await(enableBaxterRight);
                 abort(commandFeedbackRight)
                 {
                     sustain commandRight("move_arm right IDLE");
                 }
+                await(!enableBaxterRight);
 
                 send baxterRightArmCommandComplete(0);
-                send removeBottleCompleteSensors(0);
                 System.out.println("[DEBUG] moved bottle from end of conveyor to package (baxter right arm)");
             }
             else
@@ -79,6 +90,8 @@ BaxterRightArmController(
         
         // ------------ ROTATE TURNTABLE FAULT COMMAND ------------
         case 3: // COMMAND_ROTATE_TURNTABLE
+        
+            await(enableBaxterRight);
             abort(commandFeedbackRight)
             {
                 sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
@@ -89,16 +102,19 @@ BaxterRightArmController(
                 sustain commandRight("move_arm right ON_ROTARY_TURNTABLE");
             }
 
+            await(enableBaxterRight);
             abort(commandFeedbackRight)
             {
                 sustain commandRight("grip right CLOSED");
             }
 
+            await(enableBaxterRight);
             abort(commandFeedbackRight)
             {
                 sustain commandRight("rotate_hand right clockwise 60");
             }
 
+            await(enableBaxterRight);
             abort(commandFeedbackRight)
             {
                 sustain commandRight("grip right OPEN");
@@ -109,6 +125,7 @@ BaxterRightArmController(
                 sustain commandRight("move_arm right ABOVE_ROTARY_TURNTABLE");
             }
 
+            await(enableBaxterRight);
             abort(commandFeedbackRight)
             {
                 sustain commandRight("move_arm right IDLE");
