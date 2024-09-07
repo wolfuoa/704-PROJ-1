@@ -36,6 +36,7 @@ public class Canvas extends JPanel {
 	BufferedImage completeBottle;
 	
 	BufferedImage Base; 
+	BufferedImage BaxterRemoveI;
 	BufferedImage BaxterRemoveF;
 	BufferedImage BaxterPlaceTTF;
 		public Canvas(){
@@ -43,7 +44,8 @@ public class Canvas extends JPanel {
 			
 			/*----------------------------------Baxter Layouts------------------------------------------------*/
 			Base= ImageIO.read(new File("res/static_state.png"));
-			BaxterRemoveF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
+			BaxterRemoveI =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_I.png"));
+			BaxterRemoveF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_Remove_Bottle_F.png"));
 			BaxterPlaceTTF =  ImageIO.read(new File("res/Baxter_layouts/Baxter_place_Bottle.png"));
 			
 			
@@ -104,10 +106,24 @@ public class Canvas extends JPanel {
 			g.drawImage(emptyBottle, 318, 320, null);
 		} 
 		
-		
+		//Baxter Remove From Conveyor
+		if(States.BOTTLE_LEFT_POS5) {
+			g.drawImage(completeBottle, 490, 315, null);
+			
+		}
 		if (States.RIGHT_ARM_OBJECT != null &&
-				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_REMOVAL_POINT &&
-				States.RIGHT_ARM_OBJECT.getGripperStatus() == RoboticArm.GripperStatus.CLOSED) {
+				(States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_REMOVAL_POINT
+				||
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_REMOVAL_POINT
+				)){
+			g.drawImage(BaxterRemoveI, 0, 0, null);
+		}
+			// Moving item away from conveyor
+		if (States.RIGHT_ARM_OBJECT != null &&
+				(States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ABOVE_PACKAGE
+				||
+				States.RIGHT_ARM_OBJECT.getArmStatus() == RoboticArm.ArmStatus.ON_PACKAGE
+				)){
 			g.drawImage(BaxterRemoveF, 0, 0, null);
 		}
 		
@@ -126,10 +142,6 @@ public class Canvas extends JPanel {
 		if(States.BOTTLE_AT_POS5) {
 			g.drawImage(completeBottle, 440, 320, null);
 		} 
-		if(States.BOTTLE_LEFT_POS5) {
-			g.drawImage(completeBottle, 485, 320, null);
-			
-		}
 		
 		
 		//Liquid Filler
