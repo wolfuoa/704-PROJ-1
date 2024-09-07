@@ -1,23 +1,8 @@
 package util;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-
-import javafx.scene.shape.Box;
 
 public class Bottle {
 
@@ -27,21 +12,22 @@ public class Bottle {
     // Constructor
     public Bottle(int id, String info) {
         this.id = id;
+        
         this.info = info;
+        this.info = this.info + "\n" +  "Bottle Identification number: " + this.id;
     }
 
     public void addInfo(String info) {
         // Get and format the current date and time
-        //LocalDateTime now = LocalDateTime.now();
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        //String formattedNow = now.format(formatter);
-    	String formattedNow = "testDate";
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+        String formattedNow = now.format(formatter);
     		
         this.info = this.info + "\n" + "[" + formattedNow + "] " + info;
     }
 
-    public void testPrint() {
-        System.out.println("Log: " + this.info);
+    public void printLogToConsole() {
+        System.out.println(this.info);
     }
 
     public static void main(String[] args) {
