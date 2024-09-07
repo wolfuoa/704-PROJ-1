@@ -1,8 +1,10 @@
 package org.compsys704;
 
 public class Ports {
-	public static final String REQUEST_SIGNAL = "LidLoaderControllerCD.request";
-	public static final String REFILL_SIGNAL = "LidLoaderPlantCD.refill";
+	//public static final String REQUEST_SIGNAL = "LidLoaderControllerCD.request";
+	//public static final String REFILL_SIGNAL = "LidLoaderPlantCD.refill";
+	public static final String BREAK_LID_LOADER_SIGNAL = "LidLoaderControllerCD.lidLoaderFault";
+	public static final String BREAK_TT_SIGNAL = "RotaryTurntableControllerCD.rotaryTurntableFault";
 	public static final String ENABLE_SIGNAL = "BroadcastEnableCD.enable";
 	public static final String POS_ORDER_SIGNAL = "MPRCD.posOrder";
 	public static final int PORT_MPR = 10000;
@@ -11,6 +13,7 @@ public class Ports {
 	public static final int PORT_BROADCAST_ENABLE = 10090;
 	public static final int PORT_LOADER_VIZ = 20000;
 	public static final int PORT_LOADER_POS = 20001;
+	public static final int PORT_ROTARY_TT_CONTROLLER = 10030;
 	
 	// Manual 
 	public static final String SIGNAL_PUSHER_EXTEND   = "LidLoaderControllerCD.pusherExtendM";

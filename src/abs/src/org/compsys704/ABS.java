@@ -29,15 +29,23 @@ public class ABS extends JFrame {
 		panel.setBackground(Color.WHITE);
 		JButton enable = new JButton("enable");
 		enable.addActionListener(new SignalClient(Ports.PORT_BROADCAST_ENABLE, Ports.ENABLE_SIGNAL));
-		JButton request = new JButton("test pos");
-		//request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, new Order(69, 5, 10, 12, 19)));
-		//request.addActionListener(new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL));
-		JButton refill = new JButton("refill");
-		refill.addActionListener(new SignalClient(Ports.PORT_LOADER_PLANT, Ports.REFILL_SIGNAL));
+		JButton request = new JButton("B2");
+		//request.addActionListener(new SignalClient(Ports.PORT_LOADER_CONTROLLER, Ports.BREAK_LID_LOADER_SIGNAL));
+		JButton refill = new JButton("B3");
+		//refill.addActionListener(new SignalClient(Ports.PORT_ROTARY_TT_CONTROLLER, Ports.BREAK_TT_SIGNAL));
+
+		JCheckBox bllCheckBox = new JCheckBox("Break Lid Loader");
+		bllCheckBox.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.BREAK_LID_LOADER_SIGNAL));
+//		JCheckBox pr = new JCheckBox("vacOff");
+//		pr.setEnabled(false);
+//		pr.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_VACOFF));
+		JCheckBox bttCheckBox = new JCheckBox("Break Turn Table");
+		bttCheckBox.addItemListener(new SignalCheckBoxClient(Ports.PORT_ROTARY_TT_CONTROLLER, Ports.BREAK_TT_SIGNAL));
+
 		JPanel ss = new JPanel();
 		ss.add(enable);
-		ss.add(request);
-		ss.add(refill);
+		ss.add(bllCheckBox);
+		ss.add(bttCheckBox);
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridx = 0;
@@ -68,15 +76,17 @@ public class ABS extends JFrame {
 		pan.setBorder(BorderFactory.createTitledBorder("Mode selector"));
 
 		// Checkboxes
-		JCheckBox pe = new JCheckBox("pusherExtend");
+		JCheckBox pe = new JCheckBox("Break Lid Loader");
 		pe.setEnabled(false);
-		pe.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_PUSHER_EXTEND));
+		pe.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.BREAK_LID_LOADER_SIGNAL));
 //		JCheckBox pr = new JCheckBox("vacOff");
 //		pr.setEnabled(false);
 //		pr.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_VACOFF));
-		JCheckBox vo = new JCheckBox("vacOn");
+		JCheckBox vo = new JCheckBox("Break Turn Table");
 		vo.setEnabled(false);
-		vo.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_VACON));
+		vo.addItemListener(new SignalCheckBoxClient(Ports.PORT_ROTARY_TT_CONTROLLER, Ports.BREAK_TT_SIGNAL));
+
+		
 		JCheckBox as = new JCheckBox("armSource");
 		as.setEnabled(false);
 		as.addItemListener(new SignalCheckBoxClient(Ports.PORT_LOADER_CONTROLLER, Ports.SIGNAL_ARM_SOURCE));

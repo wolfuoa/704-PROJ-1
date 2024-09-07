@@ -3,7 +3,6 @@
 		<Link Type="Destination">
 			<Interface SubSystem="SS100" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1010"/>
 			<Interface SubSystem="SS50" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1005"/>
-			<Interface SubSystem="SS80" Class="com.systemj.ipc.TCPIPInterface" Args="127.0.0.1:1008"/>
 		</Link>
 	</Interconnection>
 
@@ -14,15 +13,6 @@
 			<oChannel Name="loadLid" To="LidLoaderControllerCD.loadLid" />
 			<iChannel Name="loadLidComplete" From="LidLoaderControllerCD.loadLidComplete" />
 
-		</ClockDomain>
-	</SubSystem>
-
-	<SubSystem Name="SS80">
-		<ClockDomain Name="SensorsCD" Class="Sensors">
-			
-			<!-- LID LOADER -->
-			<iChannel Name="loadLidCompleteSensors" From="LidLoaderControllerCD.loadLidCompleteSensors" />
-			
 		</ClockDomain>
 	</SubSystem>
 
@@ -50,8 +40,8 @@
 			<oSignal Name="armSource"    To="LidLoaderPlantCD.armSource"    Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 			<oSignal Name="armDest"      To="LidLoaderPlantCD.armDest"      Class="com.systemj.ipc.SimpleClient" IP="127.0.0.1" Port="10051" />
 
-			<!-- SENSORS -->
-			<oChannel Name="loadLidCompleteSensors" To="SensorsCD.loadLidCompleteSensors" />
+			<!-- VISUALIZATION -->
+			<iSignal Name="lidLoaderFault" Class="com.systemj.ipc.SimpleServer" IP="127.0.0.1" Port="10050" />
 			
 		</ClockDomain>
 	</SubSystem>
