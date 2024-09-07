@@ -25,10 +25,13 @@ public class Canvas extends JPanel {
 	BufferedImage lidLoaderArmDestDyn;
 	BufferedImage lidLoaderPusherRetreactedDyn;
 	BufferedImage lidLoaderPusherExtendedDyn;
-	BufferedImage bottleFillerDoneDyn;
-	BufferedImage bottleFillerNotDoneDyn;
 	BufferedImage bottleCapperDoneDyn;
 	BufferedImage bottleCapperNotDoneDyn;
+	
+	BufferedImage L1;
+	BufferedImage L2;
+	BufferedImage L3;
+	BufferedImage L4;
 	
 	//Bottles
 	BufferedImage emptyBottle;
@@ -52,6 +55,7 @@ public class Canvas extends JPanel {
 			
 			
 			/*----------------------------------Baxter Layouts END---------------------------------------------*/
+	
 			BufferedImage allBottles = ImageIO.read(new File("res/bottle.png"));
 			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
 			liquidFilledBottle = allBottles.getSubimage(0, 38, 45, 38);
@@ -64,9 +68,12 @@ public class Canvas extends JPanel {
 			lidLoaderPusherRetreactedDyn = ImageIO.read(new File("res/cap_loader/cap_puser_use_twice.png"));
 			lidLoaderPusherExtendedDyn = ImageIO.read(new File("res/cap_loader/cap_puser_use_twice.png"));
 			
+			//liquid Filler
 			BufferedImage bottleFillers = ImageIO.read(new File("res/bottle_filler_filling_and_not_filling.png"));
-			bottleFillerNotDoneDyn = bottleFillers.getSubimage(0, 0, 115, 82);
-			bottleFillerDoneDyn = bottleFillers.getSubimage(0, 82, 115, 82);
+			L1 = bottleFillers.getSubimage(0, 0, 115, 80);
+			L2 = bottleFillers.getSubimage(0, 80, 115, 80);
+			L3 = bottleFillers.getSubimage(0, 160, 115, 80);
+			L4 = bottleFillers.getSubimage(0, 240, 115, 79);
 			
 			BufferedImage bottleCappers = ImageIO.read(new File("res/lid_capper_on_and_off.png"));
 			bottleCapperNotDoneDyn = bottleCappers.getSubimage(0, 0, 125, 96);
@@ -108,7 +115,7 @@ public class Canvas extends JPanel {
 		
 		//Baxter Remove From Conveyor
 		if(States.BOTTLE_LEFT_POS5) {
-			g.drawImage(completeBottle, 490, 315, null);
+			g.drawImage(completeBottle, 490, 320, null);
 			
 		}
 		if (States.RIGHT_ARM_OBJECT != null &&
@@ -145,11 +152,22 @@ public class Canvas extends JPanel {
 		
 		
 		//Liquid Filler
-		if (States.BOTTLE_FILLED) {
-			g.drawImage(bottleFillerDoneDyn, 280, 233, null);
-		} else {
-			g.drawImage(bottleFillerNotDoneDyn, 280, 233, null);
+//		if (States.BOTTLE_FILLED) {
+//			g.drawImage(bottleFillerDoneDyn, 280, 233, null);
+//		} else {
+//			g.drawImage(bottleFillerNotDoneDyn, 280, 233, null);
+//		}
+		
+		if (States.LIQUID_TO_FILL == 0) {
+			g.drawImage(L1, 280, 233, null);
+		} else if (States.LIQUID_TO_FILL == 1) {
+			g.drawImage(L2, 280, 233, null);
+		} else if (States.LIQUID_TO_FILL == 2) {
+			g.drawImage(L3, 280, 233, null);
 		}
+		 else if (States.LIQUID_TO_FILL == 3) {
+				g.drawImage(L4, 280, 233, null);
+			}
 	
 		//Lid Loader
 			// Arm
