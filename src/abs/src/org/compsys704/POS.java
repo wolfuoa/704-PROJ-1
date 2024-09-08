@@ -39,8 +39,7 @@ public class POS extends JFrame {
 	private JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
-	public static JButton sendOrderButton;
-	
+	public static JButton sendOrderButton;	
 	
     private static List<Order> orderQueue = new ArrayList<>();
 	
@@ -240,6 +239,10 @@ public class POS extends JFrame {
     	orderQueue.remove(0);
         return order;
 
+    }
+    
+    public static int getQueueSize() {
+    	return orderQueue.size();
     }
 
 	public static void main(String[] args) {

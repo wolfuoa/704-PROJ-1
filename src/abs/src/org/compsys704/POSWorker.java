@@ -3,6 +3,9 @@ package org.compsys704;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
 public class POSWorker extends Worker{
 
 	@Override
@@ -12,8 +15,17 @@ public class POSWorker extends Worker{
 		case "orderComplete":
 			States.ORDER_COMPLETE = status;
 			States.SEND_ORDER_STATUS = true;
-			POS.sendOrderButton.setEnabled(true);
-			System.out.println("Recieved Complete Signal POSworker");
+			if (status == true) {
+				SwingUtilities.invokeLater(() -> {
+	                JOptionPane.showMessageDialog(null, 
+	                    "Order Complete, You may now send another order for proccessing", 
+	                    "Order Complete", 
+	                    JOptionPane.INFORMATION_MESSAGE);
+	                if (POS.getQueueSize() > 0) {
+	                	POS.sendOrderButton.setEnabled(true);
+	                }
+	            });
+			}
 		
 		case "pusherRetractedE":
 			States.PUSHER_RETRACTED = status;
