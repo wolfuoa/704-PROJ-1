@@ -35,22 +35,6 @@ public class POSWorker extends Worker{
 				States.CAP_READY = true;
 			States.PUSHER_EXTENDED = status;
 			break;
-		case "WPgrippedE":
-			if(States.GRIPPED && States.ARM_AT_SOURCE){
-				if(!status)
-					States.CAP_READY = true;
-			}
-			States.GRIPPED = status;
-			if(States.GRIPPED && States.ARM_AT_SOURCE){
-				States.CAP_READY = false;
-			}
-			break;
-		case "armAtSourceE":
-			States.ARM_AT_SOURCE = status;
-			break;
-		case "armAtDestE":
-			States.ARM_AT_DEST = status;
-			break;
 		case "emptyE":
 			States.MAG_EMPTY = status;
 			break;

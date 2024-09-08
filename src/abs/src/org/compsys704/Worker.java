@@ -54,8 +54,6 @@ public abstract class Worker implements Runnable {
 						setSignal((Boolean) o[0]);
 				}
 				
-				if(initTimeElapsed())
-					setSignal((Boolean) o[0]);
 			}
 		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {

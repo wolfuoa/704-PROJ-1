@@ -21,8 +21,8 @@ public class Canvas extends JPanel {
 	//Machines
 	BufferedImage tTStatic;
 	BufferedImage lidLoaderStationStatic;
-	BufferedImage lidLoaderArmSourceDyn;
-	BufferedImage lidLoaderArmDestDyn;
+	BufferedImage lidLoaderArmUP;
+	BufferedImage lidLoaderArmDOWN;
 	BufferedImage lidLoaderPusherRetreactedDyn;
 	BufferedImage lidLoaderPusherExtendedDyn;
 	BufferedImage bottleCapperDoneDyn;
@@ -37,6 +37,7 @@ public class Canvas extends JPanel {
 	BufferedImage emptyBottle;
 	BufferedImage liquidFilledBottle;
 	BufferedImage completeBottle;
+	BufferedImage bottleCap;
 	
 	BufferedImage Base; 
 	BufferedImage BaxterRemoveI;
@@ -47,6 +48,9 @@ public class Canvas extends JPanel {
 	BufferedImage BaxterLoadLidNoOtherEventI;
 	BufferedImage BaxterLoadLidNoOtherEventF;
 	BufferedImage BaxterLoadLidFRemoveFromConvF;
+	
+	int counter = 0;
+	Boolean cappingAnimation = false;
 		public Canvas(){
 		try {
 			
@@ -68,10 +72,11 @@ public class Canvas extends JPanel {
 			emptyBottle = allBottles.getSubimage(0, 0, 45, 38);
 			liquidFilledBottle = allBottles.getSubimage(0, 38, 45, 38);
 			completeBottle = allBottles.getSubimage(0, 76, 45, 36);
+			bottleCap = allBottles.getSubimage(0, 115, 45, 17);
 			
 			BufferedImage lidLoaderArms = ImageIO.read(new File("res/cap_loader/cap_rotating_arm_source_and_destination.png"));
-			lidLoaderArmSourceDyn = lidLoaderArms.getSubimage(0, 0, 52, 98);
-			lidLoaderArmDestDyn = lidLoaderArms.getSubimage(0, 98, 52, 98);
+			lidLoaderArmUP = lidLoaderArms.getSubimage(0, 0, 52, 98);
+			lidLoaderArmDOWN = lidLoaderArms.getSubimage(0, 98, 52, 98);
 			
 			lidLoaderPusherRetreactedDyn = ImageIO.read(new File("res/cap_loader/cap_puser_use_twice.png"));
 			lidLoaderPusherExtendedDyn = ImageIO.read(new File("res/cap_loader/cap_puser_use_twice.png"));
@@ -154,10 +159,16 @@ public class Canvas extends JPanel {
 		
 		//4.)
 		//Capped Bottle and liquid filler must be placed here to show that Baxter is using hte faul tolerance mode
-		if(States.BOTTLE_AT_POS3) {
+		//Only works if armAtDest Works
+		if(States.BOTTLE_AT_POS3 || cappingAnimation) {
 			g.drawImage(liquidFilledBottle, 400, 265, null);
-			
+			cappingAnimation = true;
+		} 
+		
+		if (States.LID_LOADED) {
+			cappingAnimation = false;
 		}
+		
 		if(States.BOTTLE_AT_POS2) {
 			g.drawImage(emptyBottle, 360, 280, null);
 		}
@@ -249,12 +260,32 @@ public class Canvas extends JPanel {
 		
 	
 		//Lid Loader
-			// Arm
-		if (States.ARM_AT_SOURCE) {
-			g.drawImage(lidLoaderArmSourceDyn, 395, 115, null);
-		} else {
-			g.drawImage(lidLoaderArmDestDyn, 395, 195, null);
+		//cap
+		if (counter == 0 && States.PUSHER_EXTENDED) {
+			counter++;
 		}
+		else if (counter == 0) {
+			g.drawImage(bottleCap, 360, 115, null);
+		}
+		else if (counter == 1 && States.ARM_AT_UP) {
+			counter++;
+		}
+		else if (counter == 1){
+			g.drawImage(bottleCap, 410, 115, null);
+		}  else if (counter == 2 && States.ARM_AT_DOWN) {
+			g.drawImage(bottleCap, 360, 115, null);
+		} 
+		else if (counter == 2) {
+			g.drawImage(bottleCap, 410, 115, null);
+		} 
+			// Arm
+		if (States.ARM_AT_UP) {
+			g.drawImage(lidLoaderArmUP, 395, 115, null);
+		} else {
+			g.drawImage(lidLoaderArmDOWN, 395, 195, null);
+		}
+		
+		
 			// Pusher
 		if (States.PUSHER_RETRACTED) {
 			g.drawImage(lidLoaderPusherRetreactedDyn, 210, 70, null);
@@ -269,51 +300,5 @@ public class Canvas extends JPanel {
 			g.drawImage(bottleCapperNotDoneDyn, 442, 221, null);
 		}
 		
-		
-		
-//		g.drawImage(loader, 0, 100, null);
-//		
-//		if(States.ARM_AT_DEST)
-//			g.drawImage(arm1, 0, 0, null);
-//		else
-//			g.drawImage(arm2, 30, 0, null);
-//		
-//		if(States.GRIPPED){
-//			if(States.ARM_AT_DEST){
-//				g.setColor(Color.black);
-//				g.fillOval(10, 11, 30, 30);
-//				g.setColor(Color.red);
-//				g.fillOval(10, 11, 15, 15);
-//
-//			}
-//			else{
-//				g.setColor(Color.black);
-//				g.fillOval(40, 243, 30, 30);
-//				g.setColor(Color.red);
-//				g.fillOval(35, 232, 15, 15);
-//			}
-//			g.setColor(Color.black);
-//		}
-////		else{
-//			if(States.CAP_READY){ // A cap is pushed to the source pos
-//				g.setColor(Color.black);
-//				g.fillOval(40, 243, 30, 30);
-//			}
-////		}
-//		
-//		if(States.PUSHER_RETRACTED){
-//			g.drawImage(p1, 90, 225, null);
-//			if(!States.MAG_EMPTY){
-//				g.setColor(Color.black);
-//				g.fillOval(154, 243, 30, 30);
-//			}
-//		}
-//		else{
-//			g.drawImage(p2, 90, 225, null);
-//		}
-//		
-//		if(!States.MAG_EMPTY){
-//			g.drawImage(cap, 152, 155, null);
-//		}
 	}
 }

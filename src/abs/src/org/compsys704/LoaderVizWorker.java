@@ -13,6 +13,15 @@ public class LoaderVizWorker extends Worker{
 	public void setSignal(boolean status) {
 //		System.out.println(signame+"  "+status);
 		switch(signame){
+		case "loadLidCompleteV":
+			if (status == true) {
+				System.out.println("loadLid true Viz");
+			}
+			States.ARM_AT_DOWN = true;
+			States.ARM_AT_UP = false;
+			States.LID_LOADED = status;
+			break;
+		
 		case "pusherRetractedE":
 			if (status == true) {
 				System.out.println("pusher Retracted true Viz");
@@ -27,11 +36,11 @@ public class LoaderVizWorker extends Worker{
 			break;
 		case "armAtSourceE":
 			System.out.println("armAtSource Viz");
-			States.ARM_AT_SOURCE = status;
+			States.ARM_AT_UP = status;
 			break;
 		case "armAtDestE":
 			System.out.println("armAtDest Viz");
-			States.ARM_AT_DEST = status;
+			States.ARM_AT_DOWN = status;
 			break;
 		// Capper
 		case "capBottleCompleteV":
@@ -76,16 +85,6 @@ public class LoaderVizWorker extends Worker{
 			break;
 		case "liquidLoadedV":
 			//Value Signal
-			break;
-		case "WPgrippedE":
-			if(States.GRIPPED && States.ARM_AT_SOURCE){
-				if(!status)
-					States.CAP_READY = true;
-			}
-			States.GRIPPED = status;
-			if(States.GRIPPED && States.ARM_AT_SOURCE){
-				States.CAP_READY = false;
-			}
 			break;
 		case "emptyE":
 			States.MAG_EMPTY = status;
@@ -140,7 +139,7 @@ public class LoaderVizWorker extends Worker{
 //		    "fillBottleIncompleteV"
 		);
 	
-	static final List<String> lidLoaderSignals = Arrays.asList("pusherRetractedE","pusherExtendedE","armAtSourceE","armAtDestE");
+	static final List<String> lidLoaderSignals = Arrays.asList("loadLidCompleteV","pusherRetractedE","pusherExtendedE","armAtSourceE","armAtDestE");
 	static final List<String> baxterSignals = Arrays.asList("rightArmV", "leftArmV");
 	static final List<String> liquidLoaderSignals = Arrays.asList("liquidLoadedV");
 	static final List<String> signames = new ArrayList<>();
