@@ -13,8 +13,11 @@ To run the simulated ABS, perform the following steps:
 3. Within the package explorer that appears on the left side of the screen, right-click `BuildAll.launch` then click `Run As` and select `1 Build All`. Ensure that the console view displays `<terminated>` before progressing.
 4. Right-click the main project file at the top of the explorer, and click `Refresh`.
 5. Right-click `LaunchABS.launch` then click `Run As` and select `1 Launch ABS`.
-6. Two windows will appear, the POS and the Visualizer. [TODO] ADD MORE INFO
-7. 
+6. Two windows will appear, the POS and the Visualizer. Within the POS, specify a bottle quantity, and volume of the four liquids.
+7. Click `Order`, then `Make Order`
+8. On the ABS Live visualizer, clicking the `Enable` button will step through the bottling process.
+
+The operation of all machines can be monitored through their respective console windows.
 
 ## Code structure and folders
 - bin: Contains the compiled systemJ files
