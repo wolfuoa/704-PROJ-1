@@ -10,6 +10,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -38,8 +39,9 @@ public class POS extends JFrame {
 	private JLabel label2;
 	private JLabel label3;
 	private JLabel label4;
-
-    private static List<Order> orderQueue;
+	public static JButton sendOrderButton;	
+	
+    private static List<Order> orderQueue = new ArrayList<>();
 	
 	
 	public POS() {
@@ -89,9 +91,9 @@ public class POS extends JFrame {
         this.add(quantitySpinner, c);
 
         // Initialize sliders and labels
-        label1 = new JLabel("Liquid 1: 0ml");
-        oneSlider = new JSlider(0, 200, 0);
-        oneSlider.setPreferredSize(new Dimension(200, 30));  // Set preferred size of the slider
+        label1 = new JLabel("Liquid 1: 0%");
+        oneSlider = new JSlider(0, 100, 0);
+        oneSlider.setPreferredSize(new Dimension(100, 30));  // Set preferred size of the slider
         oneSlider.addChangeListener(e -> updateSliders(oneSlider, label1, 1));
 
         // Add label1 to the left (first column)
@@ -112,9 +114,9 @@ public class POS extends JFrame {
         this.add(oneSlider, c);
 
         // Repeat for other sliders and labels
-        label2 = new JLabel("Liquid 2: 0ml");
-        twoSlider = new JSlider(0, 200, 0);
-        twoSlider.setPreferredSize(new Dimension(200, 30));
+        label2 = new JLabel("Liquid 2: 0%");
+        twoSlider = new JSlider(0, 100, 0);
+        twoSlider.setPreferredSize(new Dimension(100, 30));
         twoSlider.addChangeListener(e -> updateSliders(twoSlider, label2, 2));
 
         c.gridy = 5;
@@ -128,9 +130,9 @@ public class POS extends JFrame {
         c.weightx = 1;
         this.add(twoSlider, c);
 
-        label3 = new JLabel("Liquid 3: 0ml");
-        threeSlider = new JSlider(0, 200, 0);
-        threeSlider.setPreferredSize(new Dimension(200, 30));
+        label3 = new JLabel("Liquid 3: 0%");
+        threeSlider = new JSlider(0, 100, 0);
+        threeSlider.setPreferredSize(new Dimension(100, 30));
         threeSlider.addChangeListener(e -> updateSliders(threeSlider, label3, 3));
 
         c.gridy = 6;
@@ -144,8 +146,8 @@ public class POS extends JFrame {
         c.weightx = 1;
         this.add(threeSlider, c);
 
-        label4 = new JLabel("Liquid 4: 0ml");
-        fourSlider = new JSlider(0, 200, 0);
+        label4 = new JLabel("Liquid 4: 0%");
+        fourSlider = new JSlider(0, 100, 0);
         fourSlider.setPreferredSize(new Dimension(200, 30));
         fourSlider.addChangeListener(e -> updateSliders(fourSlider, label4, 4));
 
@@ -161,17 +163,63 @@ public class POS extends JFrame {
         this.add(fourSlider, c);
         
         // Create a new button
-        JButton submitButton = new JButton("Order");
+        JButton addOrderButton = new JButton("Order");
         // Add an external method as the ActionListener using a lambda expression
-        submitButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
+        addOrderButton.addActionListener(e -> {
+            // check user has entered 100% volume
+            if ((oneSlider.getValue() + twoSlider.getValue() +
+                threeSlider.getValue() + fourSlider.getValue()) == 100) {
+                
+            	double liquid1Percentage = ((double) oneSlider.getValue() / 100) * 200;
+            	double liquid2Percentage = ((double) twoSlider.getValue() / 100) * 200;
+            	double liquid3Percentage = ((double) threeSlider.getValue() / 100) * 200;
+            	double liquid4Percentage = ((double) fourSlider.getValue() / 100) * 200;
+
+                // Add the order to the queue
+                orderQueue.add(new Order((int) quantitySpinner.getValue(), 
+                                         (int)liquid1Percentage, (int)liquid2Percentage, 
+                                         (int)liquid3Percentage, (int)liquid4Percentage));
+                System.out.println("POS order added to queue. The size is: " + orderQueue.size());
+                
+                if (States.SEND_ORDER_STATUS) {
+                    sendOrderButton.setEnabled(true);
+                }
+            } else {
+                // Show an error message if all sliders are not set to maximum
+                JOptionPane.showMessageDialog(null, 
+                                              "All sliders must be set to 100% to place an order.", 
+                                              "Order Error", 
+                                              JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        	
+     // Create a new button
+        sendOrderButton = new JButton("Make Order");
+        // Add an external method as the ActionListener using a lambda expression
+        sendOrderButton.addActionListener(new SignalClient(Ports.PORT_MPR, 
         Ports.POS_ORDER_SIGNAL, 
         true
         ));
+        sendOrderButton.setEnabled(false);
         
-        // Add the button in the first column
+     // Create a new panel to hold the buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 2, 10, 0)); // 1 row, 2 columns, 10px gap between buttons
+
+        // Add buttons to the panel
+        buttonPanel.add(addOrderButton);
+        buttonPanel.add(sendOrderButton);
+
+        // Set up the GridBagConstraints for the panel
         c.gridy = 8;
         c.gridx = 0;
-        this.add(submitButton, c);
+        c.gridwidth = 2; // Span across 2 columns
+        c.weightx = 1.0; // Take up the full horizontal space
+        c.fill = GridBagConstraints.HORIZONTAL; // Stretch the panel horizontally
+        c.insets = new Insets(5, 5, 5, 5); // Optional: add padding
+
+        // Add the panel containing buttons to the layout
+        this.add(buttonPanel, c);
 
         this.setTitle("POS");
         this.setSize(500, 700);
@@ -184,19 +232,18 @@ public class POS extends JFrame {
 		label.setText("Liquid " + number + ": " + slider.getValue() + "%");
 	}
 	
-//	public void submitOrder(ActionEvent e) {
-//        Order newOrder = ;
-//        new SignalClient(Ports.PORT_MPR, Ports.POS_ORDER_SIGNAL, newOrder);
-//        System.out.println("Order Sent");
-//        System.out.println(newOrder.getQuantity());
-//        System.out.println(newOrder.getLiquidVolume(1));
-//    }
 
     public static Order getCurrentOrder(){
-        return new Order((int)quantitySpinner.getValue(), oneSlider.getValue(), twoSlider.getValue(), threeSlider.getValue(), fourSlider.getValue());
+		System.out.println("the SC size is: " + orderQueue.size());
+    	Order order = orderQueue.get(0);
+    	orderQueue.remove(0);
+        return order;
 
     }
-
+    
+    public static int getQueueSize() {
+    	return orderQueue.size();
+    }
 
 	public static void main(String[] args) {
 		POS cl = new POS();

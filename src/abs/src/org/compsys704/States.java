@@ -11,11 +11,12 @@ public class States {
 	public static volatile boolean CAP_READY = false;
 	
 	// Lid Loader
+	public static volatile boolean LID_LOADED = false;
 	public static volatile boolean PUSHER_RETRACTED = true;
 	public static volatile boolean PUSHER_EXTENDED = !PUSHER_RETRACTED;
 	
-	public static volatile boolean ARM_AT_DEST = true;
-	public static volatile boolean ARM_AT_SOURCE = !ARM_AT_DEST;
+	public static volatile boolean ARM_AT_DOWN = true;
+	public static volatile boolean ARM_AT_UP = !ARM_AT_DOWN;
 	
 	// Bottle Filler
 	public static volatile boolean BOTTLE_FILLED = false;
@@ -40,4 +41,5 @@ public class States {
 
 	//POS
 	public static volatile boolean ORDER_COMPLETE = false;
+	public static Boolean SEND_ORDER_STATUS= true;
 }

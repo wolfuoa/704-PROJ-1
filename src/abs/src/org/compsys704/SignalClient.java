@@ -20,7 +20,7 @@ public class SignalClient implements ActionListener{
 	
 	Order posOrder = null;
 	Boolean isOrder = false;
-	
+
 	String dest;
 	
 	public SignalClient(int p, String dest){
@@ -71,11 +71,15 @@ public class SignalClient implements ActionListener{
 					throw new ConnectException("Not thru");
 			}
 			if (isOrder == true) {
-				System.out.println("Signal Client Order Sent with Q: " + POS.getCurrentOrder().getQuantity() + "L1: " + POS.getCurrentOrder().getLiquidVolume(1));
-				oos.writeObject(new Object[]{true, POS.getCurrentOrder()});
-				Thread.sleep(50);
-				oos.writeObject(new Object[]{false});
-				posOrder = null;
+				if (States.SEND_ORDER_STATUS) {
+					oos.writeObject(new Object[]{true, POS.getCurrentOrder()});
+					States.SEND_ORDER_STATUS = false;
+					POS.sendOrderButton.setEnabled(false);
+					Thread.sleep(50);
+					oos.writeObject(new Object[]{false});
+					posOrder = null;
+				}
+
 			} else {
 				oos.writeObject(new Object[]{true});
 				Thread.sleep(50);
