@@ -16,6 +16,7 @@ To run the simulated ABS, perform the following steps:
 6. Two windows will appear, the POS and the Visualizer. Within the POS, specify a bottle quantity, and volume of the four liquids.
 7. Click `Order`, then `Make Order`
 8. On the ABS Live visualizer, clicking the `Enable` button will step through the bottling process.
+9. Additionally, clicking the `Break Lid Loader` or `Break Turn Table` will simulate faults in the respective machines, enabling fault tolerance mechanisms. The visualizer will show the Baxter robot manually adding lids and turning the rotary turntable. 
 
 The operation of all machines can be monitored through their respective console windows.
 
