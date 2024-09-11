@@ -1,5 +1,4 @@
-# 704-PROJ-1 
-Group 2
+# 704-PROJ-1 (Group 2) 
 Designing Advanced Embedded Software Systems - SystemJ Approach
 
 This repository documents the development process of an Automated Bottling System (ABS) written in both Java and systemJ. The ABS is an industrial automation tool used to facilitate the formulation and packaging of complex substances. The plant uses a collection of autonomous sub-systems to execute various parts of the manufacturing process in parallel. Each part of the system is affected by a layer of sensor-driven intelligence, removing the need for regular human intervention. 
